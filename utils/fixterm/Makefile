@@ -39,7 +39,7 @@ endef
 
 define Package/fixterm/install
 	$(INSTALL_DIR) $(1)/bin/
-	$(INSTALL_BIN) $(PKG_DIR)/fixterm $(1)/bin/fixterm
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/fixterm $(1)/bin/fixterm
 endef
 
 $(eval $(call BuildPackage,fixterm))
