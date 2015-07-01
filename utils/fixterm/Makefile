@@ -16,7 +16,7 @@ PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=https://github.com/OnionIoT-Packages/FixTerm.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION).$(PKG_RELEASE)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 
 include $(INCLUDE_DIR)/package.mk
@@ -24,8 +24,10 @@ include $(INCLUDE_DIR)/package.mk
 define Package/fixterm
 	SECTION:=utils
 	CATEGORY:=Utilities
+	SUBMENU:=Onion
 	TITLE:=FixTerm
 endef
+
 
 define Package/fixterm/description
 Terminal window size detection over serial connections
