@@ -25,7 +25,7 @@ define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	SUBMENU:=Onion
-	TITLE:=$(PKG_NAME)
+	TITLE:=Tool to resize serial terms to the size of the screen
 endef
 
 
