@@ -38,7 +38,8 @@ define Package/zeromq/description
 endef
 
 define Build/Configure
-	$(PKG_BUILD_DIR)/autogen.sh
+	cd $(PKG_BUILD_DIR)
+	./autogen.sh
 	@echo "here"
 endef
 
