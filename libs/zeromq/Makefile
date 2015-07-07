@@ -40,7 +40,7 @@ define Package/zeromq/description
 endef
 
 define Build/Configure
-	cd $(PKG_BUILD_DIR) && ./autogen.sh && ./configure --host=mips-linux
+	cd $(PKG_BUILD_DIR) && ./autogen.sh && ./configure --host=mipsel-unknown-linux-gnu-gcc
 endef
 
 define Build/InstallDev
