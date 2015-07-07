@@ -39,9 +39,17 @@ define Package/zeromq/description
     clustered products and supercomputing.
 endef
 
-define Build/Configure
-	cd $(PKG_BUILD_DIR) && ./autogen.sh && ./configure --host=mipsel-unknown-linux-gnu-gcc
-endef
+#define Build/Configure
+#	cd $(PKG_BUILD_DIR) && ./autogen.sh && ./configure
+#endef
+
+# add extra configure flags here
+CONFIGURE_ARGS += \
+	--enable-static \
+	--enable-shared
+
+# add make variable overrides here
+MAKE_FLAGS +=
 
 define Build/InstallDev
 	$(INSTALL_DIR) \
