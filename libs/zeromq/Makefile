@@ -37,6 +37,10 @@ define Package/zeromq/description
     clustered products and supercomputing.
 endef
 
+define Build/Configure
+	$(PKG_BUILD_DIR)/autogen.sh
+	@echo "here"
+endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) \
@@ -52,7 +56,6 @@ define Build/InstallDev
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/pkgconfig \
 		$(1)/usr/lib/
-
 endef
 
 define Package/zeromq/install
