@@ -18,6 +18,8 @@ PKG_SOURCE:=v$(PKG_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)4-1-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
 
+PKG_FIXUP:=libtool autoreconf
+PKG_USE_MIPS16:=0
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -38,7 +40,7 @@ define Package/zeromq/description
 endef
 
 define Build/Configure
-	cd $(PKG_BUILD_DIR) && ./autogen.sh && ./configure --target=mips
+	cd $(PKG_BUILD_DIR) && ./autogen.sh && ./configure
 endef
 
 define Build/InstallDev
