@@ -54,5 +54,5 @@ define Build/Compile
 		modules
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call KernelPackage,$(PKG_NAME)))
 
