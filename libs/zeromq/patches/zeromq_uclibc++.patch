@@ -1,0 +1,91 @@
+From 4714884a2be0341ef96a636a0563b94452f5415a Mon Sep 17 00:00:00 2001
+From: Boken Lin <bl@onion.io>
+Date: Wed, 8 Jul 2015 11:25:45 -0400
+Subject: [PATCH] support uclibc++
+
+---
+ configure.ac          | 4 +++-
+ src/blob.hpp          | 1 +
+ src/metadata.hpp      | 2 +-
+ src/socket_base.cpp   | 1 +
+ src/stream_engine.cpp | 4 ++--
+ 5 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index c7c83d8..a65eb79 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -148,8 +148,10 @@ case "${host_os}" in
+     *linux*)
+         # Define on Linux to enable all library features. Define if using a gnu compiler
+         if test "x$GXX" = "xyes"; then
+-            CPPFLAGS="-D_GNU_SOURCE $CPPFLAGS"
++            CPPFLAGS="-D_GNU_SOURCE $CPPFLAGS -Wno-long-long"
+         fi
++        libzmq_pedantic="no"
++        libzmq_werror="no"
+         AC_DEFINE(ZMQ_HAVE_LINUX, 1, [Have Linux OS])
+         libzmq_on_linux="yes"
+ 
+diff --git a/src/blob.hpp b/src/blob.hpp
+index 689b60b..8da2fe7 100644
+--- a/src/blob.hpp
++++ b/src/blob.hpp
+@@ -31,6 +31,7 @@
+ #define __ZMQ_BLOB_HPP_INCLUDED__
+ 
+ #include <string>
++#include <ios>
+ #include <string.h>
+ 
+ // Borrowed from id3lib_strings.h:
+diff --git a/src/metadata.hpp b/src/metadata.hpp
+index 7181d78..491f1ef 100644
+--- a/src/metadata.hpp
++++ b/src/metadata.hpp
+@@ -41,7 +41,7 @@ namespace zmq
+     {
+         public:
+ 
+-            typedef std::map <std::string, const std::string> dict_t;
++            typedef std::map <std::string, std::string> dict_t;
+ 
+             metadata_t (const dict_t &dict);
+             virtual ~metadata_t ();
+diff --git a/src/socket_base.cpp b/src/socket_base.cpp
+index f79af6f..b52d736 100644
+--- a/src/socket_base.cpp
++++ b/src/socket_base.cpp
+@@ -30,6 +30,7 @@
+ #include <new>
+ #include <string>
+ #include <algorithm>
++#include <ctype.h>
+ 
+ #include "platform.hpp"
+ 
+diff --git a/src/stream_engine.cpp b/src/stream_engine.cpp
+index 87186cc..114d6c2 100644
+--- a/src/stream_engine.cpp
++++ b/src/stream_engine.cpp
+@@ -208,7 +208,7 @@ void zmq::stream_engine_t::plug (io_thread_t *io_thread_,
+             //  Compile metadata.
+             typedef metadata_t::dict_t properties_t;
+             properties_t properties;
+-            properties.insert(std::make_pair("Peer-Address", peer_address));
++            properties.insert(std::make_pair<std::string, std::string>("Peer-Address", peer_address));
+             zmq_assert (metadata == NULL);
+             metadata = new (std::nothrow) metadata_t (properties);
+         }
+@@ -815,7 +815,7 @@ void zmq::stream_engine_t::mechanism_ready ()
+ 
+     //  If we have a peer_address, add it to metadata
+     if (!peer_address.empty()) {
+-        properties.insert(std::make_pair("Peer-Address", peer_address));
++        properties.insert(std::make_pair<std::string, std::string>("Peer-Address", peer_address));
+     }
+ 
+     //  Add ZAP properties.
+-- 
+2.1.4
+
