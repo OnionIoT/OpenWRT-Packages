@@ -8,7 +8,7 @@
 #
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=termrs
+PKG_NAME:=gpio
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
@@ -27,12 +27,12 @@ define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	SUBMENU:=Onion
-	TITLE:=Tool to resize serial terms to the size of the screen
+	TITLE:=Utility/Library to manipulate GPIOs on devices
 endef
 
 
 define Package/$(PKG_NAME)/description
-Terminal window size detection over serial connections
+Utility/Library to manipulate GPIOs on devices
 endef
 
 define Package/$(PKG_NAME)/Build/Compile
