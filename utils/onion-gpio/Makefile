@@ -8,7 +8,7 @@
 #
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=onion_gpio
+PKG_NAME:=onion-gpio
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
