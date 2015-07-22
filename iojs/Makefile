@@ -63,6 +63,7 @@ endef
 define Package/npm/install
 	mkdir -p $(1)/usr/lib/node_modules
 	$(CP) $(PKG_BUILD_DIR)/deps/npm $(1)/usr/lib/node_modules
+	mkdir -p $(1)/usr/bin
 	ln -sf /usr/lib/node_modules/npm/bin/npm-cli.js $(1)/usr/bin/npm
 endef
 
