@@ -36,7 +36,7 @@ Utility/Library to manipulate GPIOs on devices
 endef
 
 define Package/$(PKG_NAME)/Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) $(PKG_NAME)
+	$(MAKE) -C $(PKG_BUILD_DIR) gpio
 endef
 
 define Package/$(PKG_NAME)/install
