@@ -10,7 +10,7 @@ PKG_SHA256SUM:=556e1a2f58c993fcb7a89c55bc2a4da6fba74cd4d444777a8b64b19d57c4cc3c
 
 PKG_BUILD_PARALLEL:=1
 PKG_BUILD_DEPENDS:=
-PKG_USE_MIPS16:=0
+#PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -56,7 +56,7 @@ endif
 
 ifeq ($(ARCH),mips)
   CONFIGURE_ARGS += \
-  --with-mips-arch-variant=r2 --with-mips-float-abi=soft
+  --with-mips-arch-variant=r2 --with-mips-fpu-mode=fp32 --with-mips-float-abi=hard
 endif
 
 define Package/iojs/install
