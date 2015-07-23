@@ -55,7 +55,7 @@ endif
 
 ifeq ($(ARCH),mips)
   CONFIGURE_ARGS += \
-  --with-mips-arch-variant=r2 --with-tune=24kc --with-mips-fpu-mode=fp32 --with-mips-float-abi=soft
+  --with-mips-arch-variant=r2 --with-mips-fpu-mode=fp32 --with-mips-float-abi=soft
 endif
 
 define Package/iojs/install
