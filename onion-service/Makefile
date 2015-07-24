@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Network
 	SUBMENU:=Onion
 	TITLE:=Service for communicating with Onion Cloud
-	DEPENDS:=+libubus
+	DEPENDS:=+libubus +libubox
 endef
 
 
