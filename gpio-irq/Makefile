@@ -16,6 +16,7 @@ PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=https://github.com/OnionIoT/gpio-irq.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
+PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -32,19 +33,14 @@ This is a kernel to userspace GPIO IRQ translator for AR9331 devices.
 endef
 
 MAKE_OPTS:= \
-	ARCH="$(LINUX_KARCH)" \
-	CROSS_COMPILE="$(TARGET_CROSS)" \
-	SUBDIRS="$(PKG_BUILD_DIR)"
-
-define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)
-	$(CP) ./* $(PKG_BUILD_DIR)/
-endef
+    ARCH="$(LINUX_KARCH)" \
+    CROSS_COMPILE="$(TARGET_CROSS)" \
+    SUBDIRS="$(PKG_BUILD_DIR)"
 
 define Build/Compile
-	$(MAKE) -C "$(LINUX_DIR)" \
-		$(MAKE_OPTS) \
-		modules
+    $(MAKE) -C "$(LINUX_DIR)" \
+        $(MAKE_OPTS) \
+        modules
 endef
 
 $(eval $(call KernelPackage,$(PKG_NAME)))
