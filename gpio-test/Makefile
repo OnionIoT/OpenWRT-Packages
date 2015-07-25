@@ -8,14 +8,14 @@
 #
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=onion-gpio
+PKG_NAME:=gpio-test
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=https://github.com/OnionIoT/gpio.git
+PKG_SOURCE_URL:=https://github.com/OnionIoT/gpio-test.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -27,21 +27,21 @@ define Package/$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	SUBMENU:=Onion
-	TITLE:=Utility/Library to manipulate GPIOs on devices
+	TITLE:=Utility to test if GPIO IRQ has been setup properly
 endef
 
 
 define Package/$(PKG_NAME)/description
-Utility/Library to manipulate GPIOs on devices
+Utility to test if GPIO IRQ has been setup properly
 endef
 
 define Package/$(PKG_NAME)/Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) gpio
+	$(MAKE) -C $(PKG_BUILD_DIR) gpio-test
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/bin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/bin/gpio
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/bin/gpio-test
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
