@@ -18,6 +18,7 @@ PKG_SOURCE_URL:=https://github.com/OnionIoT/$(PKG_NAME).git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+PKG_BUILD_DEPENDS:=libugpio
 
 include $(INCLUDE_DIR)/package.mk
 
