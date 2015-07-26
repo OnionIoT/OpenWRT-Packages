@@ -43,4 +43,4 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/bin/$(PKG_NAME)
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME,+libugpio)))
+$(eval $(call BuildPackage,$(PKG_NAME),+libugpio))
