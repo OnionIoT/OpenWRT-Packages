@@ -12,7 +12,6 @@ PKG_NAME:=gpioutil
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
-
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=https://github.com/OnionIoT/$(PKG_NAME).git
@@ -27,8 +26,8 @@ define Package/$(PKG_NAME)
     CATEGORY:=Utilities
     SUBMENU:=Onion
     TITLE:=Simple utility to manipulate GPIOs
+    DEPENDS:=+libugpio
 endef
-
 
 define Package/$(PKG_NAME)/description
 Simple utility to manipulate GPIOs
