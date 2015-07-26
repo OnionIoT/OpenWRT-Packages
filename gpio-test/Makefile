@@ -15,12 +15,12 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=https://github.com/OnionIoT/gpioi-test.git
+PKG_SOURCE_URL:=https://github.com/OnionIoT/gpio-test.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
-
+include $(INCLUDE_DIR)/uclibc++.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
@@ -28,6 +28,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Utilities
 	SUBMENU:=Onion
 	TITLE:=Utility to test if GPIO IRQ has been setup properly
+	DEPENDS:=$(CXX_DEPENDS)
 endef
 
 
@@ -36,7 +37,8 @@ Utility to test if GPIO IRQ has been setup properly
 endef
 
 define Package/$(PKG_NAME)/Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) gpio-test
+	$(MAKE) -C $(PKG_BUILD_DIR) \
+		LD="$(TARGET_CXX)"
 endef
 
 define Package/$(PKG_NAME)/install
