@@ -42,8 +42,11 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	# copy the binary to /usr/bin of OpenWRT
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/usr/sbin/ 
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/usr/sbin/
+   	# create libexec dir for rpcd
+	$(INSTALL_DIR) $(1)/usr/libexec/rpcd
+	# copy rpcd scripts
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rpcd/* $(1)/usr/libexec/rpcd/.
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
