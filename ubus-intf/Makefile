@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Program to interface Omega devices with ubus
-	DEPENDS:=+libstdcpp $(CXX_DEPENDS)
+	DEPENDS:=+ubus +rpcd +libstdcpp $(CXX_DEPENDS)
 endef
 
 
