@@ -37,8 +37,14 @@ endef
 
 define Package/$(PKG_NAME)/install
 	# installing www dir
-	$(INSTALL_DIR) $(1)/www
-	$(INSTALL_BIN) -d $(PKG_BUILD_DIR)/www/ $(1)/www/
+	$(INSTALL_DIR) $(1)/www/
+	$(INSTALL_DIR) $(1)/www/icons
+	$(INSTALL_DIR) $(1)/www/css
+	$(INSTALL_DIR) $(1)/www/js
+	$(INSTALL_BIN) -D $(PKG_BUILD_DIR)/www/*.html $(1)/www/
+	$(INSTALL_BIN) -D $(PKG_BUILD_DIR)/www/icons/* $(1)/www/icons/
+	$(INSTALL_BIN) -D $(PKG_BUILD_DIR)/www/css/* $(1)/www/css/
+	$(INSTALL_BIN) -D $(PKG_BUILD_DIR)/www/js/* $(1)/www/js/
 	# installing acl file
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/acl.d/* $(1)/usr/share/rpcd/acl.d/
