@@ -25,9 +25,9 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	SECTION:=onion
 	CATEGORY:=Onion
-	SUBMENU:=Network
+	SUBMENU:=Utilities
 	TITLE:=Web interface to setup the Omega for the first time
-	DEPENDS:=+rpcd +wifisetup +oupgrade
+	DEPENDS:=+rpcd +wifiscan wifisetup +oupgrade
 endef
 
 
@@ -36,8 +36,12 @@ Script to facilitate wifi setup and connection on the Omega
 endef
 
 define Package/$(PKG_NAME)/install
+	# installing www dir
 	$(INSTALL_DIR) $(1)/www
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/www/
+	$(INSTALL_BIN) -d $(PKG_BUILD_DIR)/www/ $(1)/www/
+	# installing acl file
+	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/acl.d/* $(1)/usr/share/rpcd/acl.d/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
