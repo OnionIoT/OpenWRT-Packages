@@ -45,7 +45,7 @@ define Package/$(PKG_NAME)/install
 	# creating cron entry
 	$(INSTALL_DIR) $(1)/etc/crontabs
 	touch $(1)/etc/crontabs/root
-	echo `cat $(PKG_BUILD_DIR)/cron/wifisaint.cron` > $(1)/etc/crontabs/root
+	cat $(PKG_BUILD_DIR)/cron/wifisaint.cron > $(1)/etc/crontabs/root
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
