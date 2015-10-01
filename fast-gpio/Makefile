@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Tool to enable GPIO access and software PWM support
-	DEPENDS:=$(CXX_DEPENDS)
+	DEPENDS:=+onion-sh-lib $(CXX_DEPENDS)
 endef
 
 
