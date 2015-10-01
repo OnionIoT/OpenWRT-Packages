@@ -27,7 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Collection of Onion ubus tools
-	DEPENDS:=+rpcd +iwinfo +wifisetup +oupgrade
+	DEPENDS:=+rpcd +iwinfo +wifisetup +oupgrade +libugpio
 endef
 
 
