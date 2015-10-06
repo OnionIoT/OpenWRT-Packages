@@ -27,6 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
 	TITLE:=Library of commonly used code for the Omega
+	DEPENDS:= +libubox
 endef
 
 
