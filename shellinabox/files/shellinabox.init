@@ -9,7 +9,7 @@ PROG=/usr/sbin/shellinaboxd
 
 start_service() {
         procd_open_instance
-        procd_set_param command $PROG -t -s "/:$(id -u):$(id -g):HOME:"'/bin/ash'
+        procd_set_param command $PROG -t -s "/:$(id -u):$(id -g):HOME:"'/bin/ash' --css /usr/lib/shellinabox/style.css
         # disable automatic respawn - allow daemon to be turned off
 	#procd_set_param respawn                                                                   
         procd_close_instance   

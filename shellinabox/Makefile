@@ -50,10 +50,15 @@ define Build/Compile
 endef
 
 define Package/shellinabox/install
+	# install the binary
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/shellinaboxd $(1)/usr/sbin/
+	# install the init.d file
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/$(PKG_NAME).init $(1)/etc/init.d/$(PKG_NAME)
+	# install the css file
+	$(INSTALL_DIR) $(1)/usr/lib/shellinabox
+	$(INSTALL_BIN) ./files/style.css $(1)/usr/lib/shellinabox/style.css
 endef
 
 $(eval $(call BuildPackage,shellinabox))
