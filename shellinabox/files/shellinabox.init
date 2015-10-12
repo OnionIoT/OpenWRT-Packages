@@ -1,8 +1,8 @@
 #!/bin/sh /etc/rc.common
 # Copyright (C) 2010 OpenWrt.org
 
-# disable auto start of this daemon
-#START=99
+# enable auto start of this daemon
+START=99
 
 USE_PROCD=1
 PROG=/usr/sbin/shellinaboxd
