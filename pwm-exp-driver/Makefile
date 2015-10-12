@@ -40,6 +40,9 @@ endef
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/usr/sbin/
+	# tmp -for factory to test
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/test/servo_exp_test.sh $(1)/usr/bin/servo_exp_test
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
