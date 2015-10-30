@@ -23,24 +23,45 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 include $(INCLUDE_DIR)/uclibc++.mk
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
+define Package/pwm-exp
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Driver for Servo (PWM) Expansion
-	DEPENDS:= $(CXX_DEPENDS)
+	#DEPENDS:= $(CXX_DEPENDS)
 endef
 
 
-define Package/$(PKG_NAME)/description
+define Package/pwm-exp/description
 Driver for Servo (PWM) Expansion
 endef
 
 
-define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/usr/sbin/
+define Package/relay-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Drivers
+	TITLE:=Driver for Relay Expansion
+	#DEPENDS:= $(CXX_DEPENDS)
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+
+define Package/relay-exp/description
+Driver for Relay Expansion
+endef
+
+
+define Package/pwm-exp/install
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/pwm-exp $(1)/usr/sbin/
+endef
+
+define Package/relay-exp/install
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/relay-exp $(1)/usr/sbin/
+endef
+
+
+$(eval $(call BuildPackage,pwm-exp))
+$(eval $(call BuildPackage,relay-exp))
 
