@@ -74,24 +74,34 @@ endef
 
 
 TARGET_CFLAGS += $(FPIC)
+TARGET_LIBS += -l m
+
+define Build/Compile
+	$(MAKE) -C $(PKG_BUILD_DIR) \
+	CC="$(TARGET_CC)" \
+	CFLAGS="$(TARGET_CFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS)" \
+	LIB="$(TARGET_LIBS)"
+endef
 
 define Build/InstallDev
-	mkdir -p $(1)/usr/include
+	mkdir -p $(1)/usr/include $(1)/usr/lib
 	$(CP)   $(PKG_BUILD_DIR)/include/onion-i2c.h $(1)/usr/include/
-	mkdir -p $(1)/usr/include
+	$(CP)	$(PKG_BUILD_DIR)/lib/libonioni2c.so $(1)/usr/lib/
 	$(CP)   $(PKG_BUILD_DIR)/include/onion-mcp23008-driver.h $(1)/usr/include/
+	$(CP)	$(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
 endef
 
 define Package/libonioni2c/install
 	# install the static library object
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib/libonioni2c.so $(1)/usr/lib/
+	$(CP) 	$(PKG_BUILD_DIR)/lib/libonioni2c.so $(1)/usr/lib/
 endef
 
 define Package/libonionmcp23008/install
         # install the static library object
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
+	$(CP) 	$(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
 endef
 
 define Package/pwm-exp/install
