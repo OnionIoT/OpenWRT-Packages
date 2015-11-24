@@ -28,7 +28,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Tool to enable use of ADS1X15 ADC+PGA chip via i2c
-	DEPENDS:=+libonioni2c $(CXX_DEPENDS)
+	DEPENDS:=+liboniondebug +libonioni2c $(CXX_DEPENDS)
 endef
 
 
@@ -36,7 +36,7 @@ define Package/$(PKG_NAME)/description
 Tool to enable use of ADS1X15 ADC+PGA chip via I2C
 endef
 
-TARGET_LIBS = -lonioni2c
+TARGET_LIBS = -loniondebug -lonioni2c
 
 define Package/$(PKG_NAME)/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
