@@ -22,11 +22,23 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
+define Package/liboniondebug
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Library used to ease debug
+endef
+
+define Package/liboniondebug/description
+Library used to ease debug
+endef
+
 define Package/libonioni2c
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
 	TITLE:=Library of I2C communication functions
+	DEPENDS:=+liboniondebug
 endef
 
 define Package/libonioni2c/description
@@ -38,7 +50,7 @@ define Package/libonionmcp23008
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
 	TITLE:=Library of functions for MCP23008 chip
-	DEPENDS:=+libonioni2c
+	DEPENDS:=+liboniondebug +libonioni2c
 endef
 
 define Package/libonionmcp23008/description
@@ -50,7 +62,7 @@ define Package/pwm-exp
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Driver for Servo (PWM) Expansion
-	DEPENDS:=+libonioni2c
+	DEPENDS:=+liboniondebug +libonioni2c
 endef
 
 
@@ -64,7 +76,7 @@ define Package/relay-exp
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Driver for Relay Expansion
-	DEPENDS:=+libonioni2c +libonionmcp23008
+	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008
 endef
 
 
@@ -86,10 +98,18 @@ endef
 
 define Build/InstallDev
 	mkdir -p $(1)/usr/include $(1)/usr/lib
+	$(CP)   $(PKG_BUILD_DIR)/include/onion-debug.h $(1)/usr/include/
+	$(CP)	$(PKG_BUILD_DIR)/lib/liboniondebug.so $(1)/usr/lib/
 	$(CP)   $(PKG_BUILD_DIR)/include/onion-i2c.h $(1)/usr/include/
 	$(CP)	$(PKG_BUILD_DIR)/lib/libonioni2c.so $(1)/usr/lib/
 	$(CP)   $(PKG_BUILD_DIR)/include/onion-mcp23008-driver.h $(1)/usr/include/
 	$(CP)	$(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
+endef
+
+define Package/liboniondebug/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) 	$(PKG_BUILD_DIR)/lib/liboniondebug.so $(1)/usr/lib/
 endef
 
 define Package/libonioni2c/install
@@ -115,6 +135,7 @@ define Package/relay-exp/install
 endef
 
 
+$(eval $(call BuildPackage,liboniondebug))
 $(eval $(call BuildPackage,libonioni2c))
 $(eval $(call BuildPackage,libonionmcp23008))
 $(eval $(call BuildPackage,pwm-exp))
