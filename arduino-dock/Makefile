@@ -53,6 +53,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/run-avrdude.sh $(1)/usr/bin/run-avrdude
 	# arduino dock setup script
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/arduino-dock.sh $(1)/usr/bin/arduino-dock
+	# lua script 
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/merge-sketch-with-bootloader.lua $(1)/usr/bin/merge-sketch-with-bootloader.lua
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
