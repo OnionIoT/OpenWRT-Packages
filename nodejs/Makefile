@@ -17,7 +17,7 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=https://github.com/OnionIoT/nodejs.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-v$(PKG_VERSION)-$(PKG_RELEASE).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/uclibc++.mk
@@ -35,7 +35,7 @@ define Package/libv8/description
 Library for Google's V8 Javascript Engine Port
 endef
 
-define Package/$(PKG_NAME)
+define Package/nodejs
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Languages
@@ -44,7 +44,7 @@ define Package/$(PKG_NAME)
 endef
 
 
-define Package/$(PKG_NAME)/description
+define Package/nodejs/description
 Event-driven I/O server-side JavaScript environment based on V8
 endef
 
@@ -54,18 +54,20 @@ define Build/InstallDev
 	$(CP)   $(PKG_BUILD_DIR)/v8/lib/libv8.so $(1)/usr/lib/
 endef
 
-define Build/Configure
-	# running configure
+### installing from precompiled lib and binary from repo
+### 	issue with compile on strider (due to long file paths)
+#define Build/Configure
+#	# running configure
 #	$(PKG_BUILD_DIR)/configure \
 #		--without-snapshot \
 #		--shared-v8 \
 #		--shared-v8-includes="$(PKG_BUILD_DIR)/v8/include/" \
 #		--shared-v8-libpath="$(PKG_BUILD_DIR)/v8/lib" \
 #		--dest-cpu=mips
-endef
+#endef
 
-define Build/Compile
-	# running compile
+#define Build/Compile
+#	# running compile
 #	$(MAKE) -C $(PKG_BUILD_DIR) \
 #		CC=mips-openwrt-linux-gcc \
 #		CXX=mips-openwrt-linux-g++ \
@@ -73,6 +75,16 @@ define Build/Compile
 #		RANLIB=mips-openwrt-linux-ranlib \
 #		LINK=mips-openwrt-linux-g++ \
 #		snapshot=off
+#endef
+
+define Build/Configure
+	# do nothing!
+endef
+
+define Build/Compile
+	# do nothing!
+#	$(MAKE) -C $(PKG_BUILD_DIR) \
+#		omega
 endef
 
 define Package/libv8/install
@@ -81,12 +93,12 @@ define Package/libv8/install
 	$(CP)   $(PKG_BUILD_DIR)/v8/lib/libv8.so $(1)/usr/lib/
 endef
 
-define Package/$(PKG_NAME)/install
+define Package/nodejs/install
 	$(INSTALL_DIR) $(1)/usr/bin
 #	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/Release/node $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/deploy/bin/node $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,libv8))
-$(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,nodejs))
 
