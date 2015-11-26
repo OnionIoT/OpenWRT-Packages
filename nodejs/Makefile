@@ -56,23 +56,23 @@ endef
 
 define Build/Configure
 	# running configure
-	$(PKG_BUILD_DIR)/configure \
-		--without-snapshot \
-		--shared-v8 \
-		--shared-v8-includes="$(PKG_BUILD_DIR)/v8/include/" \
-		--shared-v8-libpath="$(PKG_BUILD_DIR)/v8/lib" \
-		--dest-cpu=mips
+#	$(PKG_BUILD_DIR)/configure \
+#		--without-snapshot \
+#		--shared-v8 \
+#		--shared-v8-includes="$(PKG_BUILD_DIR)/v8/include/" \
+#		--shared-v8-libpath="$(PKG_BUILD_DIR)/v8/lib" \
+#		--dest-cpu=mips
 endef
 
 define Build/Compile
 	# running compile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-		CC=mips-openwrt-linux-gcc \
-		CXX=mips-openwrt-linux-g++ \
-		AR=mips-openwrt-linux-ar \
-		RANLIB=mips-openwrt-linux-ranlib \
-		LINK=mips-openwrt-linux-g++ \
-		snapshot=off
+#	$(MAKE) -C $(PKG_BUILD_DIR) \
+#		CC=mips-openwrt-linux-gcc \
+#		CXX=mips-openwrt-linux-g++ \
+#		AR=mips-openwrt-linux-ar \
+#		RANLIB=mips-openwrt-linux-ranlib \
+#		LINK=mips-openwrt-linux-g++ \
+#		snapshot=off
 endef
 
 define Package/libv8/install
@@ -83,7 +83,8 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/Release/node $(1)/usr/bin/
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/Release/node $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/deploy/bin/node $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,libv8))
