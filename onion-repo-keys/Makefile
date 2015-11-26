@@ -12,13 +12,6 @@ PKG_NAME:=onion-repo-keys
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=git@github.com:OnionIoT/OpenWRT-Repo.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
-
 #PKG_FILE_DEPENDS:=$(PLATFORM_DIR)/ $(GENERIC_PLATFORM_DIR)/base-files/
 PKG_BUILD_DEPENDS:=opkg/host usign/host
 PKG_LICENSE:=GPL-2.0
@@ -41,9 +34,18 @@ define Package/$(PKG_NAME)/description
 Signature keys required for Onion Package Repo
 endef
 
+## to do: add functionality to generate key files if they do not exist
+define Build/Prepare
+	mkdir -p $(PKG_BUILD_DIR)
+endef
+
+define Build/Compile
+
+endef
+
 define Package/$(PKG_NAME)/install
 	mkdir -p $(1)/etc/opkg/keys
-	$(CP) $(PKG_BUILD_DIR)/keys/onion-key.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p $(PKG_BUILD_DIR)/keys/onion-key.pub`
+	$(CP) ./files/onion-key.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p $(PKG_BUILD_DIR)/keys/onion-key.pub`
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
