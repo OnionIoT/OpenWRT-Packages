@@ -85,6 +85,19 @@ Driver for Relay Expansion
 endef
 
 
+define Package/i2c-exp-ubus
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Drivers
+	TITLE:=I2C-based Expansion ubus integration 
+	DEPENDS:=+rpcd +onion-sh-lib +pwm-exp +relay-exp
+endef
+
+define Package/i2c-exp-ubus/description
+I2C-based Expansion ubus integration
+endef	
+
+
 TARGET_CFLAGS += $(FPIC)
 TARGET_LIBS += -l m
 
@@ -134,10 +147,15 @@ define Package/relay-exp/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/relay-exp $(1)/usr/sbin/
 endef
 
+define Package/i2c-exp-ubus/install
+	$(INSTALL_DIR) $(1)/usr/libexec/rpcd
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rpcd/i2c-exp.sh $(1)/usr/libexec/rpcd/i2c_exp
+endef
 
 $(eval $(call BuildPackage,liboniondebug))
 $(eval $(call BuildPackage,libonioni2c))
 $(eval $(call BuildPackage,libonionmcp23008))
 $(eval $(call BuildPackage,pwm-exp))
 $(eval $(call BuildPackage,relay-exp))
+$(eval $(call BuildPackage,i2c-exp-ubus))
 
