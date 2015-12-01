@@ -57,12 +57,49 @@ define Package/libonionmcp23008/description
 Library of functions for MCP23008 chips
 endef
 
+define Package/libonionpwmexp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Library of functions to control the Onion PWM Expansion
+	DEPENDS:=+liboniondebug +libonioni2c
+endef
+
+define Package/libonionpwmexp/description
+Library of functions to control the PWM Expansion
+endef
+
+define Package/libonionrelayexp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Library of functions to control the Onion Relay Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008
+endef
+
+define Package/libonionrelayexp/description
+Library of functions to control the Onion Relay Expansion
+endef
+
+define Package/libonionoledexp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Library of functions to control the Onion OLED Expansion
+	DEPENDS:=+liboniondebug +libonioni2c 
+endef
+
+define Package/libonionoledexp/description
+Library of functions to control the Onion OLED Expansion
+endef
+
+
 define Package/pwm-exp
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Driver for Servo (PWM) Expansion
-	DEPENDS:=+liboniondebug +libonioni2c
+	DEPENDS:=+liboniondebug +libonioni2c +libonionpwmexp
 endef
 
 
@@ -76,12 +113,26 @@ define Package/relay-exp
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Driver for Relay Expansion
-	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008
+	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008 +libonionrelayexp
 endef
 
 
 define Package/relay-exp/description
 Driver for Relay Expansion
+endef
+
+
+define Package/oled-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Drivers
+	TITLE:=Driver for OLED Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionoledexp
+endef
+
+
+define Package/oled-exp/description
+Driver for OLED Expansion
 endef
 
 
@@ -117,6 +168,12 @@ define Build/InstallDev
 	$(CP)	$(PKG_BUILD_DIR)/lib/libonioni2c.so $(1)/usr/lib/
 	$(CP)   $(PKG_BUILD_DIR)/include/onion-mcp23008-driver.h $(1)/usr/include/
 	$(CP)	$(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
+	$(CP)   $(PKG_BUILD_DIR)/include/pwm-exp.h $(1)/usr/include/
+	$(CP)	$(PKG_BUILD_DIR)/lib/libonionpwmexp.so $(1)/usr/lib/
+	$(CP)   $(PKG_BUILD_DIR)/include/relay-exp.h $(1)/usr/include/
+	$(CP)	$(PKG_BUILD_DIR)/lib/libonionrelayexp.so $(1)/usr/lib/
+	$(CP)   $(PKG_BUILD_DIR)/include/oled-exp.h $(1)/usr/include/
+	$(CP)	$(PKG_BUILD_DIR)/lib/libonionoledexp.so $(1)/usr/lib/
 endef
 
 define Package/liboniondebug/install
@@ -137,6 +194,25 @@ define Package/libonionmcp23008/install
 	$(CP) 	$(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
 endef
 
+define Package/libonionpwmexp/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) 	$(PKG_BUILD_DIR)/lib/libonionpwmexp.so $(1)/usr/lib/
+endef
+
+define Package/libonionrelayexp/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) 	$(PKG_BUILD_DIR)/lib/libonionrelayexp.so $(1)/usr/lib/
+endef
+
+define Package/libonionoledexp/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) 	$(PKG_BUILD_DIR)/lib/libonionoledexp.so $(1)/usr/lib/
+endef
+
+
 define Package/pwm-exp/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/pwm-exp $(1)/usr/sbin/
@@ -147,6 +223,11 @@ define Package/relay-exp/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/relay-exp $(1)/usr/sbin/
 endef
 
+define Package/oled-exp/install
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/oled-exp $(1)/usr/sbin/
+endef
+
 define Package/i2c-exp-ubus/install
 	$(INSTALL_DIR) $(1)/usr/libexec/rpcd
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rpcd/i2c-exp.sh $(1)/usr/libexec/rpcd/i2c_exp
@@ -155,7 +236,11 @@ endef
 $(eval $(call BuildPackage,liboniondebug))
 $(eval $(call BuildPackage,libonioni2c))
 $(eval $(call BuildPackage,libonionmcp23008))
+$(eval $(call BuildPackage,libonionpwmexp))
+$(eval $(call BuildPackage,libonionrelayexp))
+$(eval $(call BuildPackage,libonionoledexp))
 $(eval $(call BuildPackage,pwm-exp))
 $(eval $(call BuildPackage,relay-exp))
+$(eval $(call BuildPackage,oled-exp))
 $(eval $(call BuildPackage,i2c-exp-ubus))
 
