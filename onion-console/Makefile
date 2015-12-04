@@ -27,7 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Console
 	TITLE:=Web-based virtual desktop for the Omega
-	DEPENDS:=+rpcd +onion-sh-lib
+	DEPENDS:=+rpcd +onion-sh-lib +pwm-exp +relay-exp +oled-exp +i2c-exp-ubus
 endef
 
 
