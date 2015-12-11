@@ -22,6 +22,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
+# library packages
 define Package/liboniondebug
 	SECTION:=onion
 	CATEGORY:=Onion
@@ -94,6 +95,7 @@ Library of functions to control the Onion OLED Expansion
 endef
 
 
+# application packages
 define Package/pwm-exp
 	SECTION:=onion
 	CATEGORY:=Onion
@@ -136,6 +138,7 @@ Driver for OLED Expansion
 endef
 
 
+# ubus integration package
 define Package/i2c-exp-ubus
 	SECTION:=onion
 	CATEGORY:=Onion
@@ -149,15 +152,56 @@ I2C-based Expansion ubus integration
 endef	
 
 
+# python module packages
+define Package/pyPwmExp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python module to control the Onion PWM Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionpwmexp +python-base
+endef
+
+define Package/pyPwmExp/description
+Python module to control the Onion PWM Expansion
+endef
+
+define Package/pyRelayExp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python module to control the Onion Relay Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008 +libonionrelayexp +python-base
+endef
+
+define Package/pyRelayExp/description
+Python module to control the Onion Relay Expansion
+endef
+
+define Package/pyOledExp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python module to control the Onion OLED Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionoledexp +python-base
+endef
+
+define Package/pyOledExp/description
+Python module to control the Onion OLED Expansion
+endef
+
+
+PYTHON_VERSION = "2.7"
 TARGET_CFLAGS += $(FPIC)
 TARGET_LIBS += -l m
+TARGET_PYINC += "-I$(STAGING_DIR)/usr/include/python$(PYTHON_VERSION)/"
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	LIB="$(TARGET_LIBS)"
+	LIB="$(TARGET_LIBS)" \
+	PYINC="$(TARGET_PYINC)"
 endef
 
 define Build/InstallDev
@@ -228,10 +272,32 @@ define Package/oled-exp/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/oled-exp $(1)/usr/sbin/
 endef
 
+
 define Package/i2c-exp-ubus/install
 	$(INSTALL_DIR) $(1)/usr/libexec/rpcd
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rpcd/i2c-exp.sh $(1)/usr/libexec/rpcd/i2c_exp
 endef
+
+
+define Package/pyPwmExp/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+endef
+
+define Package/pyRelayExp/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python/relayExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+endef
+
+define Package/pyOledExp/install
+	# install the static library object
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python/oledExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+endef
+
+
 
 $(eval $(call BuildPackage,liboniondebug))
 $(eval $(call BuildPackage,libonioni2c))
@@ -243,4 +309,7 @@ $(eval $(call BuildPackage,pwm-exp))
 $(eval $(call BuildPackage,relay-exp))
 $(eval $(call BuildPackage,oled-exp))
 $(eval $(call BuildPackage,i2c-exp-ubus))
+$(eval $(call BuildPackage,pyPwmExp))
+$(eval $(call BuildPackage,pyRelayExp))
+$(eval $(call BuildPackage,pyOledExp))
 
