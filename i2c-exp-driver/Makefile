@@ -282,18 +282,21 @@ endef
 define Package/pyPwmExp/install
 	# install the static library object
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 endef
 
 define Package/pyRelayExp/install
 	# install the static library object
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/relayExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 endef
 
 define Package/pyOledExp/install
 	# install the static library object
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/oledExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 endef
 
