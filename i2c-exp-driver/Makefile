@@ -153,12 +153,24 @@ endef
 
 
 # python module packages
+define Package/pyOmegaExpansion
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Setup for OmegaExpansion Python Package
+	DEPENDS:=+python-base
+endef
+
+define Package/pyOmegaExpansion/description
+Setup for OmegaExpansion Python Package
+endef
+
 define Package/pyPwmExp
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
 	TITLE:=Python module to control the Onion PWM Expansion
-	DEPENDS:=+liboniondebug +libonioni2c +libonionpwmexp +python-base
+	DEPENDS:=+liboniondebug +libonioni2c +libonionpwmexp +python-base +pyOmegaExpansion
 endef
 
 define Package/pyPwmExp/description
@@ -170,7 +182,7 @@ define Package/pyRelayExp
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
 	TITLE:=Python module to control the Onion Relay Expansion
-	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008 +libonionrelayexp +python-base
+	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008 +libonionrelayexp +python-base +pyOmegaExpansion
 endef
 
 define Package/pyRelayExp/description
@@ -182,7 +194,7 @@ define Package/pyOledExp
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
 	TITLE:=Python module to control the Onion OLED Expansion
-	DEPENDS:=+liboniondebug +libonioni2c +libonionoledexp +python-base
+	DEPENDS:=+liboniondebug +libonioni2c +libonionoledexp +python-base +pyOmegaExpansion
 endef
 
 define Package/pyOledExp/description
@@ -279,24 +291,28 @@ define Package/i2c-exp-ubus/install
 endef
 
 
-define Package/pyPwmExp/install
-	# install the static library object
+
+define Package/pyOmegaExpansion/install
+	# setup the OmegaExpansion package
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
+endef
+
+define Package/pyPwmExp/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 endef
 
 define Package/pyRelayExp/install
-	# install the static library object
+	# install the python module
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/relayExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 endef
 
 define Package/pyOledExp/install
-	# install the static library object
+	# install the python module
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/oledExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 endef
 
@@ -312,6 +328,7 @@ $(eval $(call BuildPackage,pwm-exp))
 $(eval $(call BuildPackage,relay-exp))
 $(eval $(call BuildPackage,oled-exp))
 $(eval $(call BuildPackage,i2c-exp-ubus))
+$(eval $(call BuildPackage,pyOmegaExpansion))
 $(eval $(call BuildPackage,pyPwmExp))
 $(eval $(call BuildPackage,pyRelayExp))
 $(eval $(call BuildPackage,pyOledExp))
