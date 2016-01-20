@@ -24,9 +24,9 @@ include $(INCLUDE_DIR)/uclibc++.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
-	SECTION:=utils
-	CATEGORY:=Utilities
-	SUBMENU:=Onion
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Utilities
 	TITLE:=Utility to test if GPIO IRQ has been setup properly
 	DEPENDS:=$(CXX_DEPENDS)
 endef
