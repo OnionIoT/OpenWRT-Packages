@@ -29,7 +29,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Network
 	TITLE:=Client for communication with Onion Cloud Device Server
-	DEPENDS:=+libcurl +libubus +libblobmsg-json
+	DEPENDS:=+libpthread +libcurl +liboniondebug +libjson-c +libubus +libblobmsg-json +libuci
 endef
 
 define Package/$(PKG_NAME)/description
@@ -37,7 +37,7 @@ Client for communication with Onion Cloud Device Server
 endef
 
 
-TARGET_LIB += -lcurl -lubus -lubox -lblobmsg_json
+TARGET_LIB += -lpthread -lcurl -loniondebug -ljson-c -lubus -lubox -lblobmsg_json -luci
 TARGET_CFLAGS += $(FPIC)
 
 define Build/Compile
@@ -50,9 +50,12 @@ endef
 
 
 define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/usr/sbin
 	# install the binary
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/device-client $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/device-client $(1)/usr/sbin/
+	# install the init.d script
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/device-client.sh $(1)/etc/init.d/device-client
 endef
 
 
