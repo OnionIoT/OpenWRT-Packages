@@ -165,6 +165,18 @@ define Package/pyOmegaExpansion/description
 Setup for OmegaExpansion Python Package
 endef
 
+define Package/pyOnionI2C
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python module with object that implements I2C transactions
+	DEPENDS:=+liboniondebug +libonioni2c +python-base +pyOmegaExpansion
+endef
+
+define Package/pyOnionI2C/description
+Python module with object that implements I2C transactions
+endef
+
 define Package/pyPwmExp
 	SECTION:=onion
 	CATEGORY:=Onion
@@ -298,6 +310,12 @@ define Package/pyOmegaExpansion/install
 	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
 endef
 
+define Package/pyOnionI2C/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python/onionI2C.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+endef
+
 define Package/pyPwmExp/install
 	# install the python module
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
@@ -329,6 +347,7 @@ $(eval $(call BuildPackage,relay-exp))
 $(eval $(call BuildPackage,oled-exp))
 $(eval $(call BuildPackage,i2c-exp-ubus))
 $(eval $(call BuildPackage,pyOmegaExpansion))
+$(eval $(call BuildPackage,pyOnionI2C))
 $(eval $(call BuildPackage,pyPwmExp))
 $(eval $(call BuildPackage,pyRelayExp))
 $(eval $(call BuildPackage,pyOledExp))
