@@ -28,7 +28,7 @@ define Package/nodejs
   SUBMENU:=Node.js
   SECTION:=lang
   CATEGORY:=Languages
-  TITLE:=Node.js Runtime Environment
+  TITLE:=Node.js v4.3.1
   URL:=https://nodejs.org/
 endef
 
