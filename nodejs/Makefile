@@ -1,12 +1,3 @@
-
-# Copyright (C) 2015 Onion Corporation
-# 
-# Author: Zheng Han  <zh@onion.io>
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodejs
@@ -58,17 +49,16 @@ CONFIGURE_ARGS += \
 
 
 define Package/nodejs/install
-    mkdir -p $(1)/usr/bin
-    $(INSTALL_BIN) $(PKG_BUILD_DIR)/out/Release/node $(1)/usr/bin/node
+	mkdir -p $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/out/Release/node $(1)/usr/bin/node
 endef
 
 define Package/npm/install
-    mkdir -p $(1)/usr/lib/node_modules
-    $(CP) $(PKG_BUILD_DIR)/deps/npm $(1)/usr/lib/node_modules
-    mkdir -p $(1)/usr/bin
-    ln -sf /usr/lib/node_modules/npm/bin/npm-cli.js $(1)/usr/bin/npm
+	mkdir -p $(1)/usr/lib/node_modules
+	$(CP) $(PKG_BUILD_DIR)/deps/npm $(1)/usr/lib/node_modules
+	mkdir -p $(1)/usr/bin
+	ln -sf /usr/lib/node_modules/npm/bin/npm-cli.js $(1)/usr/bin/npm
 endef
 
 $(eval $(call BuildPackage,nodejs))
 $(eval $(call BuildPackage,npm))
-
