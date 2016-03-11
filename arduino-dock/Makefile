@@ -27,6 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Tool to enable I2C flashing of HEX files
+	DEPENDS:=+avrdude
 endef
 
 
