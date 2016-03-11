@@ -42,8 +42,8 @@ TARGET_CFLAGS += $(FPIC)
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
-	CC="$(TARGET_CC)" \
-	CFLAGS="$(TARGET_CFLAGS)" \
+	CXX="$(TARGET_CXX)" \
+	CXXFLAGS="$(TARGET_CXXFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 
