@@ -20,6 +20,7 @@ PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
+include $(INCLUDE_DIR)/uclibc++.mk
 include $(INCLUDE_DIR)/package.mk
 
 
@@ -29,6 +30,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Network
 	TITLE:=Client for sending date points to Ubidots cloud
+	DEPENDS:=$(CXX_DEPENDS)
 endef
 
 define Package/$(PKG_NAME)/description
