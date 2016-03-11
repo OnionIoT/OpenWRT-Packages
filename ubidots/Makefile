@@ -42,8 +42,7 @@ define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
-	LDFLAGS="$(TARGET_LDFLAGS)" \
-	LIB="$(TARGET_LIB)"
+	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 
 
