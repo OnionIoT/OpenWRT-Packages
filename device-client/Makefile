@@ -38,14 +38,16 @@ endef
 
 
 TARGET_LIB += -lpthread -lcurl -loniondebug -ljson-c -lubus -lubox -lblobmsg_json -luci
-TARGET_CFLAGS += $(FPIC)
+TARGET_CFLAGS += $(FPIC) 
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	LIB="$(TARGET_LIB)"
+	LIB="$(TARGET_LIB)" \
+	DEVICE_CLIENT_VERSION="$(PKG_VERSION)" \
+	DEVICE_TYPE="$(CONFIG_TARGET_BOARD)"
 endef
 
 
