@@ -49,17 +49,17 @@ Tool to test TFT ST7735 Driver
 endef
 
 # python module package
-#define Package/pyOnionSt7735
-#	SECTION:=onion
-#	CATEGORY:=Onion
-#	SUBMENU:=Libraries
-#	TITLE:=Python module to implement driver for TFT ST7735 
-#	DEPENDS:=+python-base +liboniondebug +libonionspi +libonionst7735
-#endef
+define Package/pyOnionSt7735
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python module to implement driver for TFT ST7735 
+	DEPENDS:=+python-base +liboniondebug +libonionspi +libonionst7735
+endef
 
-#define Package/pyOnionSt7735/description
-#Python module to implement driver for TFT ST7735
-#endef
+define Package/pyOnionSt7735/description
+Python module to implement driver for TFT ST7735
+endef
 
 PYTHON_VERSION = "2.7"
 TARGET_LIB += -loniondebug -lonionspi -lonionst7735 -lugpio
@@ -78,9 +78,9 @@ define Build/Compile
 endef
 
 define Build/InstallDev
-	mkdir -p $(1)/usr/include $(1)/usr/lib
-	$(CP)   $(PKG_BUILD_DIR)/include/onion-st7735-driver.h $(1)/usr/include/
-	$(CP)   $(PKG_BUILD_DIR)/lib/libonionst7735.so $(1)/usr/lib/
+	mkdir -p $(STAGING_DIR)/usr/include $(STAGING_DIR)/usr/lib
+	$(CP)   $(PKG_BUILD_DIR)/include/onion-st7735-driver.h $(STAGING_DIR)/usr/include/
+	$(CP)   $(PKG_BUILD_DIR)/lib/libonionst7735.so $(STAGING_DIR)/usr/lib/
 endef
 
 define Package/libonionst7735/install
@@ -95,14 +95,14 @@ define Package/st7735-test/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/st7735-test $(1)/usr/bin/
 endef
 
-#define Package/pyOnionSpi/install
-#	# install the python module
-#	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)
-#	$(CP)   $(PKG_BUILD_DIR)/lib/python/onionSpi.so $(1)/usr/lib/python$(PYTHON_VERSION)
-#endef
+define Package/pyOnionSt7735/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)
+	$(CP)   $(PKG_BUILD_DIR)/lib/python/onionSt7735.so $(1)/usr/lib/python$(PYTHON_VERSION)
+endef
 
 
 $(eval $(call BuildPackage,libonionst7735))
 $(eval $(call BuildPackage,st7735-test))
-#$(eval $(call BuildPackage,pyOnionSt7735))
+$(eval $(call BuildPackage,pyOnionSt7735))
 
