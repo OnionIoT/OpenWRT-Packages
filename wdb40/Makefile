@@ -58,7 +58,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/wdb40tool $(1)/usr/bin/
 	# install the scripts
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/wdb40.sh $(1)/usr/bin/wdb40
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/wdb40setup.sh $(1)/usr/bin/wdb40setup
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/wdb40setup.sh $(1)/usr/bin/wifisetup
 	# install the init.d script
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/wdb40d.sh $(1)/etc/init.d/wdb40d
