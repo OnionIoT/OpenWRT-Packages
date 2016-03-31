@@ -59,7 +59,7 @@ $(call Package/obluez/Default)
   CATEGORY:=Onion
   SUBMENU:=Utilities
   TITLE+= utilities
-  DEPENDS:=+obluez-libs +libpthread +librt +dbus +glib2 +libical +libncurses +libreadline +udev $(INTL_DEPENDS) $(ICONV_DEPENDS)
+  DEPENDS:=+obluez-libs +libpthread +librt +dbus +glib2 +libical +libncurses +libreadline +udev +sbc +libspeexdsp $(INTL_DEPENDS) $(ICONV_DEPENDS)
 endef
 
 define Package/obluez-utils/conffiles
