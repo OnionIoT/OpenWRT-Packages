@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=device-client
-PKG_VERSION:=0.2
+PKG_VERSION:=0.3
 PKG_RELEASE:=1
 
 
@@ -29,7 +29,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Network
 	TITLE:=Client for communication with Onion Cloud Device Server
-	DEPENDS:=+libpthread +libcurl +liboniondebug +libjson-c +libubus +libblobmsg-json +libuci
+	DEPENDS:=+libpthread +libcurl +liboniondebug +libjson-c +libubus +libblobmsg-json +libuci +onion-sh-lib
 endef
 
 define Package/$(PKG_NAME)/description
@@ -52,12 +52,16 @@ endef
 
 
 define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_DIR) \
+		$(1)/usr/sbin \
+		$(1)/etc/init.d \
+		$(1)/usr/bin
 	# install the binary
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/device-client $(1)/usr/sbin/
 	# install the init.d script
-	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/device-client.sh $(1)/etc/init.d/device-client
+	# install the cloud script
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/utilities/onion-cloud.sh $(1)/usr/bin/onion-cloud
 endef
 
 
