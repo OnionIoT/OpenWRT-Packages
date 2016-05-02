@@ -81,19 +81,7 @@ endef
 
 ##Whats this do?
 define Build/InstallDev
-	mkdir -p $(1)/usr/include $(1)/usr/lib
-	$(CP)   $(PKG_BUILD_DIR)/include/onion-debug.h $(1)/usr/include/
-	$(CP)	$(PKG_BUILD_DIR)/lib/liboniondebug.so $(1)/usr/lib/
-	$(CP)   $(PKG_BUILD_DIR)/include/onion-i2c.h $(1)/usr/include/
-	$(CP)	$(PKG_BUILD_DIR)/lib/libonioni2c.so $(1)/usr/lib/
-	$(CP)   $(PKG_BUILD_DIR)/include/onion-mcp23008-driver.h $(1)/usr/include/
-	$(CP)	$(PKG_BUILD_DIR)/lib/libonionmcp23008.so $(1)/usr/lib/
-	$(CP)   $(PKG_BUILD_DIR)/include/pwm-exp.h $(1)/usr/include/
-	$(CP)	$(PKG_BUILD_DIR)/lib/libonionpwmexp.so $(1)/usr/lib/
-	$(CP)   $(PKG_BUILD_DIR)/include/relay-exp.h $(1)/usr/include/
-	$(CP)	$(PKG_BUILD_DIR)/lib/libonionrelayexp.so $(1)/usr/lib/
-	$(CP)   $(PKG_BUILD_DIR)/include/oled-exp.h $(1)/usr/include/
-	$(CP)	$(PKG_BUILD_DIR)/lib/libonionoledexp.so $(1)/usr/lib/
+
 endef
 
 define Package/pwm-exp-node/install
