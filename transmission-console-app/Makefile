@@ -38,7 +38,7 @@ endef
 define Package/$(PKG_NAME)/install
 	# install the app
 	$(INSTALL_DIR) $(1)/www/apps/onion-transmission-client/
-	cp -r $(PKG_BUILD_DIR)/www/apps/onion-transmission-client/* $(1)/www/apps/onion-transmission-client/.
+	cp -r $(PKG_BUILD_DIR)/onion-transmission-client/* $(1)/www/apps/onion-transmission-client/.
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
