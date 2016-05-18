@@ -29,7 +29,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=C-based ubus service to implement various features on OpenWRT
-	DEPENDS:=+libubox +libubus
+	DEPENDS:=+libubox +libubus +libcurl
 endef
 
 define Package/$(PKG_NAME)/description
@@ -37,7 +37,7 @@ C-based ubus service to implement various features on OpenWRT
 endef
 
 
-TARGET_LIB += -lubox -lubus
+TARGET_LIB += -lubox -lubus -lcurl
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
@@ -54,7 +54,7 @@ define Package/$(PKG_NAME)/install
 		$(1)/etc/init.d
 	# install the binary
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/onion-helper $(1)/usr/sbin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/tester $(1)/usr/sbin/
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/tester $(1)/usr/sbin/
 	# install the init.d script
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/onion-helper.sh $(1)/etc/init.d/onion-helper
 endef
