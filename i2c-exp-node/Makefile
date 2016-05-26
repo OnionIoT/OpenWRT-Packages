@@ -1,7 +1,7 @@
 
-# Copyright (C) 2015 Onion Corporation
+# Copyright (C) 2016 Onion Corporation
 # 
-# Author: Lazar Demin  <lazar@onion.io>
+# Author: Rajiv Puri  <rajiv@onion.io>
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,7 +16,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=git@github.com:OnionIoT/i2c-exp-node-addons.git
+PKG_SOURCE_URL:=https://github.com/OnionIoT/i2c-exp-node-addons.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -29,42 +29,42 @@ include $(INCLUDE_DIR)/package.mk
 define Package/pwm-exp-node
 	SECTION:=onion
 	CATEGORY:=Onion
-	SUBMENU:=Drivers
-	TITLE:=Driver for Servo (PWM) Expansion
+	SUBMENU:=Libraries
+	TITLE:=Node module for Servo (PWM) Expansion
 	DEPENDS:=+libonionpwmexp +libpthread +libstdcpp
 endef
 
 
 define Package/pwm-exp-node/description
-Node Driver for Servo (PWM) Expansion
+Node module for Servo (PWM) Expansion
 endef
 
 
 define Package/relay-exp-node
 	SECTION:=onion
 	CATEGORY:=Onion
-	SUBMENU:=Drivers
-	TITLE:=Driver for Relay Expansion
+	SUBMENU:=Libraries
+	TITLE:=Node module for Relay Expansion
 	DEPENDS:=+libonionrelayexp +libpthread +libstdcpp
 endef
 
 
 define Package/relay-exp-node/description
-Node Driver for Relay Expansion
+Node module for Relay Expansion
 endef
 
 
 define Package/oled-exp-node
 	SECTION:=onion
 	CATEGORY:=Onion
-	SUBMENU:=Drivers
-	TITLE:=Driver for OLED Expansion
+	SUBMENU:=Libraries
+	TITLE:=Node module for OLED Expansion
 	DEPENDS:=+libonionoledexp +libpthread +libstdcpp
 endef
 
 
 define Package/oled-exp-node/description
-Node Driver for OLED Expansion
+Node module for OLED Expansion
 endef
 
 
