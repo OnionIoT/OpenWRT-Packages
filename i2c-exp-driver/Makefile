@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=i2c-exp-driver
-PKG_VERSION:=0.2
+PKG_VERSION:=0.3
 PKG_RELEASE:=1
 
 
