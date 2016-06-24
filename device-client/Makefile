@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=device-client
-PKG_VERSION:=0.5
+PKG_VERSION:=0.6
 PKG_RELEASE:=1
 
 
