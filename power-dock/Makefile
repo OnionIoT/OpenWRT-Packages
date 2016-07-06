@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=power-dock
-PKG_VERSION:=0.1
+PKG_VERSION:=0.2
 PKG_RELEASE:=1
 
 
@@ -37,7 +37,7 @@ Onion Power Dock Drivers
 endef
 
 TARGET_CFLAGS += $(FPIC)
-TARGET_LIB += -lugpio -liboniondebug
+TARGET_LIB += -lugpio -loniondebug
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
