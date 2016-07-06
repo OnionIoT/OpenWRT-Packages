@@ -29,7 +29,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Onion Power Dock Drivers
-	DEPENDS:=+libugpio
+	DEPENDS:=+libugpio +liboniondebug
 endef
 
 define Package/$(PKG_NAME)/description
@@ -37,7 +37,7 @@ Onion Power Dock Drivers
 endef
 
 TARGET_CFLAGS += $(FPIC)
-TARGET_LIB += -lugpio
+TARGET_LIB += -lugpio -liboniondebug
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
