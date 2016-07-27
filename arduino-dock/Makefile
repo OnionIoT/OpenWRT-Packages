@@ -22,7 +22,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
+define Package/arduino-dock
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
@@ -31,12 +31,23 @@ define Package/$(PKG_NAME)
 endef
 
 
-define Package/$(PKG_NAME)/description
+define Package/arduino-dock/description
 Tool to enable I2C flashing of HEX files
 endef
 
+define Package/arduino-dock-r2
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Utilities
+	TITLE:=Tools for using Onion Arduino Dock R2
+	DEPENDS:=+avrdude
+endef
 
-define Package/$(PKG_NAME)/install
+define Package/arduino-dock-r2/description
+Tools for using Onion Arduino Dock R2
+endef
+
+define Package/arduino-dock/install
 	# copy the other assorted files
 	$(INSTALL_DIR) $(1)/usr/share/arduino-dock
 	$(CP) $(PKG_BUILD_DIR)/conf/dock.conf $(1)/usr/share/arduino-dock/dock.conf
@@ -58,5 +69,23 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/merge-sketch-with-bootloader.lua $(1)/usr/bin/merge-sketch-with-bootloader.lua
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+define Package/arduino-dock-r2/install
+	# create directories
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/usr/share/arduino-dock
+	$(INSTALL_DIR) $(1)/etc/avahi/services
+	## install scripts
+	# sh library
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-r2/bin/arduino-dock-lib.sh $(1)/usr/share/arduino-dock/arduino-dock-lib.sh
+	# arduino dock setup script
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-r2/bin/arduino-dock.sh $(1)/usr/bin/arduino-dock
+	# run-avrdude script for Arduino IDE
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-r2/bin/run-avrdude.sh $(1)/usr/bin/run-avrdude
+	## configuration files
+	$(CP) $(PKG_BUILD_DIR)/arduino-dock-r2/conf/avrdude.conf $(1)/usr/share/arduino-dock/avrdude.conf
+	$(CP) $(PKG_BUILD_DIR)/conf/avahi/arduino.service $(1)/etc/avahi/services/arduino.service
+endef
+
+$(eval $(call BuildPackage,arduino-dock))
+$(eval $(call BuildPackage,arduino-dock-r2))
 
