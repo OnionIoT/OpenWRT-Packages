@@ -5,7 +5,7 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-##OPENWRT PACKAGE MAKEFILE FOR  blynk Node
+##OPENWRT PACKAGE MAKEFILE FOR blynk-library-lite (none of the dependency modules) 
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=blynk-library-node-lite
@@ -29,13 +29,13 @@ define Package/blynk-library-node-lite
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
-	TITLE:=blynk-library
+	TITLE:=blynk-library-lite
 	DEPENDS:= +libpthread +libstdcpp
 endef
 
 
 define Package/blynk-library-node-lite/description
-Blynk library package built for mips, without node_modules. 
+Blynk library lite(none of the module dependencies) package built for mips. 
 endef
 
 
@@ -43,11 +43,15 @@ TARGET_CFLAGS += $(FPIC)
 
 
 define Build/Compile
-	export CC=/home/rajiv/OpenWRT-Buildroot/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-gcc;
-	export CXX=/home/rajiv/OpenWRT-Buildroot/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-g++;
-	export STAGING_DIR=/home/rajiv/OpenWRT-Buildroot/openwrt/staging_dir/;
-	# cd $(PKG_BUILD_DIR);pwd;npm install --target_arch=mips;
+	$(CP) ./files/makefile $(PKG_BUILD_DIR)/makefile
+	$(MAKE) -C $(PKG_BUILD_DIR) \
+	CC="$(TARGET_CC)" \
+	CXX="$(TARGET_CXX)" \
+	CFLAGS="$(TARGET_CFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
+
+
 
 ##Whats this do?
 #define Build/InstallDev
@@ -55,8 +59,8 @@ endef
 #endef
 
 define Package/blynk-library-node-lite/install
-	cp -r $(PKG_BUILD_DIR)/ /tmp/; 
-	rm -r /tmp/$(PKG_NAME)/node_modules;
+	cp -r $(PKG_BUILD_DIR)/ /tmp/;
+	rm -rf /tmp/$(PKG_NAME)/node_modules/; 
 	$(INSTALL_DIR) $(1)/usr/bin;
 	cp -r /tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
 

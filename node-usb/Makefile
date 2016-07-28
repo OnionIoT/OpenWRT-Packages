@@ -41,13 +41,15 @@ endef
 
 TARGET_CFLAGS += $(FPIC)
 
-
 define Build/Compile
-	export CC=/home/rajiv/OpenWRT-Buildroot/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-gcc;
-	export CXX=/home/rajiv/OpenWRT-Buildroot/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-g++;
-	export STAGING_DIR=/home/rajiv/OpenWRT-Buildroot/openwrt/staging_dir/;
-	cd $(PKG_BUILD_DIR);pwd;npm install --target_arch=mips --build-from-source;
+	$(CP) ./files/makefile $(PKG_BUILD_DIR)/makefile
+	$(MAKE) -C $(PKG_BUILD_DIR) \
+	CC="$(TARGET_CC)" \
+	CXX="$(TARGET_CXX)" \
+	CFLAGS="$(TARGET_CFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS)"
 endef
+
 
 ##Whats this do?
 #define Build/InstallDev
