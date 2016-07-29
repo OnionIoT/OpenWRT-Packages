@@ -59,10 +59,11 @@ endef
 #endef
 
 define Package/blynk-library-node/install
-	cp -r $(PKG_BUILD_DIR)/ /tmp/; 
+	$(INSTALL_DIR) ./tmp;
+	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/; 
 	$(INSTALL_DIR) $(1)/usr/bin;
-	cp -r /tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
-
+	$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	rm -rf ./tmp;
 endef
 
 $(eval $(call BuildPackage,blynk-library-node))
