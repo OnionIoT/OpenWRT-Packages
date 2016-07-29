@@ -38,13 +38,15 @@ Client for sending date points to Ubidots cloud
 endef
 
 
+TARGET_LIB += -lcurl -ljson-c 
 TARGET_CFLAGS += $(FPIC)
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
-	LDFLAGS="$(TARGET_LDFLAGS)"
+	LDFLAGS="$(TARGET_LDFLAGS)" \
+	LIB="$(TARGET_LIB)"
 endef
 
 
