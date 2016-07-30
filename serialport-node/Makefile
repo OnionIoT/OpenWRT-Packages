@@ -5,8 +5,8 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-##OPENWRT PACKAGE MAKEFILE FOR  SerialPort Node
-## NOT READY YET, CAN'T PRODUCE FUNCTIONAL TEST SCRIPT
+#OPENWRT PACKAGE MAKEFILE FOR  SerialPort Node
+#NOT READY YET, CAN'T PRODUCE FUNCTIONAL TEST SCRIPT
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=serialport-node
