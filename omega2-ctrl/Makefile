@@ -1,5 +1,5 @@
 
-# Copyright (C) 2015 Onion Corporation
+# Copyright (C) 2016 Onion Corporation
 # 
 # Author: Lazar Demin  <lazar@onion.io>
 #
@@ -8,48 +8,53 @@
 #
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=ads1x15-chip
-PKG_VERSION:=0.2
+PKG_NAME:=omega2-ctrl
+PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=https://github.com/OnionIoT/onion-ads1x15-driver.git
+PKG_SOURCE_URL:=git@github.com:OnionIoT/omega2-ctrl.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
-include $(INCLUDE_DIR)/uclibc++.mk
 include $(INCLUDE_DIR)/package.mk
 
+
+# application package
 define Package/$(PKG_NAME)
 	SECTION:=onion
 	CATEGORY:=Onion
-	SUBMENU:=Drivers
-	TITLE:=Tool to enable use of ADS1X15 ADC+PGA chip via i2c
-	DEPENDS:=+liboniondebug +libonioni2c $(CXX_DEPENDS)
+	SUBMENU:=Utilities
+	TITLE:=Utility to control the Omega2's low-level hardware
 endef
-
 
 define Package/$(PKG_NAME)/description
-Tool to enable use of ADS1X15 ADC+PGA chip via I2C
+Utility to control the Omega2's low-level hardware
 endef
 
-TARGET_LIBS = -loniondebug -lonioni2c
 
-define Package/$(PKG_NAME)/Compile
+#TARGET_LIB += -lpthread -lcurl -loniondebug -ljson-c -lubus -lubox -lblobmsg_json -luci
+TARGET_CFLAGS += $(FPIC) 
+
+define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
-	CXX="$(TARGET_CXX)" \
-	CXX_FLAGS="$(TARGET_CXXFLAGS)" \
+	CC="$(TARGET_CC)" \
+	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	LIB="$(TARGET_LIBS)"
+	LIB="$(TARGET_LIB)"
 endef
+
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/usr/bin/
+	# install the binary
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/omega2-ctrl $(1)/usr/bin/
 endef
+
+
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
 
