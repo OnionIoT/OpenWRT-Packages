@@ -5,7 +5,8 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-##OPENWRT PACKAGE MAKEFILE FOR  onoff Node
+##OPENWRT PACKAGE MAKEFILE FOR  SerialPort Node
+## NOT READY YET, CAN'T PRODUCE FUNCTIONAL TEST SCRIPT
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=serialport-node
@@ -58,9 +59,12 @@ endef
 
 
 define Package/serialport-node/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/build/Release/serialport.node $(1)/usr/bin/
+	#$(INSTALL_DIR) $(1)/usr/bin
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/build/Release/serialport.node $(1)/usr/bin/
+	cp -r $(PKG_BUILD_DIR)/ /tmp/;
+	$(INSTALL_DIR) $(1)/usr/bin;
+	cp -r /tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
 endef
 
-$(eval $(call BuildPackage,serialport-node))
+#$(eval $(call BuildPackage,serialport-node))
 
