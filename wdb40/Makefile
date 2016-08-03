@@ -48,7 +48,8 @@ define Build/Compile
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	LIB="$(TARGET_LIB)"
+	LIB="$(TARGET_LIB)" \
+	DEVICE_TYPE="$(CONFIG_TARGET_BOARD)"
 endef
 
 
