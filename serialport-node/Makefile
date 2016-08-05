@@ -61,9 +61,11 @@ endef
 define Package/serialport-node/install
 	#$(INSTALL_DIR) $(1)/usr/bin
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/build/Release/serialport.node $(1)/usr/bin/
-	cp -r $(PKG_BUILD_DIR)/ /tmp/;
+	$(CP) -r $(PKG_BUILD_DIR)/ /tmp/;
 	$(INSTALL_DIR) $(1)/usr/bin;
-	cp -r /tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	#$(CP) -r /tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	$(CP) -r /tmp/$(PKG_NAME) $(1)/usr/bin;
+	rm -rf ./tmp;
 endef
 
 #$(eval $(call BuildPackage,serialport-node))

@@ -60,7 +60,8 @@ define Package/node-usb/install
 	$(INSTALL_DIR) ./tmp;
 	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/; 
 	$(INSTALL_DIR) $(1)/usr/bin;
-	$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	#$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	$(CP) -r ./tmp/$(PKG_NAME) $(1)/usr/bin;
 	rm -rf ./tmp;
 endef
 

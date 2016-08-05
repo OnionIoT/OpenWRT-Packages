@@ -63,7 +63,8 @@ define Package/blynk-library-node-lite/install
 	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/;
 	rm -rf ./tmp/$(PKG_NAME)/node_modules/; 
 	$(INSTALL_DIR) $(1)/usr/bin;
-	$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	#$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
+	$(CP) -r ./tmp/$(PKG_NAME) $(1)/usr/bin;
 	rm -rf ./tmp
 endef
 
