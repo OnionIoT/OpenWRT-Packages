@@ -31,6 +31,13 @@ define Package/$(PKG_NAME)
 	DEPENDS:=+onion-sh-lib $(CXX_DEPENDS)
 endef
 
+define Build/Compile
+	$(MAKE) -C $(PKG_BUILD_DIR) \
+	CXX="$(TARGET_CXX)" \
+	CXXFLAGS="$(TARGET_CXXFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS)" \
+	DEVICE_TYPE="$(CONFIG_TARGET_BOARD)"
+endef
 
 define Package/$(PKG_NAME)/description
 Tool to enable GPIO access and PWM support
