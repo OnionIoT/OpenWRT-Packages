@@ -15,7 +15,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=https://github.com/OnionIoT/blynk-library-js.git
+PKG_SOURCE_URL:=https://github.com/vshymanskyy/blynk-library-js.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -35,7 +35,7 @@ endef
 
 
 define Package/blynk-library-node/description
-Blynk library package built for mips. 
+Blynk library package built for mips.Updated:No Node Dependencies 
 endef
 
 
