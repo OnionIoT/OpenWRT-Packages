@@ -27,7 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Web interface to setup the Omega for the first time
-	DEPENDS:=+rpcd +onion-ubus +wifisetup +oupgrade
+	DEPENDS:=+rpcd +onion-ubus +wifimanager +oupgrade
 endef
 
 
