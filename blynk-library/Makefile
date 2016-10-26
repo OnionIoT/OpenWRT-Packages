@@ -5,17 +5,17 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-##OPENWRT PACKAGE MAKEFILE FOR blynk-library-lite (none of the dependency modules) 
+##OPENWRT PACKAGE MAKEFILE FOR  onoff Node
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=blynk-library-node-lite
+PKG_NAME:=blynk-library
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=https://github.com/OnionIoT/blynk-library-js.git
+PKG_SOURCE_URL:=https://github.com/vshymanskyy/blynk-library-js.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -25,17 +25,17 @@ include $(INCLUDE_DIR)/package.mk
 
 
 # application packages
-define Package/blynk-library-node-lite
+define Package/blynk-library
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
-	TITLE:=blynk-library-lite
-	DEPENDS:= +libpthread +libstdcpp
+	TITLE:=blynk-library
+	DEPENDS:= +libpthread +libstdcpp +nodejs
 endef
 
 
-define Package/blynk-library-node-lite/description
-Blynk library lite(none of the module dependencies) package built for mips. 
+define Package/blynk-library/description
+Blynk library package built for mips.Updated:No Node Dependencies 
 endef
 
 
@@ -58,15 +58,14 @@ endef
 #
 #endef
 
-define Package/blynk-library-node-lite/install
+define Package/blynk-library/install
 	$(INSTALL_DIR) ./tmp;
-	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/;
-	rm -rf ./tmp/$(PKG_NAME)/node_modules/; 
+	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/; 
 	$(INSTALL_DIR) $(1)/usr/bin;
 	#$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
 	$(CP) -r ./tmp/$(PKG_NAME) $(1)/usr/bin;
-	rm -rf ./tmp
+	rm -rf ./tmp;
 endef
 
-$(eval $(call BuildPackage,blynk-library-node-lite))
+$(eval $(call BuildPackage,blynk-library))
 
