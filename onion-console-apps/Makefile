@@ -20,7 +20,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/onion-editor
+define Package/onion-console-editor
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Console
@@ -28,7 +28,7 @@ define Package/onion-editor
 	DEPENDS:=+rpcd +onion-console-base
 endef
 
-define Package/onion-terminal
+define Package/onion-console-terminal
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Console
@@ -36,7 +36,7 @@ define Package/onion-terminal
 	DEPENDS:=+rpcd +onion-console-base +shellinabox
 endef
 
-define Package/onion-webcam
+define Package/onion-console-webcam
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Console
@@ -44,19 +44,19 @@ define Package/onion-webcam
 	DEPENDS:=+rpcd +onion-console-base +mjpg-streamer
 endef
 
-define Package/onion-editor/description
+define Package/onion-console-editor/description
 Editor App for the Console
 endef
 
-define Package/onion-terminal/description
+define Package/onion-console-terminal/description
 Terminal App for the console
 endef
 
-define Package/onion-webcam/description
+define Package/onion-console-webcam/description
 Webcam App for the console
 endef
 
-define Package/onion-editor/install
+define Package/onion-console-editor/install
 	# copy the web site files, starting with the lib and element folders
 	$(INSTALL_DIR) $(1)/www/apps/onion-editor
 	$(INSTALL_DIR) $(1)/www/lib/juicy-ace-editor
@@ -66,7 +66,7 @@ define Package/onion-editor/install
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/.
 endef
 
-define Package/onion-terminal/install
+define Package/onion-console-terminal/install
 	# copy the web site files, starting with the lib and element folders
 	$(INSTALL_DIR) $(1)/www/apps/onion-terminal
 	# copy the editor app
@@ -74,7 +74,7 @@ define Package/onion-terminal/install
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/.
 endef
 
-define Package/onion-webcam/install
+define Package/onion-console-webcam/install
 	# copy the web site files, starting with the lib and element folders
 	$(INSTALL_DIR) $(1)/www/apps/onion-webcam
 	# copy the editor app
@@ -83,6 +83,6 @@ define Package/onion-webcam/install
 endef
 
 
-$(eval $(call BuildPackage,onion-terminal))
-$(eval $(call BuildPackage,onion-editor))
-$(eval $(call BuildPackage,onion-webcam))
+$(eval $(call BuildPackage,onion-console-terminal))
+$(eval $(call BuildPackage,onion-console-editor))
+$(eval $(call BuildPackage,onion-console-webcam))
