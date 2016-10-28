@@ -26,43 +26,40 @@ PKG_INSTALL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 
-define Package/obluez/Default
-  TITLE:=Bluetooth
+define Package/bluez/Default
+  TITLE:=Onion-Customized Bluetooth
   URL:=http://www.bluez.org/
 endef
 
-define Package/obluez-examples
-$(call Package/obluez/Default)
-  SECTION:=onion
-  CATEGORY:=Onion
-  SUBMENU:=Utilities
+define Package/bluez-examples
+$(call Package/bluez/Default)
+  SECTION:=utils
+  CATEGORY:=Utilities
   TITLE+= python example apps
   DEPENDS:=+python
 endef
 
-define Package/obluez-examples/description
+define Package/bluez-examples/description
   contains many examples apps for bluetooth, requiring python
 endef
 
-define Package/obluez-libs
-$(call Package/obluez/Default)
-  SECTION:=onion
-  CATEGORY:=Onion
-  SUBMENU:=Libraries
+define Package/bluez-libs
+$(call Package/bluez/Default)
+  SECTION:=libs
+  CATEGORY:=Libraries
   TITLE+= library
   DEPENDS:=+libpthread
 endef
 
-define Package/obluez-utils
-$(call Package/obluez/Default)
-  SECTION:=onion
-  CATEGORY:=Onion
-  SUBMENU:=Utilities
+define Package/bluez-utils
+$(call Package/bluez/Default)
+  SECTION:=utils
+  CATEGORY:=Utilities
   TITLE+= utilities
-  DEPENDS:=+obluez-libs +libpthread +librt +dbus +glib2 +libical +libncurses +libreadline +udev +sbc +libspeexdsp $(INTL_DEPENDS) $(ICONV_DEPENDS)
+  DEPENDS:=+bluez-libs +libpthread +librt +dbus +glib2 +libical +libncurses +libreadline +udev +sbc +libspeexdsp $(INTL_DEPENDS) $(ICONV_DEPENDS)
 endef
 
-define Package/obluez-utils/conffiles
+define Package/bluez-utils/conffiles
 /etc/bluetooth/main.conf
 /etc/bluetooth/network.conf
 /etc/bluetooth/input.conf
@@ -101,17 +98,17 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/bluez.pc $(1)/usr/lib/pkgconfig/
 endef
 
-define Package/obluez-examples/install
+define Package/bluez-examples/install
 	$(INSTALL_DIR) $(1)/usr/bin/bluez
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/test/* $(1)/usr/bin/bluez/
 endef
 
-define Package/obluez-libs/install
+define Package/bluez-libs/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libbluetooth.so.* $(1)/usr/lib/
 endef
 
-define Package/obluez-utils/install
+define Package/bluez-utils/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/bluetooth/bluetoothd $(1)/usr/bin/
@@ -131,6 +128,6 @@ define Package/obluez-utils/install
 	$(INSTALL_BIN) ./files/bluetoothd.init $(1)/etc/init.d/bluetoothd
 endef
 
-$(eval $(call BuildPackage,obluez-examples))
-$(eval $(call BuildPackage,obluez-libs))
-$(eval $(call BuildPackage,obluez-utils))
+$(eval $(call BuildPackage,bluez-examples))
+$(eval $(call BuildPackage,bluez-libs))
+$(eval $(call BuildPackage,bluez-utils))

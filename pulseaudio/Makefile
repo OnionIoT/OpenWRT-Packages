@@ -28,54 +28,51 @@ PKG_INSTALL = 1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 
-define Package/opulseaudio/Default
-  SECTION:=onion
-  CATEGORY:=Onion
-  SUBMENU:=Sound
+define Package/pulseaudio/Default
+  SECTION:=sound
+  CATEGORY:=Sound
   DEPENDS:=+libspeexdsp +libsndfile +libltdl +libpthread \
 	+librt +alsa-lib +libopenssl +libwrap +libcap $(ICONV_DEPENDS) $(INTL_DEPENDS) +libdbus +obluez-libs +obluez-utils +sbc
-  TITLE:=Network sound server
+  TITLE:=Onion-Customized Network sound server
   MAINTAINER:=Peter Wagner <tripolar@gmx.at>
   URL:=http://www.pulseaudio.org
   PROVIDES:=pulseaudio
   USERID:=pulse=51:pulse=51
 endef
 
-define Package/opulseaudio-daemon
-  $(call Package/opulseaudio/Default)
+define Package/pulseaudio-daemon
+  $(call Package/pulseaudio/Default)
   DEPENDS+= +libjson-c
 endef
 
-define Package/opulseaudio/Default/description
+define Package/pulseaudio/Default/description
   PulseAudio (formerly Polypaudio) is a cross-platform, networked sound server.
 endef
 
-define Package/opulseaudio-daemon/description
-  $(call Package/opulseaudio/Default/description)
+define Package/pulseaudio-daemon/description
+  $(call Package/pulseaudio/Default/description)
 endef
 
-define Package/opulseaudio-daemon/conffiles
+define Package/pulseaudio-daemon/conffiles
 /etc/pulse/client.conf
 /etc/pulse/daemon.conf
 /etc/pulse/default.pa
 /etc/pulse/system.pa
 endef
 
-define Package/opulseaudio-tools
-  SECTION:=onion
-  CATEGORY:=Onion
-  SUBMENU:=Sound
-  DEPENDS:=+libsndfile +opulseaudio
-  TITLE:=Tools for Pulseaudio
+define Package/pulseaudio-tools
+  SECTION:=sound
+  CATEGORY:=Sound
+  DEPENDS:=+libsndfile +pulseaudio
+  TITLE:=Onion-Customized Tools for Pulseaudio
   URL:=http://www.pulseaudio.org
 endef
 
-define Package/opulseaudio-profiles
-  SECTION:=onion
-  CATEGORY:=Onion
-  SUBMENU:=Sound
-  DEPENDS:=opulseaudio
-  TITLE:=Profiles for Pulseaudio
+define Package/pulseaudio-profiles
+  SECTION:=sound
+  CATEGORY:=Sound
+  DEPENDS:=pulseaudio
+  TITLE:=Onion-Customized Profiles for Pulseaudio
   URL:=http://www.pulseaudio.org
 endef
 
@@ -132,7 +129,7 @@ define Build/InstallDev
 		$(1)/usr/lib/pulseaudio/
 endef
 
-define Package/opulseaudio-daemon/install
+define Package/pulseaudio-daemon/install
 	$(INSTALL_DIR) \
 		$(1)/etc/pulse \
 		$(1)/etc/init.d \
@@ -148,7 +145,7 @@ define Package/opulseaudio-daemon/install
 
 	$(INSTALL_BIN) \
 		./files/pulseaudio.init \
-		$(1)/etc/init.d/pulseaudioa
+		$(1)/etc/init.d/pulseaudio
 
 	$(INSTALL_CONF) \
 		./files/pulseaudio.dbus \
@@ -182,7 +179,7 @@ define Package/opulseaudio-daemon/install
 	chmod -R 0644 $(1)/etc/pulse/*
 endef
 
-define Package/opulseaudio-tools/install
+define Package/pulseaudio-tools/install
 	$(INSTALL_DIR) \
 		$(1)/usr/bin
 
@@ -191,7 +188,7 @@ define Package/opulseaudio-tools/install
 		$(1)/usr/bin/
 endef
 
-define Package/opulseaudio-profiles/install
+define Package/pulseaudio-profiles/install
 	$(INSTALL_DIR) \
 		$(1)/usr/share/pulseaudio/alsa-mixer/paths \
 		$(1)/usr/share/pulseaudio/alsa-mixer/profile-sets
@@ -205,6 +202,6 @@ define Package/opulseaudio-profiles/install
 		$(1)/usr/share/pulseaudio/alsa-mixer/profile-sets
 endef
 
-$(eval $(call BuildPackage,opulseaudio-daemon))
-$(eval $(call BuildPackage,opulseaudio-tools))
-$(eval $(call BuildPackage,opulseaudio-profiles))
+$(eval $(call BuildPackage,pulseaudio-daemon))
+$(eval $(call BuildPackage,pulseaudio-tools))
+$(eval $(call BuildPackage,pulseaudio-profiles))
