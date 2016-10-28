@@ -13,11 +13,11 @@ PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
 
-#PKG_SOURCE_PROTO:=git
-#PKG_SOURCE_VERSION:=HEAD
-#PKG_SOURCE_URL:=
-#PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-#PKG_SOURCE:=$(PKG_NAME).tar.gz
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_VERSION:=HEAD
+PKG_SOURCE_URL:=https://github.com/OnionIoT/node-red.git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)
+PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
@@ -58,6 +58,7 @@ endef
 
 define Package/onion-node-red/install
 	$(INSTALL_DIR) ./tmp;
+	$(CP) -r $(PKG_BUILD_DIR)/red.js $(PKG_BUILD_DIR)/node_modules/node-red/red.js
 	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/;
 	$(INSTALL_DIR) $(1)/usr/bin;
 	#$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
