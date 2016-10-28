@@ -87,6 +87,7 @@ define Package/$(PKG_NAME)/install
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-launcher/* $(1)/www/apps/onion-launcher/.
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-settings/* $(1)/www/apps/onion-settings/.
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-login/* $(1)/www/apps/onion-login/.
+	rm -r $(1)/www/lib/juicy-ace-editor/
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/.
 endef
 
