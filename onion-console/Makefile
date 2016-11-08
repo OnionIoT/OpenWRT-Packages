@@ -49,8 +49,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/libexec/rpcd
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rpcd/onion-console.sh $(1)/usr/libexec/rpcd/onion-console
 	# copy the web site files
-	$(INSTALL_DIR) $(1)/www
-	cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/.
+	$(INSTALL_DIR) $(1)/www/console
+	$(CP) -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
