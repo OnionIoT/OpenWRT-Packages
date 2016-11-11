@@ -1,0 +1,97 @@
+#!/bin/sh
+#We don't understand the license things, so let it go.
+#Please don't do evil to us.
+#WRTnode Team. 
+#v2015-1-10 qizha/wangke/noel/summer
+
+if [ -n "$QUERY_STRING" ]; then
+	echo "Content-Type: application/json"
+	echo ""
+
+	firstexp=`echo $QUERY_STRING | cut -d'&' -f 1`
+	firstkey=`echo $firstexp | cut -d'=' -f 1`
+	firstvalue=`echo $firstexp | cut -d'=' -f 2`
+
+	secondexp=`echo $QUERY_STRING | cut -d'&' -f 2`
+	secondkey=`echo $secondexp | cut -d'=' -f 1`
+	secondvalue=`echo $secondexp | cut -d'=' -f 2`
+
+	if [ "$firstkey"x = "ssid"x ] && [ "$secondkey"x = "password"x -o "$secondkey"x = "passwd"x ]; then
+		ussid=$(printf $(echo -n $firstvalue | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n")
+		upass=$(printf $(echo -n $secondvalue | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n")
+	elif [ "$secondkey"x = "ssid"x ] && [ "$firstkey"x = "password"x -o "$firstkey"x = "passwd"x ]; then
+		ussid=$(printf $(echo -n $secondvalue | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n")
+		upass=$(printf $(echo -n $firstvalue | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n")
+	else
+		echo "{\"result\"=\"error\",\"message\"=\"Please input the right format like ssid=xxxx&passwd=yyyy\"}"
+		exit 1
+	fi
+   	
+elif [ -z "$1" -o -z "$2" ]; then
+    	echo "WRTnode wireless-WAN tool"
+	echo "Pls specify ssid and password, use this tool like: setwifi your-ssid your-password"
+    	exit 2
+else
+	echo "WRTnode wireless-WAN tool"
+    	ussid=$1
+    	upass=$2
+fi
+
+line=`iwpriv ra0 get_site_survey | fgrep "$ussid"` 
+if [ ! "$line" ]; then
+	iwpriv ra0 set SiteSurvey=1
+	line=`iwpriv ra0 get_site_survey | fgrep "$ussid"` 
+fi
+
+if [ "$line" ]; then
+
+	chanel=`echo $line | awk '{print $1}'`
+	security=`echo ${line:57} | awk '{print $1}'`
+
+		if [ "$security"x = "WPA1PSKWPA2PSK/TKIPAES"x ]; then
+			umode="WPA2PSK"
+        		uencryp="AES"
+		elif [ "$security"x = "WPA1PSKWPA2PSK/TKIP"x ]; then
+			umode="WPA2PSK"
+        		uencryp="TKIP"
+		elif [ "$security"x = "WPA1PSKWPA2PSK/AES"x ]; then
+			umode="WPA2PSK"
+        		uencryp="AES"
+		elif [ "$security"x = "WPA2PSK/AES"x ]; then
+        		umode="WPA2PSK"
+        		uencryp="AES"
+  	  	elif [ "$security"x = "WPA2PSK/TKIPAES"x ]; then
+        		umode="WPA2PSK"
+	        	uencryp="AES"
+  	  	elif [ "$security"x = "WPA2PSK/TKIP"x ]; then
+        		umode="WPA2PSK"
+	        	uencryp="TKIP"
+   		elif [ "$security"x = "WPAPSK/TKIPAES"x ]; then
+        		umode="WPAPSK"
+	        	uencryp="AES"
+		elif [ "$security"x = "WPAPSK/AES"x ]; then
+   			umode="WPAPSK"
+        		uencryp="AES"
+		elif [ "$security"x = "WPAPSK/TKIP"x ]; then
+    			umode="WPAPSK"
+        		uencryp="TKIP"
+		elif [ "$security"x = "WEP"x ]; then
+    			umode="WEPAUTO"
+        		uencryp="WEP"
+		else
+			umode="OPEN"
+			uencryp="NONE"
+   		fi
+
+	uci set wireless.ra0.channel=$chanel
+	uci set wireless.@wifi-iface[0].ApCliSsid="$ussid"
+	uci set wireless.@wifi-iface[0].ApCliPassWord=$upass
+	uci set wireless.@wifi-iface[0].ApCliAuthMode=$umode	
+	uci set wireless.@wifi-iface[0].ApCliEncrypType=$uencryp
+	uci commit
+
+	wifi
+
+else
+	echo "{\"result\":\"error\",\"message\":\"can not find WIFI with ssid $ussid\"}"
+fi
