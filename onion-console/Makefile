@@ -98,7 +98,7 @@ define Package/onion-console-editor
 	CATEGORY:=Onion
 	SUBMENU:=Console
 	TITLE:=Onion-Editor
-	DEPENDS:=+rpcd +onion-console-base
+	DEPENDS:=+rpcd +onion-console-base +cgi-io
 endef
 
 define Package/onion-console-editor/description
