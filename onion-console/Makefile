@@ -1,5 +1,5 @@
 
-# Copyright (C) 2015 Onion Corporation
+# Copyright (C) 2016 Onion Corporation
 # 
 # Author: Lazar Demin  <lazar@onion.io>
 #
