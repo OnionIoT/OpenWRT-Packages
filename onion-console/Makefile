@@ -199,4 +199,3 @@ $(eval $(call BuildPackage,onion-console-base))
 $(eval $(call BuildPackage,onion-console-terminal))
 $(eval $(call BuildPackage,onion-console-editor))
 $(eval $(call BuildPackage,onion-console-webcam))
-
