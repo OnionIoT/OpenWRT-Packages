@@ -14,7 +14,7 @@ PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=dev # dev for dev branch, HEAD for master
+PKG_SOURCE_VERSION:=omega2 # dev for dev branch, HEAD for master
 PKG_SOURCE_URL:=https://github.com/OnionIoT/Onion-Console.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
