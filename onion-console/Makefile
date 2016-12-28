@@ -9,12 +9,12 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-console
-PKG_VERSION:=0.2
+PKG_VERSION:=0.3
 PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=dev # dev for dev branch, HEAD for master
+PKG_SOURCE_VERSION:=omega2 # dev for dev branch, HEAD for master
 PKG_SOURCE_URL:=https://github.com/OnionIoT/Onion-Console.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
@@ -63,6 +63,21 @@ define Package/onion-console-base/install
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-login
 	# Create the directory for the onion-settings
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-settings
+
+	#### Add the app shells 
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-editor
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-terminal
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-webcam
+
+	### Installing the OLED, RELAY AND PWM
+
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-oled
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-pwm
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-relay
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-gpio
+
+
+
 	# Create the services directory
 	$(INSTALL_DIR) $(1)/www/console/services
 	# Create the fonts directory
@@ -88,8 +103,27 @@ define Package/onion-console-base/install
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-launcher/* $(1)/www/console/apps/onion-launcher/.
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-settings/* $(1)/www/console/apps/onion-settings/.
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-login/* $(1)/www/console/apps/onion-login/.
+
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-oled/* $(1)/www/console/apps/onion-oled/.
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-gpio/* $(1)/www/console/apps/onion-gpio/.
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-pwm/* $(1)/www/console/apps/onion-pwm/.
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-relay/* $(1)/www/console/apps/onion-relay/.
+
+	## Adding the index page
+
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-editor/* $(1)/www/console/apps/onion-editor/.
+	rm -r $(1)/www/console/apps/onion-editor/onion-editor.html
+
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-terminal/* $(1)/www/console/apps/onion-terminal/.
+	rm -r $(1)/www/console/apps/onion-terminal/onion-terminal.html	
+
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/* $(1)/www/console/apps/onion-webcam/.
+	rm -r $(1)/www/console/apps/onion-webcam/onion-webcam.html
+
 	rm -r $(1)/www/console/lib/juicy-ace-editor/
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
+
+	# Add the 
 endef
 
 # editor
@@ -110,7 +144,7 @@ define Package/onion-console-editor/install
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-editor
 	$(INSTALL_DIR) $(1)/www/console/lib/juicy-ace-editor
 	# copy the editor app
-	cp -r $(PKG_BUILD_DIR)/www/apps/onion-editor/* $(1)/www/console/apps/onion-editor/.
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-editor/onion-editor.html $(1)/www/console/apps/onion-editor/onion-editor.html
 	cp -r $(PKG_BUILD_DIR)/www/lib/juicy-ace-editor/* $(1)/www/console/lib/juicy-ace-editor/.
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 endef
@@ -132,7 +166,7 @@ define Package/onion-console-terminal/install
 	# copy the web site files, starting with the lib and element folders
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-terminal
 	# copy the editor app
-	cp -r $(PKG_BUILD_DIR)/www/apps/onion-terminal/* $(1)/www/console/apps/onion-terminal/.
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-terminal/onion-terminal.html $(1)/www/console/apps/onion-terminal/onion-terminal.html
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 endef
 
@@ -153,7 +187,7 @@ define Package/onion-console-webcam/install
 	# copy the web site files, starting with the lib and element folders
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-webcam
 	# copy the editor app
-	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/* $(1)/www/console/apps/onion-webcam/.
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/onion-webcam.html $(1)/www/console/apps/onion-webcam/onion-webcam.html
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 endef
 
@@ -165,4 +199,3 @@ $(eval $(call BuildPackage,onion-console-base))
 $(eval $(call BuildPackage,onion-console-terminal))
 $(eval $(call BuildPackage,onion-console-editor))
 $(eval $(call BuildPackage,onion-console-webcam))
-
