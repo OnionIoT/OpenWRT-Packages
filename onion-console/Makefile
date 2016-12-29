@@ -1,4 +1,3 @@
-
 # Copyright (C) 2016 Onion Corporation
 # 
 # Author: Lazar Demin  <lazar@onion.io>
@@ -192,10 +191,27 @@ define Package/onion-console-webcam/install
 endef
 
 # nodered
-# to come later
+define Package/onion-console-node-red
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Console
+	TITLE:=Onion-Node-Red
+	DEPENDS:=+onion-console-base +nodejs
+endef
+
+define Package/onion-console-node-red/description
+Node red app fo the console
+endef
+
+define Package/onion-console-node-red/install
+	# copy the node-red element file
+	$(INSTALL_DIR) $(1)/www/console/apps/onion-node-red
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-node-red/onion-node-red.html $(1)/www/console/apps/onion-node-red/onion-node-red.html
+endef
 
 # calls to build each package
 $(eval $(call BuildPackage,onion-console-base))
 $(eval $(call BuildPackage,onion-console-terminal))
 $(eval $(call BuildPackage,onion-console-editor))
 $(eval $(call BuildPackage,onion-console-webcam))
+$(eval $(call BuildPackage,onion-console-node-red))
