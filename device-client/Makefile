@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=device-client
-PKG_VERSION:=0.6
+PKG_VERSION:=0.7
 PKG_RELEASE:=1
 
 
@@ -17,7 +17,7 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=git@github.com:OnionIoT/device-client.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
