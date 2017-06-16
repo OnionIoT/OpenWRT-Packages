@@ -48,7 +48,7 @@ define Package/$(PKG_NAME)/install
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
-nclude $(TOPDIR)/rules.mk
+include $(TOPDIR)/rules.mk
 PKG_NAME:=console-install-tool
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
