@@ -9,8 +9,8 @@
 ##OPENWRT PACKAGE MAKEFILE FOR node addons
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=i2c-node-addons
-PKG_VERSION:=0.1
+PKG_NAME:=i2c-exp-node-addons
+PKG_VERSION:=0.2
 PKG_RELEASE:=1
 
 
@@ -18,7 +18,7 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=https://github.com/OnionIoT/i2c-exp-node-addons.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
@@ -26,7 +26,7 @@ include $(INCLUDE_DIR)/package.mk
 
 
 # application packages
-define Package/pwm-exp-node
+define Package/node-pwm-exp
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
@@ -35,12 +35,12 @@ define Package/pwm-exp-node
 endef
 
 
-define Package/pwm-exp-node/description
+define Package/node-pwm-exp/description
 Node module for Servo (PWM) Expansion
 endef
 
 
-define Package/relay-exp-node
+define Package/node-relay-exp
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
@@ -49,12 +49,12 @@ define Package/relay-exp-node
 endef
 
 
-define Package/relay-exp-node/description
+define Package/node-relay-exp/description
 Node module for Relay Expansion
 endef
 
 
-define Package/oled-exp-node
+define Package/node-oled-exp
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Libraries
@@ -63,7 +63,7 @@ define Package/oled-exp-node
 endef
 
 
-define Package/oled-exp-node/description
+define Package/node-oled-exp/description
 Node module for OLED Expansion
 endef
 
@@ -85,23 +85,23 @@ define Build/InstallDev
 
 endef
 
-define Package/pwm-exp-node/install
+define Package/node-pwm-exp/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/Pwm_Expansion/build/Release/pwm-exp-addon.node $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/pwm-exp/build/Release/node-pwm-exp.node $(1)/usr/bin/
 endef
 
-define Package/relay-exp-node/install
+define Package/node-relay-exp/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/Relay_Expansion/build/Release/relay-exp-addon.node $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/relay-exp/build/Release/node-relay-exp.node $(1)/usr/bin/
 endef
 
-define Package/oled-exp-node/install
+define Package/node-oled-exp/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/Oled_Expansion/build/Release/oled-exp-addon.node $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/oled-exp/build/Release/node-oled-exp.node $(1)/usr/bin/
 endef
 
 
-$(eval $(call BuildPackage,pwm-exp-node))
-$(eval $(call BuildPackage,relay-exp-node))
-$(eval $(call BuildPackage,oled-exp-node))
+$(eval $(call BuildPackage,node-pwm-exp))
+$(eval $(call BuildPackage,node-relay-exp))
+$(eval $(call BuildPackage,node-oled-exp))
 

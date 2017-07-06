@@ -46,6 +46,7 @@ endef
 define Package/$(PKG_NAME)/install
 	mkdir -p $(1)/etc/opkg/keys
 	$(CP) ./files/onion-key.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/onion-key.pub`
+	$(CP) ./files/omega2-repo.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/omega2-repo.pub`
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

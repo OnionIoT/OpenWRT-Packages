@@ -15,9 +15,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=git@github.com:OnionIoT/arduino-dock.git
+PKG_SOURCE_URL:=https://github.com/OnionIoT/arduino-dock.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
@@ -35,16 +35,16 @@ define Package/arduino-dock/description
 Tool to enable I2C flashing of HEX files
 endef
 
-define Package/arduino-dock-r2
+define Package/arduino-dock-2
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
-	TITLE:=Tools for using Onion Arduino Dock R2
+	TITLE:=Tools for using Onion Arduino Dock 2
 	DEPENDS:=+avrdude
 endef
 
-define Package/arduino-dock-r2/description
-Tools for using Onion Arduino Dock R2
+define Package/arduino-dock-2/description
+Tools for using Onion Arduino Dock 2
 endef
 
 define Package/arduino-dock/install
@@ -69,23 +69,23 @@ define Package/arduino-dock/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/merge-sketch-with-bootloader.lua $(1)/usr/bin/merge-sketch-with-bootloader.lua
 endef
 
-define Package/arduino-dock-r2/install
+define Package/arduino-dock-2/install
 	# create directories
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/usr/share/arduino-dock
 	$(INSTALL_DIR) $(1)/etc/avahi/services
 	## install scripts
 	# sh library
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-r2/bin/arduino-dock-lib.sh $(1)/usr/share/arduino-dock/arduino-dock-lib.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-2/bin/arduino-dock-lib.sh $(1)/usr/share/arduino-dock/arduino-dock-lib.sh
 	# arduino dock setup script
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-r2/bin/arduino-dock.sh $(1)/usr/bin/arduino-dock
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-2/bin/arduino-dock.sh $(1)/usr/bin/arduino-dock
 	# run-avrdude script for Arduino IDE
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-r2/bin/run-avrdude.sh $(1)/usr/bin/run-avrdude
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/arduino-dock-2/bin/run-avrdude.sh $(1)/usr/bin/run-avrdude
 	## configuration files
-	$(CP) $(PKG_BUILD_DIR)/arduino-dock-r2/conf/avrdude.conf $(1)/usr/share/arduino-dock/avrdude.conf
+	$(CP) $(PKG_BUILD_DIR)/arduino-dock-2/conf/avrdude.conf $(1)/usr/share/arduino-dock/avrdude.conf
 	$(CP) $(PKG_BUILD_DIR)/conf/avahi/arduino.service $(1)/etc/avahi/services/arduino.service
 endef
 
 $(eval $(call BuildPackage,arduino-dock))
-$(eval $(call BuildPackage,arduino-dock-r2))
+$(eval $(call BuildPackage,arduino-dock-2))
 
