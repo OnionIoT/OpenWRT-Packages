@@ -1,3 +1,4 @@
+
 # Copyright (C) 2016 Onion Corporation
 # 
 # Author: Lazar Demin  <lazar@onion.io>
@@ -62,6 +63,7 @@ define Package/onion-console-base/install
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-login
 	# Create the directory for the onion-settings
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-settings
+
 
 	#### Add the app shells 
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-editor
@@ -166,7 +168,6 @@ define Package/onion-console-terminal/install
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-terminal
 	# copy the editor app
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-terminal/onion-terminal.html $(1)/www/console/apps/onion-terminal/onion-terminal.html
-	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 endef
 
 # webcam
@@ -187,6 +188,7 @@ define Package/onion-console-webcam/install
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-webcam
 	# copy the editor app
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/onion-webcam.html $(1)/www/console/apps/onion-webcam/onion-webcam.html
+	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/* $(1)/www/console/apps/onion-webcam/.
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 endef
 
@@ -208,6 +210,7 @@ define Package/onion-console-node-red/install
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-node-red
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-node-red/onion-node-red.html $(1)/www/console/apps/onion-node-red/onion-node-red.html
 endef
+
 
 # calls to build each package
 $(eval $(call BuildPackage,onion-console-base))
