@@ -41,7 +41,7 @@ define Package/power-dock2
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
 	TITLE:=Onion Power Dock 2 application 
-	DEPENDS:=+power-dock
+	DEPENDS:=+power-dock +bc
 endef
 
 define Package/power-dock2/description
