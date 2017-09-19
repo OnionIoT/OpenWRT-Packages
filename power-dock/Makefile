@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=power-dock
-PKG_VERSION:=0.2
+PKG_VERSION:=0.3
 PKG_RELEASE:=1
 
 
@@ -24,16 +24,28 @@ include $(INCLUDE_DIR)/package.mk
 
 
 # application package
-define Package/$(PKG_NAME)
+define Package/power-dock
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=Drivers
-	TITLE:=Onion Power Dock Drivers
+	TITLE:=Onion Power Dock Application
 	DEPENDS:=+libugpio +liboniondebug
 endef
 
-define Package/$(PKG_NAME)/description
-Onion Power Dock Drivers
+define Package/power-dock/description
+Onion Power Dock Application
+endef
+
+define Package/power-dock2
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Drivers
+	TITLE:=Onion Power Dock 2 application 
+	DEPENDS:=+power-dock
+endef
+
+define Package/power-dock2/description
+Onion Power Dock 2 application
 endef
 
 TARGET_CFLAGS += $(FPIC)
@@ -48,13 +60,19 @@ define Build/Compile
 endef
 
 
-define Package/$(PKG_NAME)/install
+define Package/power-dock/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	# install the binary
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/power-dock $(1)/usr/bin/
 endef
 
+define Package/power-dock2/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	# install the script
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/scripts/power-dock2.sh $(1)/usr/bin/power-dock2
+endef
 
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,power-dock))
+$(eval $(call BuildPackage,power-dock2))
 
