@@ -186,10 +186,8 @@ endef
 define Package/onion-console-webcam/install
 	# copy the web site files, starting with the lib and element folders
 	$(INSTALL_DIR) $(1)/www/console/apps/onion-webcam
-	# copy the editor app
+	# copy the webcam app
 	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/onion-webcam.html $(1)/www/console/apps/onion-webcam/onion-webcam.html
-	cp -r $(PKG_BUILD_DIR)/www/apps/onion-webcam/* $(1)/www/console/apps/onion-webcam/.
-	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 endef
 
 # nodered
