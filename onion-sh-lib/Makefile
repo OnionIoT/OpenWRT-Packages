@@ -41,7 +41,7 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/onion
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib.sh $(1)/usr/lib/onion/lib.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lib.sh $(1)/usr/lib/onion/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
