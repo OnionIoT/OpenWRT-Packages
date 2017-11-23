@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodejs
-PKG_VERSION:=v4.3.1
+PKG_VERSION:=v8.9.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=node-$(PKG_VERSION).tar.gz
@@ -19,7 +19,7 @@ define Package/nodejs
   SUBMENU:=Node.js
   SECTION:=lang
   CATEGORY:=Languages
-  TITLE:=Node.js v4.3.1
+  TITLE:=Node.js $(PKG_VERSION)
   URL:=https://nodejs.org/
 endef
 
