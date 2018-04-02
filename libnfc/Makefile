@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libnfc
 PKG_VERSION:=1.7.1
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
 
@@ -48,7 +48,7 @@ define Package/nfc-utils
 	$(call Package/libnfc/Default)
 	SECTION:=utils
 	CATEGORY:=Utilities
-	DEPENDS:=+libnfc
+	DEPENDS:=+libnfc +xxd
 endef
 
 define Package/nfc-utils/description
@@ -64,6 +64,18 @@ define Package/nfc-utils/description
 	* Lists each available NFC device
 
 endef
+
+define Package/nfc-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Utilities
+	TITLE:=Onion NFC/RFID Expansion Applications
+	DEPENDS:=+nfc-utils
+endef
+
+define Package/nfc-exp/description
+Onion NFC/RFID Expansion Applications
+endef	
 
 TARGET_CFLAGS+=$(FPIC)
 CONFIGURE_ARGS+=--without-readline
@@ -94,5 +106,11 @@ define Package/nfc-utils/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/nfc-scan-device $(1)/usr/bin/
 endef
 
+define Package/nfc-exp/install
+	$(INSTALL_DIR) $(1)/etc/nfc/
+	$(CP) ./files/libnfc.conf $(1)/etc/nfc/
+endef
+
 $(eval $(call BuildPackage,libnfc))
 $(eval $(call BuildPackage,nfc-utils))
+$(eval $(call BuildPackage,nfc-exp))
