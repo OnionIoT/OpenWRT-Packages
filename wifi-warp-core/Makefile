@@ -10,7 +10,7 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=wifi-warp-core
 PKG_VERSION:=0.0.3
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
+PKG_RELEASE=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=http://git.openwrt.org/project/iwinfo.git
