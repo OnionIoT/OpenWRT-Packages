@@ -276,9 +276,8 @@ UciPopulateWifiConfigSection () {
 			uci set wireless.\@wifi-config[$index].key1="$password"
 		;;
 		none|*)
-			# add a 'NONE' value as a placeholder for open networks
-			# the config parser in wifimanager expects non-empty values for existing configurations
-			uci set wireless.\@wifi-config[$index].key='none'
+			# empty value for open networks
+			uci set wireless.\@wifi-config[$index].key=''
 		;;
 	esac
 
@@ -859,8 +858,8 @@ _NormalizeEncryptInput () {
 		WPA1PSKWPA2PSK|WPA2PSK|wpa2|psk2|WPA2|PSK2|wpa-mixed)
 			encrypt="psk2"
 		;;
-		WPA1PSK|wpa|psk|WPA|PSK)
-			encrypt="psk1"
+		WPA1PSK|WPAPSK|wpa|psk|WPA|PSK)
+			encrypt="psk"
 		;;
 		wep|WEP)
 			encrypt="wep"
