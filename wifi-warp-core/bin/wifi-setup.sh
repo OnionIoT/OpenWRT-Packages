@@ -24,6 +24,7 @@ bCmdReset=0     # for overwriting wireless config with factory file
 bCmdPriority=0
 bCmdList=0
 bCmdInfo=0
+bCmdDebug=0
 
 
 #parameters
@@ -845,6 +846,41 @@ ResetNetworkSettings () {
 	wifi
 }
 
+# collect information about the wifi and network configuration
+#
+CollectDebugInfo () {
+	local dbgFile="/tmp/wifidebug.log"
+
+	echo "================ WIFI DEBUG LOG ================" > $dbgFile
+	echo "== `date` ==" >> $dbgFile
+	echo "" >> $dbgFile
+
+	CollectCommandOutput "ifconfig" "$dbgFile"
+	CollectCommandOutput "iwconfig" "$dbgFile"
+	CollectCommandOutput "uci show wireless" "$dbgFile"
+
+	if [ $bVerbose -eq 1 ]; then
+		CollectCommandOutput "iwpriv ra0 get_site_survey" "$dbgFile"
+	fi
+
+	_Print "Collected WiFi and network debug information in $dbgFile file"
+}
+
+# append output from a specific command into a file
+# 	arg1 	- command to run
+#	arg2 	- output file
+CollectCommandOutput () {
+	local cmd="$1"
+	local outfile="$2"
+	local tmp=$(mktemp)
+
+	echo "================ $cmd ================" >> $outfile
+	eval $cmd &> $tmp
+	cat $tmp >> $outfile
+	echo "" >> $outfile
+	rm -rf $tmp
+}
+
 
 
 ########################################
@@ -1182,6 +1218,11 @@ do
 			bCmdReset=1
 			shift
 		;;
+		-debug|debug)
+			bCmd=1
+			bCmdDebug=1
+			shift
+		;;
 		-h|--h|help|-help|--help)
 			usage
 			exit
@@ -1342,6 +1383,12 @@ elif [ $bCmdReset == 1 ]; then
 	# remove error message
 	id=0
 
+elif [ $bCmdDebug == 1 ]; then
+	CollectDebugInfo
+
+	# remove error message
+	id=0
+
 fi # command if else statement
 
 
@@ -1357,6 +1404,7 @@ if [ $bError == 0 ]; then
 		[ $bCmdEnable == 1 ] ||
 		[ $bCmdRemove == 1 ] ||
 		# bCmdClear and bCmdReset are not considered because all wifi options will be reset
+		# bCmdDebug is not considered since it just gathers data
 		[ $bCmdPriority == 1 ];
 	then
 		_Print "> Restarting wifimanager for changes to take effect" "status"

@@ -147,6 +147,21 @@ createWifiConfigList () {
 	echo "$resp"
 }
 
+# read a UCI option, specify a default option to return if it doesn't exist
+#		arg1 - UCI option
+#		arg2 - default value
+uciGetDefaultVal () {
+	local opt="$1"
+	local def="$2"
+
+	local val=$(uci -q get $opt)
+	if [ "$val" == "" ]; then
+		val="$def"
+	fi
+
+	echo "$val"
+}
+
 ralink_setup_sta(){
 	local name="$1"
 	local hide=1
@@ -173,16 +188,19 @@ ralink_setup_sta(){
 		op_mode="preference"
 	fi
 
-	interval=$(uci -q get wireless.radio0.interval)
-
-	rssi_thresh=$(uci -q get wireless.radio0.rssi_threshold)
-	low_sig_max_count=$(uci -q get wireless.radio0.low_signal_max_count)
+	interval=$(uciGetDefaultVal "wireless.radio0.interval" "-1")
+	scan_wait=$(uciGetDefaultVal "wireless.radio0.scan_wait" "-1")
+	check_assoc_wait=$(uciGetDefaultVal "wireless.radio0.assoc_wait" "-1")
+	check_assoc_num_checks=$(uciGetDefaultVal "wireless.radio0.assoc_num_checks" "-1")
+	rssi_thresh=$(uciGetDefaultVal "wireless.radio0.rssi_threshold" "-1")
+	low_sig_max_count=$(uciGetDefaultVal "wireless.radio0.low_signal_max_count" "-1")
+	params="${interval},${scan_wait},${check_assoc_wait},${check_assoc_num_checks},${rssi_thresh},${low_sig_max_count}"
 
 	killall ap_client
-	#echo "/sbin/ap_client \"$op_mode\" \"ra0\" \"$ifname\" \"$interval\" \"${ssid_list}\" \"${pass_list}\" \"${bssid_list}\" \"${hide}\" \"${led}\" \"${rssi_thresh}\" \"${low_sig_max_count}\"" > /tmp/ralink.out
-	/sbin/ap_client "$op_mode" "ra0" "$ifname" "$interval" "${ssid_list}" "${pass_list}" "${bssid_list}" "${hide}" "${led}" "${rssi_thresh}" "${low_sig_max_count}"
+	#echo "/sbin/ap_client \"$op_mode\" \"ra0\" \"$ifname\" \"${params}\" \"${ssid_list}\" \"${pass_list}\" \"${bssid_list}\" \"${hide}\" \"${led}\"" > /tmp/ralink.out
+	/sbin/ap_client "$op_mode" "ra0" "$ifname" "${params}" "${ssid_list}" "${pass_list}" "${bssid_list}" "${hide}" "${led}"
 	sleep 1
-	wireless_add_process "$(cat /tmp/apcli-${ifname}.pid)" /sbin/ap_client "$op_mode" "ra0" "$ifname" "$interval" "${ssid_list}" "${pass_list}" "${bssid_list}" "${hide}" "${led}" "${rssi_thresh}" "${low_sig_max_count}"
+	wireless_add_process "$(cat /tmp/apcli-${ifname}.pid)" /sbin/ap_client "$op_mode" "ra0" "$ifname" "${params}" "${ssid_list}" "${pass_list}" "${bssid_list}" "${hide}" "${led}"
 
 	wireless_add_vif "$name" "$ifname"
 }
