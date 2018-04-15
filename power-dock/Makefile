@@ -1,4 +1,4 @@
-
+#
 # Copyright (C) 2016 Onion Corporation
 # 
 # Author: Lazar Demin  <lazar@onion.io>
@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=power-dock
-PKG_VERSION:=0.4
+PKG_VERSION:=0.5
 PKG_RELEASE:=1
 
 
@@ -70,6 +70,7 @@ define Package/power-dock2/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	# install the script
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/scripts/power-dock2.sh $(1)/usr/bin/power-dock2
+	$(LN) -s /usr/bin/power-dock2 $(1)/usr/bin/power-dock-2
 endef
 
 
