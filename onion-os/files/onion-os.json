@@ -20,7 +20,7 @@
                                         "omega-led",
                                         "gpio"
                                 ],
-                                "onion-console": [
+                                "onion-os": [
                                         "app-list"
                                 ],
                                 "system": [
@@ -112,4 +112,3 @@
         }
 
 }
-

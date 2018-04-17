@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-os
 PKG_VERSION:=0.0.1
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 
 PKG_SOURCE_PROTO:=git
@@ -37,9 +37,10 @@ OnionOS for headless IoT devices
 endef
 
 define Package/onion-os/install
-	# install the acl permissions file
-	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
+	# install the acl permissions file and rpcd script
+	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d $(1)/usr/libexec/rpcd
 	$(INSTALL_BIN) ./files/onion-os.json $(1)/usr/share/rpcd/acl.d/onion-os.json
+	$(INSTALL_BIN) ./files/onion-os.sh $(1)/usr/libexec/rpcd/onion-os
 	# copy the web site files
 	$(INSTALL_DIR) $(1)/www/OnionOS
 	$(CP) -r ./files/www/* $(1)/www/OnionOS/
