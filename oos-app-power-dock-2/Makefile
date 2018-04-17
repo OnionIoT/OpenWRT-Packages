@@ -39,7 +39,7 @@ define Package/oos-app-power-dock-2/install
 	# install the scripts
 	$(INSTALL_DIR) $(1)/etc/init.d $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/etc/init.d/power-dock-2 $(1)/etc/init.d/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/getBatteryLevels.sh $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/getBatteryLevels.sh $(1)/usr/bin/getBatteryLevels
 	# copy the web site files
 	$(INSTALL_DIR) $(1)/www/apps/power-dock-2-app
 	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/power-dock-2-app/
