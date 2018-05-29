@@ -75,6 +75,7 @@ define Package/wifi-warp-core/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libiwinfo.so $(1)/lib/libiwinfo.so
 	$(INSTALL_DIR) $(1)/sbin/
 	$(INSTALL_BIN) ./bin/ap_client $(1)/sbin/
+	$(INSTALL_BIN) ./bin/ated $(1)/bin/
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) ./bin/wifi-setup.sh $(1)/usr/bin/wifisetup
 	$(INSTALL_DIR) $(1)/lib/modules/$(LINUX_VERSION)/
