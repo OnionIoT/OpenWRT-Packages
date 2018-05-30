@@ -10,13 +10,13 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=wifi-warp-core
 PKG_VERSION:=0.0.3
-PKG_RELEASE=4
+PKG_RELEASE=5
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=http://git.openwrt.org/project/iwinfo.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=ade8b1b299cbd5748db1acf80dd3e9f567938371
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.gz
 PKG_LICENSE:=GPL-2.0
 
 PKG_CONFIG_DEPENDS := \
@@ -73,7 +73,7 @@ define Package/wifi-warp-core/install
 	$(INSTALL_DIR) $(1)/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/iwinfo $(1)/usr/bin/iwinfo.rt
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libiwinfo.so $(1)/lib/libiwinfo.so
-	$(INSTALL_DIR) $(1)/sbin/
+	$(INSTALL_DIR) $(1)/sbin/ $(1)/bin/
 	$(INSTALL_BIN) ./bin/ap_client $(1)/sbin/
 	$(INSTALL_BIN) ./bin/ated $(1)/bin/
 	$(INSTALL_DIR) $(1)/usr/bin
