@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=i2c-exp-driver
-PKG_VERSION:=0.6
+PKG_VERSION:=0.7
 PKG_RELEASE:=1
 
 
@@ -320,6 +320,7 @@ define Package/pyPwmExp/install
 	# install the python module
 	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
 	$(CP)   $(PKG_BUILD_DIR)/lib/python/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(CP)	$(PKG_BUILD_DIR)/src/python/omegaMotors.py $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/
 endef
 
 define Package/pyRelayExp/install
