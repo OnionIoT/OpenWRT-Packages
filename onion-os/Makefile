@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2018 Onion Corporation
-# 
+#
 # Author: Lazar Demin  <lazar@onion.io>
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-os
-PKG_VERSION:=1.0.0
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 
 
@@ -28,7 +28,7 @@ define Package/onion-os
 	CATEGORY:=Onion
 	SUBMENU:=OS
 	TITLE:=OnionOS for headless IoT devices
-	DEPENDS:=+rpcd +libmosquitto-ssl +mosquitto-ssl +mosquitto-client-ssl +shellinabox +oos-app-editor +oos-app-nfc-exp +onion-console-base
+	DEPENDS:=+rpcd +libmosquitto-ssl +mosquitto-ssl +mosquitto-client-ssl +shellinabox +oos-app-editor +oos-app-nfc-exp
 endef
 
 
