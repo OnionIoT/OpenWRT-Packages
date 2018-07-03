@@ -1,6 +1,6 @@
 
 # Copyright (C) 2015 Onion Corporation
-# 
+#
 # Author: Lazar Demin  <lazar@onion.io>
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=console-install-tool
-PKG_VERSION:=0.2
+PKG_VERSION:=0.3
 PKG_RELEASE:=1
 
 
