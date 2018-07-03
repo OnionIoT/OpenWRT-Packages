@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oos-app-camera
 PKG_VERSION:=1.0.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 
 PKG_SOURCE_PROTO:=git
@@ -27,7 +27,7 @@ define Package/oos-app-camera
 	CATEGORY:=Onion
 	SUBMENU:=OS
 	TITLE:=OnionOS App for managing camera stream and timelapse
-	DEPENDS:=+mjpg-streamer +onion-script
+	DEPENDS:=+mjpg-streamer +onion-script +curl +ca-bundle
 endef
 
 
@@ -38,7 +38,7 @@ endef
 define Package/oos-app-camera/install
 	# install the scripts
 	$(INSTALL_DIR) $(1)/www/apps/oos-app-camera $(1)/etc/init.d $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/timelapse $(1)/etc/init.d/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/timelapse $(1)/etc/init.d/oos-app-timelapse
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/run.sh $(1)/www/apps/oos-app-camera/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/save-token.sh $(1)/www/apps/oos-app-camera/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/snap-to-dropbox.sh $(1)/www/apps/oos-app-camera/
@@ -46,6 +46,15 @@ define Package/oos-app-camera/install
 	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/oos-app-camera/
 endef
 
+
+define Package/oos-app-camera/postinst
+#!/bin/sh
+# check if we are on real system
+if [ -z "$${IPKG_INSTROOT}" ]; then
+	onion mjpg-streamer setup
+fi
+exit 0
+endef
 
 # calls to build each package
 $(eval $(call BuildPackage,oos-app-camera))
