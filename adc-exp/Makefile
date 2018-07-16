@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=adc-exp
-PKG_VERSION:=0.1
+PKG_VERSION:=0.2
 PKG_RELEASE:=1
 
 
@@ -30,9 +30,20 @@ define Package/adc-exp
 	DEPENDS:=+bc +coreutils-sleep
 endef
 
-
 define Package/adc-exp/description
 Command line utility for ADC Expansion
+endef
+
+define Package/python-adc-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python module to interact with Onion ADC Expansion
+	DEPENDS:=+python-base +pyOmegaExpansion
+endef
+
+define Package/python-adc-exp/description
+Python module to interact with Onion ADC Expansion
 endef
 
 #define Package/$(PKG_NAME)/Build/Compile
@@ -44,4 +55,12 @@ define Package/adc-exp/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/adc-exp.sh $(1)/usr/bin/adc-exp
 endef
 
+define Package/python-adc-exp/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python2.7/OmegaExpansion
+	$(CP) $(PKG_BUILD_DIR)/python/AdcExp.py $(1)/usr/lib/python2.7/OmegaExpansion
+endef
+
+
 $(eval $(call BuildPackage,adc-exp))
+$(eval $(call BuildPackage,python-adc-exp))
