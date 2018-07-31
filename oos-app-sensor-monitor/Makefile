@@ -27,7 +27,7 @@ define Package/oos-app-sensor-monitor
 	CATEGORY:=Onion
 	SUBMENU:=OS
 	TITLE:=OnionOS App for sensor measurement dashboard
-	DEPENDS:=+mjpg-streamer +onion-script +curl +ca-bundle
+	DEPENDS:=+adc-exp
 endef
 
 
