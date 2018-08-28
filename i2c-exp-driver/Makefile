@@ -225,7 +225,8 @@ define Build/Compile
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LIB="$(TARGET_LIBS)" \
-	PYINC="$(TARGET_PYINC)"
+	PYINC="$(TARGET_PYINC)" \
+	PYTHON_VERSION="$(PYTHON_VERSION)"
 endef
 
 define Build/InstallDev
