@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=i2c-exp-driver
-PKG_VERSION:=0.7
+PKG_VERSION:=0.8
 PKG_RELEASE:=1
 
 
@@ -213,19 +213,89 @@ define Package/pyOledExp/description
 Python module to control the Onion OLED Expansion
 endef
 
+define Package/python3-omega-expansion
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Setup for OmegaExpansion Python3 Package
+	DEPENDS:=+python3-base
+endef
 
-PYTHON_VERSION = "2.7"
+define Package/python3-omega-expansion/description
+Setup for OmegaExpansion Python3 Package
+endef
+
+define Package/python3-onion-i2c
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python3 module that implements I2C transactions
+	DEPENDS:=+liboniondebug +libonioni2c +python3-base +python3-omega-expansion
+endef
+
+define Package/python3-onion-i2c/description
+Python3 module that implements I2C transactions
+endef
+
+define Package/python3-pwm-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python3 module to control the Onion PWM Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionpwmexp +python3-base +python3-omega-expansion
+endef
+
+define Package/python3-pwm-exp/description
+Python3 module to control the Onion PWM Expansion
+endef
+
+define Package/python3-relay-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python3 module to control the Onion Relay Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionmcp23008 +libonionrelayexp +python3-base +python3-omega-expansion
+endef
+
+define Package/python3-relay-exp/description
+Python3 module to control the Onion Relay Expansion
+endef
+
+define Package/python3-oled-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python3 module to control the Onion OLED Expansion
+	DEPENDS:=+liboniondebug +libonioni2c +libonionoledexp +python3-base +python3-omega-expansion
+endef
+
+define Package/python3-oled-exp/description
+Python3 module to control the Onion OLED Expansion
+endef
+
+PYTHON_VERSION_2_7:=2.7
+TARGET_PYINC_2_7 += "-I$(STAGING_DIR)/usr/include/python$(PYTHON_VERSION_2_7)/"
+PYTHON_VERSION_3_6:=3.6
+TARGET_PYINC_3_6 += "-I$(STAGING_DIR)/usr/include/python$(PYTHON_VERSION_3_6)/"
 TARGET_CFLAGS += $(FPIC)
 TARGET_LIBS += -l m
-TARGET_PYINC += "-I$(STAGING_DIR)/usr/include/python$(PYTHON_VERSION)/"
 
 define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
+	$(MAKE) -B -C $(PKG_BUILD_DIR) \
 	CC="$(TARGET_CC)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LIB="$(TARGET_LIBS)" \
-	PYINC="$(TARGET_PYINC)"
+	PYINC="$(TARGET_PYINC_2_7)" \
+	PYTHON_VERSION="$(PYTHON_VERSION_2_7)"
+
+	$(MAKE) -B -C $(PKG_BUILD_DIR) \
+	CC="$(TARGET_CC)" \
+	CFLAGS="$(TARGET_CFLAGS)" \
+	LDFLAGS="$(TARGET_LDFLAGS)" \
+	LIB="$(TARGET_LIBS)" \
+	PYINC="$(TARGET_PYINC_3_6)" \
+	PYTHON_VERSION="$(PYTHON_VERSION_3_6)"
 endef
 
 define Build/InstallDev
@@ -306,35 +376,65 @@ endef
 
 define Package/pyOmegaExpansion/install
 	# setup the OmegaExpansion package
-	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	touch $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/__init__.py
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
+	touch $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion/__init__.py
 endef
 
 define Package/pyOnionI2C/install
 	# install the python module
-	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	$(CP)   $(PKG_BUILD_DIR)/lib/python/onionI2C.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_2_7)/onionI2C.so $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
 endef
 
 define Package/pyPwmExp/install
 	# install the python module
-	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	$(CP)   $(PKG_BUILD_DIR)/lib/python/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	$(CP)	$(PKG_BUILD_DIR)/src/python/omegaMotors.py $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion/
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_2_7)/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
+	$(CP)	$(PKG_BUILD_DIR)/src/python/omegaMotors.py $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion/
 endef
 
 define Package/pyRelayExp/install
 	# install the python module
-	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	$(CP)   $(PKG_BUILD_DIR)/lib/python/relayExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_2_7)/relayExp.so $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
 endef
 
 define Package/pyOledExp/install
 	# install the python module
-	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
-	$(CP)   $(PKG_BUILD_DIR)/lib/python/oledExp.so $(1)/usr/lib/python$(PYTHON_VERSION)/OmegaExpansion
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_2_7)/oledExp.so $(1)/usr/lib/python$(PYTHON_VERSION_2_7)/OmegaExpansion
 endef
 
+define Package/python3-omega-expansion/install
+	# setup the OmegaExpansion package
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+	touch $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion/__init__.py
+endef
+
+define Package/python3-onion-i2c/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_3_6)/onionI2C.so $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+endef
+
+define Package/python3-pwm-exp/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_3_6)/pwmExp.so $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+	$(CP)	$(PKG_BUILD_DIR)/src/python/omegaMotors.py $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion/
+endef
+
+define Package/python3-relay-exp/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_3_6)/relayExp.so $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+endef
+
+define Package/python3-oled-exp/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+	$(CP)   $(PKG_BUILD_DIR)/lib/python$(PYTHON_VERSION_3_6)/oledExp.so $(1)/usr/lib/python$(PYTHON_VERSION_3_6)/OmegaExpansion
+endef
 
 
 $(eval $(call BuildPackage,liboniondebug))
@@ -352,4 +452,9 @@ $(eval $(call BuildPackage,pyOnionI2C))
 $(eval $(call BuildPackage,pyPwmExp))
 $(eval $(call BuildPackage,pyRelayExp))
 $(eval $(call BuildPackage,pyOledExp))
+$(eval $(call BuildPackage,python3-omega-expansion))
+$(eval $(call BuildPackage,python3-onion-i2c))
+$(eval $(call BuildPackage,python3-pwm-exp))
+$(eval $(call BuildPackage,python3-relay-exp))
+$(eval $(call BuildPackage,python3-oled-exp))
 
