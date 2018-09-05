@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-script
 PKG_VERSION:=0.3
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 
 PKG_SOURCE_PROTO:=git
@@ -27,7 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Command to help with Onion product automation
-	DEPENDS:=+wget
+	DEPENDS:=+wget +bc
 endef
 
 
