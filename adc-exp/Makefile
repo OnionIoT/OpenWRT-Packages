@@ -46,9 +46,24 @@ define Package/python-adc-exp/description
 Python module to interact with Onion ADC Expansion
 endef
 
+define Package/python3-adc-exp
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Libraries
+	TITLE:=Python3 module to interact with Onion ADC Expansion
+	DEPENDS:=+python3-base +python3-omega-expansion +python3-onion-i2c
+endef
+
+define Package/python3-adc-exp/description
+Python3 module to interact with Onion ADC Expansion
+endef
+
 #define Package/$(PKG_NAME)/Build/Compile
 #	$(MAKE) -C $(PKG_BUILD_DIR)
 #endef
+
+PYTHON2:=2.7
+PYTHON3:=3.6
 
 define Package/adc-exp/install
 	$(INSTALL_DIR) $(1)/usr/bin
@@ -61,6 +76,13 @@ define Package/python-adc-exp/install
 	$(CP) $(PKG_BUILD_DIR)/python/AdcExp.py $(1)/usr/lib/python2.7/OmegaExpansion
 endef
 
+define Package/python3-adc-exp/install
+	# install the python module
+	$(INSTALL_DIR) $(1)/usr/lib/python$(PYTHON3)/OmegaExpansion
+	$(CP) $(PKG_BUILD_DIR)/python/AdcExp.py $(1)/usr/lib/python$(PYTHON3)/OmegaExpansion
+endef
+
 
 $(eval $(call BuildPackage,adc-exp))
 $(eval $(call BuildPackage,python-adc-exp))
+$(eval $(call BuildPackage,python3-adc-exp))
