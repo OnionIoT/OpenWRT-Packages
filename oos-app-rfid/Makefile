@@ -8,8 +8,8 @@
 #
 
 include $(TOPDIR)/rules.mk
-PKG_NAME:=oos-app-nfc-exp
-PKG_VERSION:=1.0.0
+PKG_NAME:=oos-app-nfc-rfid-expansion
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 
 
@@ -22,29 +22,29 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/oos-app-nfc-exp
+define Package/$(PKG_NAME)
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=OS
-	TITLE:=OnionOS App for the NFC & RFID Expansion
+	TITLE:=NFC-RFID Expansion : Real-time scanning of RFID tags
 	DEPENDS:=+nfc-exp
 endef
 
 
-define Package/oos-app-nfc-exp/description
-OnionOS App for the NFC & RFID Expansion 
+define Package/$(PKG_NAME)/description
+NFC-RFID Expansion : Real-time scanning of RFID tags
 endef
 
-define Package/oos-app-nfc-exp/install
+define Package/$(PKG_NAME)/install
 	# install the scripts
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/rfid-scan.sh $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/etc/init.d/rfid-scan $(1)/etc/init.d/
 	# copy the web site files
-	$(INSTALL_DIR) $(1)/www/apps/nfc-rfid-exp
-	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/nfc-rfid-exp/
+	$(INSTALL_DIR) $(1)/www/apps/oos-app-nfc-rfid-expansion
+	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/oos-app-nfc-rfid-expansion/
 endef
 
 
 # calls to build each package
-$(eval $(call BuildPackage,oos-app-nfc-exp))
+$(eval $(call BuildPackage,oos-app-nfc-rfid-expansion))

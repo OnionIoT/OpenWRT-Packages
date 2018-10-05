@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oos-app-power-dock-2
-PKG_VERSION:=1.0.0
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 
 
@@ -26,13 +26,13 @@ define Package/oos-app-power-dock-2
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=OS
-	TITLE:=OnionOS App for logging battery level with the Power Dock 2
+	TITLE:=Power Dock 2 : Measuring and logging LiPo battery level with the Power Dock 2
 	DEPENDS:=+power-dock2
 endef
 
 
 define Package/oos-app-power-dock-2/description
-OnionOS App for logging battery level with the Power Dock 2
+Power Dock 2 : Measuring and logging LiPo battery level with the Power Dock 2
 endef
 
 define Package/oos-app-power-dock-2/install
@@ -41,8 +41,8 @@ define Package/oos-app-power-dock-2/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/etc/init.d/power-dock-2 $(1)/etc/init.d/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/omega/getBatteryLevels.sh $(1)/usr/bin/getBatteryLevels
 	# copy the web site files
-	$(INSTALL_DIR) $(1)/www/apps/power-dock-2-app
-	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/power-dock-2-app/
+	$(INSTALL_DIR) $(1)/www/apps/oos-app-power-dock-2
+	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/oos-app-power-dock-2/
 endef
 
 

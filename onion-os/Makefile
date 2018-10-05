@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-os
-PKG_VERSION:=1.0.2
+PKG_VERSION:=1.0.3
 PKG_RELEASE:=2
 
 
@@ -28,7 +28,7 @@ define Package/onion-os
 	CATEGORY:=Onion
 	SUBMENU:=OS
 	TITLE:=OnionOS for headless IoT devices
-	DEPENDS:=+rpcd +libmosquitto-ssl +mosquitto-ssl +mosquitto-client-ssl +shellinabox +oos-app-editor +oos-app-nfc-exp
+	DEPENDS:=+shellinabox
 endef
 
 

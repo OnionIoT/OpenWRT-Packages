@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oos-app-sensor-monitor
-PKG_VERSION:=1.0.0
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 
 
@@ -26,20 +26,20 @@ define Package/oos-app-sensor-monitor
 	SECTION:=onion
 	CATEGORY:=Onion
 	SUBMENU:=OS
-	TITLE:=OnionOS App for sensor measurement dashboard
+	TITLE:=Sensor Monitor : Sensor measurement dashboard
 	DEPENDS:=+adc-exp
 endef
 
 
 define Package/oos-app-sensor-monitor/description
-OnionOS App for managing camera stream and timelapse
+Sensor Monitor : Sensor measurement dashboard
 endef
 
 define Package/oos-app-sensor-monitor/install
 	# install the scripts
-	$(INSTALL_DIR) $(1)/www/apps/sensor-monitor-app
+	$(INSTALL_DIR) $(1)/www/apps/oos-app-sensor-monitor
 	# copy the web site files
-	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/sensor-monitor-app/
+	$(CP) -r $(PKG_BUILD_DIR)/omega/www/* $(1)/www/apps/oos-app-sensor-monitor/
 endef
 
 
