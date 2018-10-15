@@ -9,8 +9,8 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-os
-PKG_VERSION:=1.0.3
-PKG_RELEASE:=2
+PKG_VERSION:=1.0.4
+PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
@@ -42,8 +42,10 @@ define Package/onion-os/install
 	$(INSTALL_BIN) ./files/onion-os.json $(1)/usr/share/rpcd/acl.d/onion-os.json
 	$(INSTALL_BIN) ./files/onion-os.sh $(1)/usr/libexec/rpcd/onion-os
 	# copy the web site files
-	$(INSTALL_DIR) $(1)/www/OnionOS
-	$(CP) -r ./files/www/* $(1)/www/OnionOS/
+	$(INSTALL_DIR) $(1)/www/ $(1)/www/OnionOS $(1)/www/cgi-bin
+	$(CP) ./files/www/index.html $(1)/www/
+	$(CP) -r ./files/www/OnionOS/* $(1)/www/OnionOS/
+	$(INSTALL_BIN) ./files/www/cgi-bin/setup.sh $(1)/www/cgi-bin/setup
 endef
 
 define Package/onion-os/postinst
