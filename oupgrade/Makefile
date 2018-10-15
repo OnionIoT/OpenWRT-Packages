@@ -1,6 +1,6 @@
-
+#
 # Copyright (C) 2015 Onion Corporation
-# 
+#
 # Author: Lazar Demin  <lazar@onion.io>
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oupgrade
-PKG_VERSION:=0.1
+PKG_VERSION:=0.2
 PKG_RELEASE:=1
 
 
@@ -45,4 +45,3 @@ define Package/$(PKG_NAME)/install
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
-
