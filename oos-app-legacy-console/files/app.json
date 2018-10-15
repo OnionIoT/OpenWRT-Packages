@@ -1,0 +1,10 @@
+{
+  "id": "oos-app-legacy-console",
+  "name": "Legacy Console",
+  "icon": "icon.svg",
+  "description": "",
+  "type": "ExternalApp",
+  "params": {
+    "url": "/console"
+  }
+}
