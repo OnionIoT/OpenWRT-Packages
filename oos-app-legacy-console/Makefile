@@ -37,11 +37,11 @@ define Build/Compile
 endef
 
 define Package/$(PKG_NAME)/install
-# install the scripts
-$(INSTALL_DIR) $(1)/www/apps/oos-app-legacy-console
-# copy the web site files
-$(CP) ./files/app.json $(1)/www/apps/oos-app-legacy-console/
-$(CP) ./files/icon.svg $(1)/www/apps/oos-app-legacy-console/
+	# install the scripts
+	$(INSTALL_DIR) $(1)/www/apps/oos-app-legacy-console
+	# copy the web site files
+	$(CP) ./files/app.json $(1)/www/apps/oos-app-legacy-console/
+	$(CP) ./files/icon.svg $(1)/www/apps/oos-app-legacy-console/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
