@@ -1,6 +1,6 @@
 
 # Copyright (C) 2018 Onion Corporation
-# 
+#
 # Author: Lazar Demin  <lazar@onion.io>
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-script
 PKG_VERSION:=0.3
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 
 
 PKG_SOURCE_PROTO:=git
@@ -45,4 +45,3 @@ define Package/$(PKG_NAME)/install
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
-
