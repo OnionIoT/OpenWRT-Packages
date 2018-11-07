@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-console
 PKG_VERSION:=0.1.4
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 
 PKG_SOURCE_PROTO:=git
@@ -125,6 +125,15 @@ define Package/onion-console-base/install
 	# cp -r $(PKG_BUILD_DIR)/www/* $(1)/www/console/.
 
 	# Add the 
+endef
+
+define Package/onion-console-base/postinst
+#!/bin/sh
+# check if we are on real system
+if [ -z "$${IPKG_INSTROOT}" ]; then
+	/etc/init.d/rpcd restart
+fi
+exit 0
 endef
 
 # editor
