@@ -71,7 +71,7 @@ define Package/nfc-exp
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Onion NFC/RFID Expansion Applications
-	DEPENDS:=+nfc-utils +libfreefare-examples
+	DEPENDS:=+nfc-utils
 endef
 
 define Package/nfc-exp/description
