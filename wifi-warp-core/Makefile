@@ -33,7 +33,7 @@ define Package/wifi-warp-core
   CATEGORY:=Onion
   SUBMENU:=WiFi
   TITLE:=Onion's Enhanced Omega2 MT7688 WiFi Driver
-  DEPENDS:=@TARGET_ramips_mt7688 +wireless-tools +maccalc +libuci +coreutils-base64
+  DEPENDS:=@(TARGET_ramips_mt7688||TARGET_ramips_mt76x8) +wireless-tools +maccalc +libuci +coreutils-base64
   ABI_VERSION:=$(PKG_RELEASE)
 endef
 
