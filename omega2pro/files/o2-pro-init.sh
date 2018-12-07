@@ -3,7 +3,9 @@
 storageDev=mmcblk0p1
 swapSize=384 # 512 - 128 MB
 
+# TODO: if OS has booted from overlay partition on emmc, exit the script!
 
+# TODO: if an ext4 partition 1 already exists, skip this step
 #Format SD card
 (
 echo d # Delete all partitions
@@ -35,6 +37,9 @@ EOF
 chmod +x /etc/init.d/swapon
 /etc/init.d/swapon enable
 
+# TODO: if there is already an overlay filesystem on the emmc:
+#	* do not overwrite the /root directory 
+# 	* do not overwrite changes to /etc/config/ files
 #duplicate /overlay
 mount /dev/$storageDev /mnt/ ; tar -C /overlay -cvf - . | tar -C /mnt/ -xf - ; umount /mnt/
 
