@@ -30,7 +30,7 @@ PKG_NAME:=p44-ledchain
 # version of what we are downloading
 PKG_VERSION:=1.2
 # version of this makefile
-PKG_RELEASE:=6
+PKG_RELEASE:=7
 
 PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/$(PKG_NAME)
 PKG_CHECK_FORMAT_SECURITY:=0
@@ -47,6 +47,18 @@ endef
 define KernelPackage/$(PKG_NAME)/description
 	This package contains the p44-ledchain kernel driver for WS28xx and SK68xx type serial LED chains
 	for MT7688, which uses PWM unit to generate the WS28xx timing without blocking IRQs.
+endef
+
+define Package/$(PKG_NAME)
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Utilities
+	TITLE:=p44-ledchain driver for WS28xx/SK68xx
+	DEPENDS:=+kmod-p44-ledchain
+endef
+
+define Package/$(PKG_NAME)/description
+Implements p44-ledchain kernel driver for WS28xx and SK68xx type serial LED chains for MT7688
 endef
 
 define Build/Prepare
@@ -66,4 +78,10 @@ define Build/Compile
 		modules
 endef
 
+define Package/$(PKG_NAME)/install
+	$(INSTALL_DIR) $(1)/etc/modules.d
+	$(INSTALL_BIN) ./files/p44-ledchain-module $(1)/etc/modules.d/91-p44-ledchain
+endef
+
 $(eval $(call KernelPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,$(PKG_NAME)))
