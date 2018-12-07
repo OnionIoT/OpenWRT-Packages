@@ -3,7 +3,7 @@
 storageDev=mmcblk0p1
 swapSize=384 # 512 - 128 MB
 
-# TODO: if OS has booted from overlay partition on emmc, exit the script!
+# TODO: if OS has booted from overlay partition on mmcblk0 device, exit the script!
 
 # TODO: if an ext4 partition 1 already exists, skip this step
 #Format SD card
