@@ -9,8 +9,8 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oos-app-code-editor
-PKG_VERSION:=1.0.1
-PKG_RELEASE:=2
+PKG_VERSION:=1.0.2
+PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
@@ -53,7 +53,7 @@ define Package/oos-app-code-editor/install
 	$(CP) $(PKG_BUILD_DIR)/*.php $(1)/www/apps/oos-app-code-editor/
 	$(CP) $(PKG_BUILD_DIR)/*.json $(1)/www/apps/oos-app-code-editor/
 	$(CP) $(PKG_BUILD_DIR)/*.xml $(1)/www/apps/oos-app-code-editor/
-	$(CP) ./files/www/* $(1)/www/apps/oos-app-code-editor/
+	$(CP) -r ./files/www/* $(1)/www/apps/oos-app-code-editor/
 endef
 
 define Package/oos-app-code-editor/postinst
