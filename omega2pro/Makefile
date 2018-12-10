@@ -27,7 +27,7 @@ define Package/omega2-pro-base
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Omega2 Pro base packages and configuration
-	DEPENDS:=+fdisk +e2fsprogs +block-mount +swap-utils
+	DEPENDS:=+fdisk +e2fsprogs +block-mount +swap-utils +tar @TARGET_DEVICE_ramips_mt76x8_DEVICE_omega2pro
 endef
 
 define Package/omega2-pro/description
