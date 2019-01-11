@@ -32,7 +32,7 @@ endef
 
 
 define Package/oos-app-sparkfun-qwiic/description
-Sensor Monitor : Detect and interact with Sparkfun Qwiic devices
+Sparkfun Qwiic : Detect and interact with Sparkfun Qwiic devices
 endef
 
 define Package/oos-app-sparkfun-qwiic/install
