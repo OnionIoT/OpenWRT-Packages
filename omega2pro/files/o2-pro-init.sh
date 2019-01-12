@@ -46,7 +46,7 @@ chmod +x /etc/init.d/swapon
 #	* do not overwrite the /root directory 
 # 	* do not overwrite changes to /etc/config/ files
 #duplicate /overlay
-mount /dev/$storageDev /mnt/ ; tar -C /overlay -cvf - . | tar --exclude='./upper/root' --exclude='./upper/etc/config' -C /mnt/ -xf - ; umount /mnt/
+mount /dev/$storageDev /mnt/ ; tar -C /overlay -cvf - . | tar --exclude='./upper/root' -C /mnt/ -xf - ; umount /mnt/
 
 # auto mount /overlay
 block detect > /etc/config/fstab
