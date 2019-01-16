@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:= onion-node-red
-PKG_VERSION:=0.1
+PKG_VERSION:=0.19.5
 PKG_RELEASE:=1
 
 
@@ -17,7 +17,7 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
 PKG_SOURCE_URL:=https://github.com/OnionIoT/node-red.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
@@ -28,42 +28,21 @@ include $(INCLUDE_DIR)/package.mk
 define Package/onion-node-red
 	SECTION:=onion
 	CATEGORY:=Onion
-	SUBMENU:=Libraries
-	TITLE:=Onion-Node-Red
-	DEPENDS:= +libc +libpthread +libstdcpp 
+	SUBMENU:=Node-RED
+	TITLE:=Flow-based development tool for visual programming
+	DEPENDS:= +libc +libpthread +libstdcpp +node
 endef
 
 
 define Package/onion-node-red/description
-Node-Red built for mips Ar971XX. 
+Flow-based development tool for visual programming
 endef
 
-
-TARGET_CFLAGS += $(FPIC)
-
-define Build/Compile
-	$(CP) ./files/makefile $(PKG_BUILD_DIR)/makefile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-	CC="$(TARGET_CC)" \
-	CXX="$(TARGET_CXX)" \
-	CFLAGS="$(TARGET_CFLAGS)" \
-	CXXFLAGS="$(TARGET_CXXFLAGS)"\
-	LDFLAGS="$(TARGET_LDFLAGS)"
-endef
-
-##Whats this do?
-#define Build/InstallDev
-#
-#endef
 
 define Package/onion-node-red/install
-	$(INSTALL_DIR) ./tmp;
-	$(CP) -r $(PKG_BUILD_DIR)/red.js $(PKG_BUILD_DIR)/node_modules/node-red/red.js
-	$(CP) -r $(PKG_BUILD_DIR)/ ./tmp/;
-	$(INSTALL_DIR) $(1)/usr/bin;
-	#$(CP) -r ./tmp/$(PKG_NAME) $(PKG_BUILD_DIR)/ipkg-ar71xx/$(PKG_NAME)/usr/bin;
-	$(CP) -r ./tmp/$(PKG_NAME) $(1)/usr/bin;
-	rm -rf ./tmp;
+	$(INSTALL_DIR) $(1)/usr/lib/node_modules/ $(1)/etc/init.d/
+	$(CP) -r $(PKG_BUILD_DIR)/node_modules/node-red/ $(1)/usr/lib/node_modules/node-red/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/nodered $(1)/etc/init.d/nodered
 endef
 
 $(eval $(call BuildPackage,onion-node-red))
