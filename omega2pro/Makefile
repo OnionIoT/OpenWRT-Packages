@@ -8,7 +8,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-pro
-PKG_VERSION:=1.0.2
+PKG_VERSION:=1.0.3
 PKG_RELEASE:=1
 
 
@@ -43,7 +43,7 @@ endef
 define Package/omega2-pro-base/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/o2-pro-init.sh  $(1)/usr/bin/o2-pro-init
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/initd.sh $(1)/etc/init.d/o2-pro-init
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/initd.sh $(1)/etc/init.d/o2-pro-init
 endef
 
 $(eval $(call BuildPackage,omega2-pro-base))

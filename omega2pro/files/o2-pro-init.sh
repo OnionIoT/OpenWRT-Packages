@@ -11,7 +11,11 @@ block info > $blockInfo
 awk -F'[ :=]' 'BEGIN {err = 1;} {if (($1 ~ "'$storageDev'") && ($8 ~ "/overlay")) {err = 0;}} END {exit err;}' $blockInfo && exit 0
 # if emmc device cannot be detected
 [ ! -e /dev/$baseDev ] && exit 0
+# check if OS is running from flash
+flash=$(grep "/overlay" $blockInfo  | grep "/dev/mtdblock6")
+[ "$flash" == "" ] && exit 0
 
+echo "> Omega2 Pro initializing..." > /dev/console
 # format SD card, if an ext4 partition 1 does not exists
 [ ! -e /dev/$storageDev ] && {
 	#Format SD card
@@ -74,3 +78,4 @@ rm -f $blockInfo
 echo "> Done. Rebooting in 3 seconds..."
 sleep 3
 reboot
+
