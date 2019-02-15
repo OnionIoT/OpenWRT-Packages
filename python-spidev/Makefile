@@ -8,7 +8,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=python-spidev
-PKG_VERSION:=4.0.0
+PKG_VERSION:=4.0.1
 PKG_RELEASE:=1
 
 
