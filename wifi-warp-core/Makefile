@@ -10,7 +10,7 @@ include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=wifi-warp-core
 PKG_VERSION:=0.1.0
-PKG_RELEASE=0
+PKG_RELEASE=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=http://git.openwrt.org/project/iwinfo.git
@@ -33,7 +33,7 @@ define Package/wifi-warp-core
   CATEGORY:=Onion
   SUBMENU:=WiFi
   TITLE:=Onion's Enhanced Omega2 MT7688 WiFi Driver
-  DEPENDS:=@(TARGET_ramips_mt7688||TARGET_ramips_mt76x8) +wireless-tools +maccalc +libuci +coreutils-base64
+  DEPENDS:=@(TARGET_ramips_mt7688||TARGET_ramips_mt76x8) +wireless-tools +maccalc +libuci +coreutils-base64 +libcurl
   ABI_VERSION:=$(PKG_RELEASE)
 endef
 
@@ -76,6 +76,7 @@ define Package/wifi-warp-core/install
 	$(INSTALL_DIR) $(1)/sbin/ $(1)/bin/
 	$(INSTALL_BIN) ./bin/ap_client $(1)/sbin/
 	$(INSTALL_BIN) ./bin/ated $(1)/bin/
+	$(INSTALL_BIN) ./bin/ots $(1)/bin/
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) ./bin/wifi-setup.sh $(1)/usr/bin/wifisetup
 	$(INSTALL_DIR) $(1)/lib/modules/$(LINUX_VERSION)/
