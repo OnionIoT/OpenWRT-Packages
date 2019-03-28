@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oos-app-sparkfun-qwiic
 PKG_VERSION:=1.0.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 
 PKG_SOURCE_PROTO:=git
@@ -27,7 +27,7 @@ define Package/oos-app-sparkfun-qwiic
 	CATEGORY:=Onion
 	SUBMENU:=OS
 	TITLE:=Sparkfun Qwiic : Detect and interact with Sparkfun Qwiic devices
-	DEPENDS:=+libonioni2c +libmosquitto
+	DEPENDS:=+libonioni2c +libmosquitto-ssl
 endef
 
 
