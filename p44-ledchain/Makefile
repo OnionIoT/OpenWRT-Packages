@@ -1,4 +1,4 @@
-# Copyright (C) 2017 Lukas Zeller <luz@plan44.ch> (RGBW support)
+# Copyright (C) 2017-2019 Lukas Zeller <luz@plan44.ch>
 # See LICENSE for more information.
 #
 # Completely rewritten, but made compatible with and partially based on code snippets from
@@ -7,16 +7,6 @@
 # References: http://www.adafruit.com/datasheets/WS2812.pdf
 # References: https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf
 #
-
-## === example module load + test for 20 WS2812 LEDs connected to PWM1:
-## insmod p44-ledchain pwm_channel=1 inverted=1
-## echo -en '\x00\x00\x40' > /dev/p44ledchain
-
-## === example module load + test for 20 SK6812 LEDs:
-## insmod ws2812-draiveris pwm_channel=1 inverted=1 rgbw=1
-## echo -en '\x00\x00\x40\x40' > /dev/p44ledchain
-
-# Copyright (C) 2006-2012 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -28,7 +18,7 @@ include $(INCLUDE_DIR)/kernel.mk
 # name
 PKG_NAME:=p44-ledchain
 # version of what we are downloading
-PKG_VERSION:=1.2
+PKG_VERSION:=2.0
 # version of this makefile
 PKG_RELEASE:=7
 

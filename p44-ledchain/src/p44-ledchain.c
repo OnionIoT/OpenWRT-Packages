@@ -1,7 +1,7 @@
 /*
  *  p44-ledchain.c - A MT7688 SoC hardware PWM based kernel module for driving serial LEDs (WS28xx, SK68xx, ...)
  *
- *  Copyright (C) 2017 Lukas Zeller <luz@plan44.ch>
+ *  Copyright (C) 2017-2019 Lukas Zeller <luz@plan44.ch>
  *
  *  This is free software, licensed under the GNU General Public License v2.
  *  See /LICENSE for more information.
@@ -38,9 +38,11 @@ MODULE_DESCRIPTION("PWM driver for WS281x, SK68xx type serial led chains");
 
 
 #define DEVICE_NAME "ledchain"
+#define P44LEDCHAIN_VERSION 2
 
 #define LEDCHAIN_MAX_LEDS   1024
 #define DEFAULT_MAX_RETRIES 3
+#define MIN_MAXTPASSIVE_NS 5000
 
 #define LOGPREFIX DEVICE_NAME ": "
 
@@ -52,7 +54,8 @@ MODULE_DESCRIPTION("PWM driver for WS281x, SK68xx type serial led chains");
 #define LEDCHAIN_PARAM_REQUIRED_COUNT 2 // min number of params
 #define LEDCHAIN_PARAM_LEDTYPE 2 // type of LEDs
 #define LEDCHAIN_PARAM_MAXRETRIES 3 // maximum number of retries in case of timing failures before givin up
-#define LEDCHAIN_PARAM_MAX_COUNT 4 // max number of params
+#define LEDCHAIN_PARAM_MAXTPASSIVE 4 // maximum number of retries in case of timing failures before givin up
+#define LEDCHAIN_PARAM_MAX_COUNT 5 // max number of params
 
 
 // parameter array storage
@@ -65,7 +68,7 @@ int ledchain2_argc = 0;
 static unsigned int ledchain3[LEDCHAIN_PARAM_MAX_COUNT] __initdata;
 int ledchain3_argc = 0;
 
-#define LEDCHAIN_PARM_DESC " config: <inverted 0/1>,<numleds>[,<ledtype 0..n>[,<maxretries>]]"
+#define LEDCHAIN_PARM_DESC " config: <inverted 0/1>,<numleds>[,<ledtype 0..n>[,<maxretries>[,<maxTpassive>]]]"
 
 // parameter declarations
 module_param_array(ledchain0, int, &ledchain0_argc, 0000);
@@ -243,7 +246,9 @@ struct p44ledchain_dev {
   // - number of LEDs
   int num_leds;
   // - max sending repeats
-  int maxSendRepeats;
+  int maxSendRetries;
+  // - max TPassive time in nS (default comes from led type descriptor, but is tweakable)
+  int maxTPassiveNs;
   // the device
   struct cdev cdev;
   // spinlock for updating hardware
@@ -269,9 +274,10 @@ struct p44ledchain_dev {
   // timing
   int notReady; // set as long as no new send can be started
   long long expectedSentAt; // time when last 64bits are expected to be fully sent (checked in IRQ to detect timing violations)
-  int sendRepeats; // how many times sending was tried
+  int sendRetries; // how many times sending was tried
   // statistics
   u32 max_irq_delay; // max IRQ delay behind expectedSentAt that did NOT trigger a retry
+  u32 min_irq_delay; // min IRQ delay behind expectedSentAt seen
   u32 last_timeout_ns; // last IRQ delay that triggered a retry
   u32 irq_count; // IRQ counter
   u32 updates; // number of updates requested
@@ -369,9 +375,10 @@ void startSendingPatterns(devPtr_t dev)
     SEQ_TRACE('>');
     dev->updates++;
     dev->notReady = 1;
-    dev->sendRepeats = 0;
+    dev->sendRetries = 0;
     dev->last_timeout_ns = 0;
     dev->max_irq_delay = 0;
+    dev->min_irq_delay = dev->maxTPassiveNs;
     // - enable PWM IRQ
     intEnable = ioread32(PWM_INT_ENABLE); // currently enabled PWM IRQs
     SEQ_HEXBYTE(intEnable);
@@ -450,13 +457,13 @@ static irqreturn_t p44ledchain_pwm_interrupt(int irq, void *dev_id)
         iowrite32(irqMask, PWM_INT_ACK);
         // check for timing failure
         irq_delay_ns = now-dev->expectedSentAt;
-        if (irq_delay_ns > dev->ledTypeDesc->TPassive_max_nS) {
+        if (irq_delay_ns > dev->maxTPassiveNs) {
           // failure, needs retry
           SEQ_TRACE('o');
-          dev->sendRepeats++;
+          dev->sendRetries++;
           dev->retries++;
           dev->last_timeout_ns = irq_delay_ns;
-          if (dev->sendRepeats>=dev->maxSendRepeats) {
+          if (dev->sendRetries>=dev->maxSendRetries) {
             // give up, do not restart when timer hits
             SEQ_TRACE('E');
             dev->remainingPWMPatterns = 0; // do not attempt to send anything more
@@ -468,8 +475,12 @@ static irqreturn_t p44ledchain_pwm_interrupt(int irq, void *dev_id)
         else {
           // send next
           SEQ_TRACE('n');
-          if (irq_delay_ns>dev->max_irq_delay)
+          if (irq_delay_ns<dev->min_irq_delay) {
+            dev->min_irq_delay = irq_delay_ns;
+          }
+          else if (irq_delay_ns>dev->max_irq_delay) {
             dev->max_irq_delay = irq_delay_ns;
+          }
           expectedNs = sendNextPattern(dev);
           if (expectedNs) {
             // something to send, update expected time
@@ -763,11 +774,11 @@ void update_leds(const char *buff, size_t len, devPtr_t dev)
   // information
   SEQ_TRACE_SHOW()
   #if STAT_INFO
-  printk(KERN_INFO LOGPREFIX "#%d: Previous update had %d repeats, last timeout=%d nS, max irq=%d nS.\n", dev->pwm_channel, dev->sendRepeats, dev->last_timeout_ns, dev->max_irq_delay);
+  printk(KERN_INFO LOGPREFIX "#%d: Previous update had %d retries, last timeout=%d nS, min..max irq=%d..%d nS.\n", dev->pwm_channel, dev->sendRetries, dev->last_timeout_ns, dev->min_irq_delay, dev->max_irq_delay);
   printk(KERN_INFO LOGPREFIX "#%d: Totals: updates=%u, overruns=%u, retries=%u, errors=%u, irqs=%u\n", dev->updates, dev->overruns, dev->retries, dev->errors, dev->irq_count);
   #else
-  if (dev->sendRepeats>dev->maxSendRepeats) {
-    printk(KERN_INFO LOGPREFIX "#%d: Previous update failed (%d repeats) - Totals: updates=%u, retries=%u, errors=%u, irqs=%u\n", dev->pwm_channel, dev->sendRepeats, dev->updates, dev->retries, dev->errors, dev->irq_count);
+  if (dev->sendRetries>dev->maxSendRetries) {
+    printk(KERN_INFO LOGPREFIX "#%d: Previous update failed (%d repeats) - Totals: updates=%u, retries=%u, errors=%u, irqs=%u\n", dev->pwm_channel, dev->sendRetries, dev->updates, dev->retries, dev->errors, dev->irq_count);
   }
   #endif
   // start sending now or schedule start when reset time is over
@@ -821,10 +832,10 @@ static ssize_t p44ledchain_read(struct file *filp, char *buf, size_t count, loff
   // return "Ready" or "Busy" on first line, some stats on following lines
   bytes = snprintf(ans, ansBufferSize,
     "%s\n"
-    "Last update: %d repeats, last timeout=%d nS, max irq=%d nS\n"
+    "Last update: %d retries, last timeout=%d nS, min..max irq=%d..%d nS\n"
     "Totals: updates=%u, overruns=%u, retries=%u, errors=%u, irqs=%u\n",
     isReady(dev) ? "Ready" : "Busy",
-    dev->sendRepeats, dev->last_timeout_ns, dev->max_irq_delay,
+    dev->sendRetries, dev->last_timeout_ns, dev->min_irq_delay, dev->max_irq_delay,
     dev->updates, dev->overruns, dev->retries, dev->errors, dev->irq_count
   );
   if (bytes<=0 || dev->read_idx>=bytes) {
@@ -911,7 +922,7 @@ static int p44ledchain_add_device(struct class *class, int minor, devPtr_t *devP
   }
   dev->ledTypeDesc = &ledTypeDescriptors[ledType];
   // - retries
-  dev->maxSendRepeats = DEFAULT_MAX_RETRIES;
+  dev->maxSendRetries = DEFAULT_MAX_RETRIES;
   if (LEDCHAIN_PARAM_MAXRETRIES<param_count) {
     pval = params[LEDCHAIN_PARAM_MAXRETRIES];
     if (pval<0) {
@@ -919,7 +930,16 @@ static int p44ledchain_add_device(struct class *class, int minor, devPtr_t *devP
       err = -EINVAL;
       goto err_free;
     }
-    dev->maxSendRepeats = pval;
+    dev->maxSendRetries = pval;
+  }
+  // - max passive time
+  dev->maxTPassiveNs = dev->ledTypeDesc->TPassive_max_nS; // default to what LED type specifies
+  if (LEDCHAIN_PARAM_MAXTPASSIVE<param_count) {
+    pval = params[LEDCHAIN_PARAM_MAXTPASSIVE];
+    if (pval<MIN_MAXTPASSIVE_NS) {
+      printk(KERN_WARNING LOGPREFIX "max passive time < %dnS is unlikely to work for %s\n", MIN_MAXTPASSIVE_NS, devname);
+    }
+    dev->maxTPassiveNs = pval;
   }
   // allocate the buffer for the LED data
   dev->outBufSize =
@@ -930,7 +950,7 @@ static int p44ledchain_add_device(struct class *class, int minor, devPtr_t *devP
     * sizeof(PWMPattern_t);
   dev->outBuf = kzalloc(dev->outBufSize, GFP_KERNEL);
   if (!dev->outBuf) {
-    printk(KERN_WARNING LOGPREFIX "Cannot allocated PWM data buffer of %d bytes for %s\n", dev->outBufSize, devname);
+    printk(KERN_WARNING LOGPREFIX "Cannot allocate PWM data buffer of %d bytes for %s\n", dev->outBufSize, devname);
     err = -ENOMEM;
     goto err_free;
   }
@@ -961,13 +981,14 @@ static int p44ledchain_add_device(struct class *class, int minor, devPtr_t *devP
   hrtimer_init(&dev->starttimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
   dev->starttimer.function = p44ledchain_timer_func;
   // Config summary
-  printk(KERN_INFO LOGPREFIX "Device: /dev/%s\n", devname);
+  printk(KERN_INFO LOGPREFIX "v%d - Device: /dev/%s\n", P44LEDCHAIN_VERSION, devname);
   printk(KERN_INFO LOGPREFIX "- PWM channel    : %d\n", dev->pwm_channel);
   printk(KERN_INFO LOGPREFIX "- PWM buffer size: %u\n", dev->outBufSize);
   printk(KERN_INFO LOGPREFIX "- Number of LEDs : %d\n", dev->num_leds);
   printk(KERN_INFO LOGPREFIX "- Inverted       : %d\n", dev->inverted);
   printk(KERN_INFO LOGPREFIX "- LED type       : %s\n", dev->ledTypeDesc->name);
-  printk(KERN_INFO LOGPREFIX "- Max retries    : %d\n", dev->maxSendRepeats);
+  printk(KERN_INFO LOGPREFIX "- Max retries    : %d\n", dev->maxSendRetries);
+  printk(KERN_INFO LOGPREFIX "- Max Tpassive   : %d nS\n", dev->maxTPassiveNs);
   // done
   *devP = dev; // pass back new dev
   return 0;
