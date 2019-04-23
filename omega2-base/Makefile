@@ -12,16 +12,10 @@ PKG_VERSION:=1.0.0
 PKG_RELEASE:=1
 
 
-#PKG_SOURCE_PROTO:=git
-#PKG_SOURCE_VERSION:=HEAD
-#PKG_SOURCE_URL:=https://github.com/OnionIoT/omega2-pro.git
-#PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.gz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-# python module package
 define Package/omega2-base
 	SECTION:=onion
 	CATEGORY:=Onion
@@ -30,7 +24,7 @@ define Package/omega2-base
 	#DEPENDS:=
 endef
 
-define Package/omega2-pro/description
+define Package/omega2-base/description
 Omega2 family base packages and configuration
 endef
 
