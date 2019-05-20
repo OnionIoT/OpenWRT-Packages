@@ -16,6 +16,7 @@ bCmd=0
 bSetApn=0
 bData=0
 bGnss=0
+bForwarding=0
 bEnable=0
 bDisable=0
 bConfig=0
@@ -52,6 +53,13 @@ usage () {
 	_Print ""
 	_Print "	$PROG_NAME gnss disable"
 	_Print "		DISABLE collection of GNSS data"
+	_Print ""
+	_Print ""
+	_Print "	$PROG_NAME share enable"
+	_Print "		ENABLE sharing of cellular data on WiFi AP"
+	_Print ""
+	_Print "	$PROG_NAME share disable"
+	_Print "		DISABLE sharing of cellular data on WiFi AP"
 	_Print ""
 }
 
@@ -97,8 +105,9 @@ _Close () {
 ###     Omega2 LTE Functions
 ########################################
 
+# configure network settings
+#	no arguments
 setNetworkConfig () {
-    # configure network settings
     local ifname=$(uci -q get network.lte.ifname)
     if [ "$ifname" != "$DATA_INTF" ]; then
         _Print "> Configuring network settings"
@@ -112,8 +121,9 @@ setNetworkConfig () {
     fi
 }
 
+# configure gps data collection settings
+#	no arguments
 setGpsConfig () {
-    # configure network settings
     local tty=$(uci -q get gps.@gps[0].tty)
     if [ "$tty" != "$GNSS_DATA_TTY" ]; then
         _Print "> Configuring GPS settings"
@@ -125,11 +135,28 @@ setGpsConfig () {
     fi
 }
 
+# configure network and gps data collection settings
+#	no arguments
 setupConfig () {
     setNetworkConfig
     setGpsConfig
 }
 
+# configure firewall for LTE data forwarding to AP
+#	$1 - 0 = disable lte forwarding, 1 = enable lte data forwarding
+setFirewallConfig () {
+	local bEnable=$1
+	if [ $1 == 1 ]; then
+		uci add_list firewall.@zone[1].network="lte"
+	else
+		uci del_list firewall.@zone[1].network="lte"
+	fi
+	uci commit firewall
+	/etc/init.d/firewall restart
+}
+
+# write LTE cellular network APN to uci 
+#	$1 - APN string
 setApn () {
     local apn="$1"
     if [ "$apn" != "" ]; then
@@ -145,6 +172,8 @@ setApn () {
     fi
 }
 
+# enable LTE cellular data connection
+#	no arguments
 lteEnable () {
     local apn=$(uci -q get onion.@onion[0].apn)
     if [ "$apn" != "" ]; then
@@ -161,24 +190,33 @@ lteEnable () {
     fi
 }
 
+# disable LTE cellular data connection
+#  no arguments
 lteDisable () {
     _Print "> Disabling LTE data connection"
     /etc/init.d/lted disable
     /etc/init.d/lted stop
 }
 
+# Send an AT command to the modem
+#	$1 - command to send
+#	$2 - device where to send 
 sendAtCmd () {
     local cmd="$1"
     local dev="$2" 
     echo "$cmd" > "$dev"
 }
 
+# enable GNSS data collection
+#  no arguments
 gnssEnable () {
     _Print "> Enabling GNSS data collection"
     setGpsConfig
     sendAtCmd "AT+QGPS=1" "$GNSS_AT_CMD_DEV"
 }
 
+# disable GNSS data collection
+#  no arguments
 gnssDisable () {
     _Print "> Disabling GNSS data collection"
     sendAtCmd "AT+QGPS=0" "$GNSS_AT_CMD_DEV"
@@ -243,6 +281,18 @@ do
 			    bDisable=1
 			fi
 		;;
+		share)
+			bCmd=1
+			bForwarding=1
+			shift
+			scriptOption0="$1"
+			shift
+			if [ "$scriptOption0" == "enable" ]; then
+			    bEnable=1
+			else 
+			    bDisable=1
+			fi
+		;;
 		*)
 			echo "ERROR: Invalid Argument: $1"
 			usage
@@ -275,6 +325,12 @@ if [ $bCmd == 1 ]; then
             gnssEnable
         elif [ $bDisable == 1 ]; then
             gnssDisable
+        fi
+    elif [ $bForwarding == 1 ]; then
+        if [ $bEnable == 1 ]; then
+            setFirewallConfig 1
+        elif [ $bDisable == 1 ]; then
+            setFirewallConfig 0
         fi
     elif [ $bConfig == 1 ]; then
         setupConfig
