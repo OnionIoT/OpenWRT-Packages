@@ -49,7 +49,7 @@ define Package/nfc-utils
 	$(call Package/libnfc/Default)
 	SECTION:=utils
 	CATEGORY:=Utilities
-	DEPENDS:=+libnfc +xxd +libtirpc
+	DEPENDS:=+libnfc +xxd
 endef
 
 define Package/nfc-utils/description
