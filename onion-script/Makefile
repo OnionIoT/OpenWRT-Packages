@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-script
 PKG_VERSION:=0.3
-PKG_RELEASE:=5
+PKG_RELEASE:=6
 
 
 PKG_SOURCE_PROTO:=git
@@ -35,6 +35,19 @@ define Package/$(PKG_NAME)/description
 Command to help with Onion product automation
 endef
 
+define Package/ethernet-mode
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Utilities
+	TITLE:=Program to help automate production-time ethernet configuration
+	DEPENDS:=onion-script
+endef
+
+
+define Package/ethernet-mode/description
+Program to help automate production-time ethernet configuration
+endef
+
 #define Package/$(PKG_NAME)/Build/Compile
 #	$(MAKE) -C $(PKG_BUILD_DIR)
 #endef
@@ -44,4 +57,10 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/onion.sh $(1)/usr/bin/onion
 endef
 
+define Package/ethernet-mode/install
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/ethernet-mode.sh $(1)/etc/init.d/ethernet-mode
+endef
+
 $(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,ethernet-mode))
