@@ -1,14 +1,13 @@
 #!/bin/sh
 #### Description: USB autorun script for the Onion Omega2
-#### Pleace autorun.sh and auth.txt under the USB root directory
+#### Place autorun.sh and auth.txt under the USB root directory
 #### Written by: Onion Corporation https://onion.io
 
 authFile="auth.txt"
 scriptFile="autorun.sh"
 logFile="autorun.log"
 usbPath=""
-usbPath1="/mnt/sda1"
-usbPath2="/mnt/sda"
+usbPath1="/mnt/sd*"
 
 . /lib/ramips.sh
 ledPath="/sys/class/leds/$(ramips_board_name):amber:system"
@@ -53,24 +52,26 @@ check_auth () {
 }
 
 usbAutorunStart () {
-    sleep 2
+    echo "usb autorun started"
+
+    sleep 4
     # do nothing if no autorun script is found
     [ -f $usbPath1/$scriptFile ] && {
-        usbPath="$usbPath1"
-    }
-    [ -f $usbPath2/$scriptFile ] && {
-        usbPath="$usbPath2"
+        usbPath=`ls $usbPath1/$scriptFile | head -n 1 | sed -e 's/autorun.sh//g'`
     }
     
     [ "$usbPath" == "" ] && {
+        echo "autorun file not found, exit"
         end
     }
 
-    blink_start
+    blink_start     # no need to flash Omega system LED unless USB autorun is actually running
     log_write "Omega Autorun Started"
     check_auth
 
-    sh $usbPath/$scriptFile >> $usbPath/$logFile
+    cd $usbPath
+
+    sh $scriptFile >> $usbPath/$logFile
 
     blink_stop
     log_write "Omega Autorun Ended"
@@ -87,6 +88,5 @@ if [ "$1" == "start" ]; then
 elif [ "$1" == "stop" ]; then
     usbAutorunStop
 fi
-
 
 
