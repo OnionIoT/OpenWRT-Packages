@@ -1,64 +1,44 @@
-# 
-# Copyright (C) 2006-2010 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-# Initial port of shellinabox to OpenWrt - Jan Jaeger 25-MAR-2010
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shellinabox
-PKG_VERSION:=2.10
-PKG_RELEASE:=1
+PKG_VERSION:=2.20
+PKG_RELEASE:=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_URL:=https://github.com/OnionIoT/shellinabox.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+PKG_SOURCE_URL:=https://github.com/shellinabox/shellinabox.git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=98e6eebc6c2026fb126a458c6cb5a2541447258e
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
-#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-#PKG_SOURCE_URL:=http://shellinabox.googlecode.com/files
-#PKG_MD5SUM:=0e144910d85d92edc54702ab9c46f032
+PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/shellinabox
-	SECTION:=net
-	CATEGORY:=Network
-	TITLE:=Shell In A Box
-	DEPENDS:= zlib
-	URL:=http://shellinabox.googlecode.com
+define Package/shellinabox 
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=a web based terminal emulator
+  URL:=https://github.com/shellinabox/shellinabox
+  DEPENDS:=+zlib +libopenssl +busybox +@BUSYBOX_CUSTOM +@BUSYBOX_CONFIG_LOGIN
 endef
 
 define Package/shellinabox/description
-Web based AJAX terminal emulator
+	Shell In A Box implements a web server that 
+	can export arbitrary command line tools to 
+	a web based terminal emulator. This emulator 
+	is accessible to any JavaScript and CSS 
+	enabled web browser and does not require any additional browser plugins.
 endef
 
-define Build/Configure
-	$(call Build/Configure/Default)
-endef
-
-define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-		$(TARGET_CONFIGURE_OPTS) \
-		CFLAGS="$(TARGET_CFLAGS)" \
-		BINDIR="/usr/sbin" \
-		all
-endef
+CONFIGURE_ARGS += --disable-utmp
 
 define Package/shellinabox/install
-	# install the binary
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/shellinaboxd $(1)/usr/sbin/
-	# install the init.d file
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/$(PKG_NAME).init $(1)/etc/init.d/$(PKG_NAME)
-	# install the css file
-	$(INSTALL_DIR) $(1)/usr/lib/shellinabox
-	$(INSTALL_BIN) ./files/style.css $(1)/usr/lib/shellinabox/style.css
+	$(INSTALL_DIR) $(1)/usr/sbin $(1)/etc/init.d $(1)/etc/shellinabox
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/shellinaboxd $(1)/usr/sbin
+	$(INSTALL_BIN) ./files/shellinaboxd.init $(1)/etc/init.d/shellinaboxd
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/shellinabox/*.css $(1)/etc/shellinabox
+	$(PKG_BUILD_DIR)/make-chained-cert.sh > $(1)/etc/shellinabox/certificate.pem
 endef
 
 $(eval $(call BuildPackage,shellinabox))
