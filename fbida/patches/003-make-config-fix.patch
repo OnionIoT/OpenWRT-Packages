@@ -1,0 +1,11 @@
+Index: fbida-2.09/mk/Autoconf.mk
+===================================================================
+--- fbida-2.09.orig/mk/Autoconf.mk
++++ fbida-2.09/mk/Autoconf.mk
+@@ -164,5 +164,6 @@ config: Make.config
+ Make.config: $(srcdir)/GNUmakefile
+ 	@echo -e "$(make-config-q)" > $@
+ 	@echo
++	@sed -e 's/^-e //' -i Make.config
+ 	@echo "Make.config written, edit if needed"
+ 	@echo

@@ -37,6 +37,8 @@ define Package/fbi
 	TITLE:=This is a image viewer for the linux framebuffer console.
 endef
 
+# example: fbi -d /dev/fb0 -notty -nocomments --noverbose <FILE>
+
 # define Package/fbgs
 #     $(call Package/fbida)
 #     TITLE:=A wrapper script for viewing ps/pdf files on the framebuffer console using fbi.
