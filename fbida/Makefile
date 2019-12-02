@@ -10,9 +10,14 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=fbida
 PKG_VERSION:=2.09
 
+#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+#PKG_SOURCE_URL:=http://dl.bytesex.org/releases/fbida/
+#PKG_MD5SUM:=62415c7cb28d995f9d317868de0f2830
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_VERSION:=0d8c9ea5f6bec9af8d87b26540d031af70008063
+PKG_SOURCE_URL:=https://github.com/OnionIoT/fbida.git
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://dl.bytesex.org/releases/fbida/
-PKG_MD5SUM:=62415c7cb28d995f9d317868de0f2830
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
