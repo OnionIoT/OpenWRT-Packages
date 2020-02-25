@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-dash-base
 PKG_VERSION:=1.0.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -37,6 +37,7 @@ endef
 define Package/omega2-dash-base/install
 	$(INSTALL_DIR) $(1)/etc/modules.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/08-fbtft-device $(1)/etc/modules.d/08-fbtft-device
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/splash.sh $(1)/usr/bin/o2-dash-init
 endef
 
 $(eval $(call BuildPackage,omega2-dash-base))
