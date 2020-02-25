@@ -35,7 +35,7 @@ endef
 
 
 define Package/omega2-dash-base/install
-	$(INSTALL_DIR) $(1)/etc/modules.d
+	$(INSTALL_DIR) $(1)/etc/modules.d $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/08-fbtft-device $(1)/etc/modules.d/08-fbtft-device
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/splash.sh $(1)/usr/bin/o2-dash-init
 endef
