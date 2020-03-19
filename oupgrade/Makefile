@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oupgrade
-PKG_VERSION:=0.3
+PKG_VERSION:=0.4
 PKG_RELEASE:=1
 
 
@@ -40,8 +40,9 @@ endef
 #endef
 
 define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/oupgrade.sh $(1)/usr/bin/oupgrade
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/init.d/oupgrade $(1)/etc/init.d/oupgrade
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
