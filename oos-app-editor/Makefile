@@ -9,12 +9,12 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=oos-app-code-editor
-PKG_VERSION:=1.0.3
+PKG_VERSION:=1.0.4
 PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=HEAD # dev for dev branch, HEAD for master
+PKG_SOURCE_VERSION:=b2ef139219d2f931465f11306e651d3832262227
 PKG_SOURCE_URL:=https://github.com/Codiad/Codiad.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.gz
