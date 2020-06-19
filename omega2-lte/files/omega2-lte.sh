@@ -219,7 +219,7 @@ gnssEnable () {
 #  no arguments
 gnssDisable () {
     _Print "> Disabling GNSS data collection"
-    sendAtCmd "AT+QGPS=0" "$GNSS_AT_CMD_DEV"
+    sendAtCmd "AT+QGPSEND" "$GNSS_AT_CMD_DEV"
 }
 
 ########################################
