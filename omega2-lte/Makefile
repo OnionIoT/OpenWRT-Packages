@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-lte-base
-PKG_VERSION:=1.0.1
+PKG_VERSION:=1.0.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -34,7 +34,7 @@ Omega2 LTE base packages and configuration
 endef
 
 
-TARGET_CFLAGS += $(FPIC) 
+TARGET_CFLAGS += $(FPIC)
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
@@ -47,7 +47,6 @@ endef
 define Package/omega2-lte-base/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/quectel-CM $(1)/usr/bin/lted
-	$(INSTALL_BIN) ./files/lted-run.sh  $(1)/usr/bin/lted-run
 	$(INSTALL_BIN) ./files/init.d/lted.sh  $(1)/etc/init.d/lted
 	$(INSTALL_BIN) ./files/omega2-lte.sh  $(1)/usr/bin/o2lte
 endef
