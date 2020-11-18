@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=adc-exp
 PKG_VERSION:=0.3
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 
 
 PKG_SOURCE_PROTO:=git
