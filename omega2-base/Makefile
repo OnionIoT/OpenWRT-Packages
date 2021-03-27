@@ -21,7 +21,7 @@ define Package/omega2-base
 	CATEGORY:=Onion
 	SUBMENU:=Base system
 	TITLE:=Omega2 family base packages and configuration
-	DEPENDS:=+block-mount +blockd +ca-certificates +kmod-nls-cp437 +kmod-nls-iso8859-1 +kmod-nls-utf8 +kmod-sdhci +kmod-spi-dev +kmod-usb-storage +kmod-usb-storage-extras +odhcpd +wget
+	DEPENDS:=+block-mount +blockd +ca-certificates +kmod-nls-cp437 +kmod-nls-iso8859-1 +kmod-nls-utf8 +kmod-sdhci +kmod-spi-dev +kmod-usb-storage +kmod-usb-storage-extras +wget
 endef
 
 define Package/omega2-base/description
