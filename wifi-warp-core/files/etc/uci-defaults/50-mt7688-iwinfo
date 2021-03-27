@@ -1,7 +1,0 @@
-#!/bin/sh
-
-[ -f /usr/bin/iwinfo.rt ] && mv /usr/bin/iwinfo.rt /usr/bin/iwinfo
-# fixed below command so /usr/lib version gets overwritten
-[ -f /lib/libiwinfo.so ] && mv /lib/libiwinfo.so /usr/lib/libiwinfo.so
-
-return 0

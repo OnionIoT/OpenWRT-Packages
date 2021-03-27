@@ -1,3 +1,0 @@
-fb_ili9341
-# horizontal screen with tty
-fbtft_device custom name=fb_ili9341 busnum=0 cs=1 gpios=dc:17,reset:16 speed=98985984 txbuflen=153600 rotate=90 width=240 height=320 bgr=1

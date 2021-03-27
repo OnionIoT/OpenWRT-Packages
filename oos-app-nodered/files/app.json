@@ -1,7 +1,0 @@
-{
-  "id": "oos-app-nodered",
-  "name": "Node-Red",
-  "icon": "icon.svg",
-  "params": {  "url": "http://{{host}}:1880" },
-  "description": "Node-Red Graphical Programming interface"
-}

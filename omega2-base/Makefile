@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Onion Corporation
+# Copyright (C) 2021 Onion Corporation
 #
 # Author: Lazar Demin  <lazar@onion.io>
 #
@@ -21,23 +21,11 @@ define Package/omega2-base
 	CATEGORY:=Onion
 	SUBMENU:=Base system
 	TITLE:=Omega2 family base packages and configuration
-	#DEPENDS:=
+	DEPENDS:=+block-mount +blockd +ca-certificates +kmod-nls-cp437 +kmod-nls-iso8859-1 +kmod-nls-utf8 +kmod-regmap +kmod-sdhci +kmod-spi-dev +kmod-usb-storage +kmod-usb-storage-extras +odhcpd +wget
 endef
 
 define Package/omega2-base/description
 Omega2 family base packages and configuration
-endef
-
-define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)/
-	$(CP) ./files/* $(PKG_BUILD_DIR)/
-endef
-
-
-define Package/omega2-base/install
-	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/hotplug.d/usb/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/hotplug.d/usb/20-autorun.sh $(1)/etc/hotplug.d/usb/20-autorun
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/usbAutorun.sh  $(1)/usr/bin/usbAutorun
 endef
 
 $(eval $(call BuildPackage,omega2-base))
