@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2019 Lukas Zeller <luz@plan44.ch>
+# Copyright (C) 2017-2021 Lukas Zeller <luz@plan44.ch>
 # See LICENSE for more information.
 #
 # Completely rewritten, but made compatible with and partially based on code snippets from
@@ -18,9 +18,9 @@ include $(INCLUDE_DIR)/kernel.mk
 # name
 PKG_NAME:=p44-ledchain
 # version of what we are downloading
-PKG_VERSION:=2.0
+PKG_VERSION:=6
 # version of this makefile
-PKG_RELEASE:=7
+PKG_RELEASE:=9
 
 PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/$(PKG_NAME)
 PKG_CHECK_FORMAT_SECURITY:=0
