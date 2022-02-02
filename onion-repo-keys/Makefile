@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-repo-keys
-PKG_VERSION:=0.1
+PKG_VERSION:=1.0.0
 PKG_RELEASE:=1
 
 #PKG_FILE_DEPENDS:=$(PLATFORM_DIR)/ $(GENERIC_PLATFORM_DIR)/base-files/
@@ -45,8 +45,9 @@ endef
 
 define Package/$(PKG_NAME)/install
 	mkdir -p $(1)/etc/opkg/keys
-	$(CP) ./files/onion-key.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/onion-key.pub`
-	$(CP) ./files/omega2-repo.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/omega2-repo.pub`
+	# $(CP) ./files/onion-key.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/onion-key.pub`
+	# $(CP) ./files/omega2-repo.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/omega2-repo.pub`
+	$(CP) ./files/openwrt21.pub $(1)/etc/opkg/keys/`$(STAGING_DIR_HOST)/bin/usign -F -p ./files/openwrt21.pub`
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
