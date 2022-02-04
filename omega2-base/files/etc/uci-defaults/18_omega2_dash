@@ -1,0 +1,23 @@
+#!/bin/sh
+
+## Adding Omega2 Dash splash screen to rc.local
+
+. /lib/ramips.sh
+board=$(ramips_board_name)
+
+[ "$board" == "omega2dash" ] && {
+	
+echo "
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file runs the 
+# Omega2 Pro initialization script.
+
+# disable the blinking cursor
+echo 0 > /sys/class/graphics/fbcon/cursor_blink
+
+# display the splash screen text
+/usr/bin/o2-dash-init > /dev/tty1
+
+exit 0" > /etc/rc.local
+
+}

@@ -28,6 +28,18 @@ define Package/omega2-base/description
 Omega2 family base packages and configuration
 endef
 
+define Package/omega2-base-files
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Base system
+	TITLE:=Omega2 family base configuration files
+	#DEPENDS:=
+endef
+
+define Package/omega2-base-files/description
+Omega2 family base configuration files
+endef
+
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)/
 	$(CP) ./files/* $(PKG_BUILD_DIR)/
@@ -36,7 +48,18 @@ endef
 
 define Package/omega2-base/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/omega2selfreport.sh  $(1)/usr/bin/omega2selfreport
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/omega2selfreport.sh  $(1)/usr/bin/omega2selfreport
+endef
+
+define Package/omega2-base-files/install
+	$(INSTALL_DIR) $(1)/etc/uci-defaults/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/uci-defaults/12_onion_defaults $(1)/etc/uci-defaults/12_onion_defaults
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/uci-defaults/13_hostname $(1)/etc/uci-defaults/13_hostname
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/uci-defaults/14_banner $(1)/etc/uci-defaults/14_banner
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/uci-defaults/15_network $(1)/etc/uci-defaults/15_network
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/uci-defaults/16_block_mount $(1)/etc/uci-defaults/16_block_mount
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/uci-defaults/98_opkg $(1)/etc/uci-defaults/98_opkg
 endef
 
 $(eval $(call BuildPackage,omega2-base))
+$(eval $(call BuildPackage,omega2-base-files))

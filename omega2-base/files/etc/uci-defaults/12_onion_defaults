@@ -1,0 +1,18 @@
+#!/bin/sh
+
+uci import onion < /dev/null
+
+uci -q batch <<-EOF > /dev/null
+	set onion.onion='onion'
+	set onion.onion.version='0.4.0'
+	set onion.onion.build='301'
+
+	set onion.oupgrade='oupgrade'
+	set onion.api_url='https://api.onioniot.com/firmware'
+	set onion.ack_upgrade='1'
+	set onion.auto_update='0'
+	set onion.update_frequency='monthly'
+	commit onion
+EOF
+
+exit 0

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# adding Onion feeds
+# echo "src/gz omega2_core http://repo.onioniot.com/omega2/packages/openwrt-21.02/core
+# src/gz omega2_base http://repo.onioniot.com/omega2/packages/openwrt-21.02/base
+# src/gz omega2_packages http://repo.onioniot.com/omega2/packages/openwrt-21.02/packages
+# src/gz omega2_onion http://repo.onioniot.com/omega2/packages/openwrt-21.02/onion" \
+# >> /etc/opkg/distfeeds.conf
+echo "src/gz omega2_onion http://repo.onioniot.com/omega2/packages/openwrt-21.02.1/onion" \
+>> /etc/opkg/distfeeds.conf
+
+# remove incompatible feeds (openwrt_core and openwrt_onion)
+sed -i /openwrt_[oc]/d /etc/opkg/distfeeds.conf
+
+exit 0
