@@ -9,7 +9,7 @@ readMacAddr () {
 readUci () {
   local value
   value=$(uci -q get $1 2> /dev/null)
-  echo "$value" 
+  echo "$value"
 }
 
 readVersionNumber () {
@@ -33,12 +33,18 @@ readDeviceName () {
   echo "$device"
 }
 
+getCrc () {
+  crc=$(echo $1$@ | sha256sum)
+  echo $crc
+}
+
 main () {
   mac=$(readMacAddr)
   versionNumber=$(readVersionNumber)
   device=$(readDeviceName)
+  crc=$(getCrc $mac $versionNumber $device)
 
-  echo -e "${mac}\t${versionNumber}\t${device}"
+  echo -e "${mac}\t${versionNumber}\t${device}\t${crc}"
 }
 
 main
