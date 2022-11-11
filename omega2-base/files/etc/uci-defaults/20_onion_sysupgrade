@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if ! grep ^'/root/' /etc/sysupgrade.conf; then
+	echo "/root/" >> /etc/sysupgrade.conf
+fi
+
+exit 0

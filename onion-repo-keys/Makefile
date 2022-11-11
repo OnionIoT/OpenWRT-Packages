@@ -9,7 +9,7 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-repo-keys
-PKG_VERSION:=1.0.0
+PKG_VERSION:=22.03.2
 PKG_RELEASE:=1
 
 #PKG_FILE_DEPENDS:=$(PLATFORM_DIR)/ $(GENERIC_PLATFORM_DIR)/base-files/

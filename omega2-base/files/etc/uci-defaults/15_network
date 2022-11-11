@@ -1,24 +1,40 @@
 #!/bin/sh
 
+MAC_ID=$(cat /sys/class/net/eth0/address | tr -d ':' | tail -c5)
+HOSTNAME="Omega-${MAC_ID}"
+
 uci -q batch <<-EOF > /dev/null
+	set network.lan.ipaddr='192.168.4.1'
+
+	del_list network.@device[0].ports='eth0'
+	set network.wan='interface'
+	set network.wan.proto='dhcp'
+	set network.wan.device='eth0'
+	set network.wan.hostname="${HOSTNAME}"
+
 	set network.wlan='interface'
-	set network.wlan.type='bridge'
+	set network.wlan.device='ra0'
 	set network.wlan.proto='static'
 	set network.wlan.ipaddr='192.168.3.1'
 	set network.wlan.netmask='255.255.255.0'
 	set network.wlan.ip6assign='60'
+
 	set network.wwan='interface'
 	set network.wwan.proto='dhcp'
-	set network.wwan.hostname='OnionOmega2'
-	set network.lan.ipaddr='192.168.4.1'
+	set network.wwan.device='apcli0'
+	set network.wwan.hostname="${HOSTNAME}"
+
 	commit network
 
 	set wireless.@wifi-device[0].disabled='0'
 	set wireless.@wifi-device[0].channel='auto'
 	set wireless.@wifi-device[0].htmode='HT40'
+	set wireless.@wifi-iface[0].ifname='ra0'
 	set wireless.@wifi-iface[0].network='wlan'
+	set wireless.@wifi-iface[0].ssid="${HOSTNAME}"
 	set wireless.@wifi-iface[0].encryption='psk2'
 	set wireless.@wifi-iface[0].key='12345678'
+
 	set wireless.client=wifi-iface
 	set wireless.client.device='radio0'
 	set wireless.client.network='wwan'
@@ -26,21 +42,19 @@ uci -q batch <<-EOF > /dev/null
 	set wireless.client.ssid=MySSID
  	set wireless.client.key=MyKey
 	set wireless.client.encryption=psk2
+	set wireless.client.ifname=apcli0
 	set wireless.client.disabled=1
+
 	commit wireless
 
-	set firewall.@zone[0].network='wlan'
-	set firewall.@defaults[0].disable_ipv6='1'
-	set firewall.@zone[0].network='wlan'
-	set firewall.@zone[1].network='wwan'
+	add_list firewall.@zone[0].network='wlan'
+
+	del_list firewall.@zone[1].network='wan6'
+	add_list firewall.@zone[1].network='wwan'
+	set firewall.@zone[1].mtu_fix='1'
 	set firewall.@zone[1].input='ACCEPT'
-	set firewall.@zone[2].name='wan'
-	set firewall.@zone[2].masq='1'
-	set firewall.@zone[2].mtu_fix='1'
-	set firewall.@zone[2].network='wan'
-	set firewall.@zone[2].input='ACCEPT'
-	set firewall.@zone[2].output='ACCEPT'
-	set firewall.@zone[2].forward='ACCEPT'
+	set firewall.@zone[1].forward='ACCEPT'
+
 	commit firewall
 
 	set dhcp.wlan='dhcp'
@@ -51,6 +65,9 @@ uci -q batch <<-EOF > /dev/null
 	set dhcp.wlan.dhcpv4='server'
 	set dhcp.wlan.dhcpv6='server'
 	set dhcp.wlan.ra='server'
+	set dhcp.wlan.ra_slaac='1'
+	add_list dhcp.wlan.ra_flags='managed-config'
+	add_list dhcp.wlan.ra_flags='other-config'
 	commit dhcp
 EOF
 
