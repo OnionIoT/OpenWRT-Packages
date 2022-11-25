@@ -9,8 +9,8 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=onion-script
-PKG_VERSION:=0.3
-PKG_RELEASE:=8
+PKG_VERSION:=0.4
+PKG_RELEASE:=1
 
 
 PKG_SOURCE_PROTO:=git
