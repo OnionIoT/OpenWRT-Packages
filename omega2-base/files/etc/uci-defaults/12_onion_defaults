@@ -10,11 +10,6 @@ uci -q batch <<-EOF > /dev/null
 	set onion.onion.version=${VERSION_ID}
 	set onion.onion.build="${BUILD:-1}"
 
-	set onion.oupgrade='oupgrade'
-	set onion.oupgrade.api_url='https://api.onioniot.com/firmware'
-	set onion.oupgrade.ack_upgrade='1'
-	set onion.oupgrade.auto_update='0'
-	set onion.oupgrade.update_frequency='monthly'
 	commit onion
 EOF
 
