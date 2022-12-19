@@ -1,3 +1,3 @@
 # OpenWRT-Packages
 
-Onion Packages for OpenWRT/LEDE firmware. Meant for the Onion Omega2 & Omega2+
+Onion Packages for OpenWRT firmware. Meant for the Onion Omega2 & Omega2+ devices
