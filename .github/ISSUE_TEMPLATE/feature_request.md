@@ -1,11 +1,15 @@
 ---
-name: Feature request
+name: Improvement Suggestion/Feature Request
 about: Suggest an idea for this project
 title: ''
 labels: enhancement
 assignees: ''
 
 ---
+
+# Context
+
+Specify which branch of this repo or firmware version you're referring to
 
 # Motivation
 
