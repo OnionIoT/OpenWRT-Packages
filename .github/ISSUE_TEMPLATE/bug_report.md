@@ -34,6 +34,7 @@ If applicable, add screenshots or terminal output to help explain your problem.
  - Firmware version: [e.g. 22.03.02 b124]
  - Package name [e.g. omega2-ctrl]
  - Package Version [e.g. 22-1]
+ - Repo branch (if applicable) [e.g. openwrt-22.03]
 
 # **Additional context**
 Add any other context about the problem here.
