@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.2
-PKG_RELEASE:=101
+PKG_RELEASE:=102
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -79,6 +79,7 @@ define Package/omega2-base/install
 	$(INSTALL_DIR) $(1)/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/omega2selfreport.sh  $(1)/usr/bin/omega2selfreport
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/lib/ramips.sh $(1)/lib/ramips.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/gpio-lookup $(1)/usr/bin/gpio-lookup
 endef
 
 define Package/omega2-base-files/install
