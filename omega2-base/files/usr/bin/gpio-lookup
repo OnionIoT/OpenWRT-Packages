@@ -1,0 +1,34 @@
+#!/bin/sh
+
+usage() {
+	echo "$0 <onion gpio>"
+}
+
+if [ $# -lt 1 ]; then
+	usage
+	exit 1
+fi
+
+GPIO_INPUT=$1
+GPIO_MIN=0
+GPIO_MAX=63
+ARCH_NR_GPIOS=512
+
+if ! validate_data "range($GPIO_MIN, $GPIO_MAX)" "$GPIO_INPUT" 2>/dev/null; then
+	echo "-1"
+	exit 1
+fi
+
+GPIO_CHIP=$(( $(( GPIO_INPUT / 32 )) + 1 ))
+GPIO_CHIP_BASE=$(( ARCH_NR_GPIOS - $(( 32 * GPIO_CHIP )) ))
+GPIO_OFFSET=$(( GPIO_INPUT % 32 ))
+
+GPIO=$(( GPIO_CHIP_BASE + GPIO_OFFSET ))
+
+gpio_sysfs="/sys/class/gpio/gpiochip${GPIO_CHIP_BASE}"
+if [ ! -d "$gpio_sysfs" ]; then
+	echo "gpio not found"
+	exit 1
+fi
+
+echo "$GPIO"
