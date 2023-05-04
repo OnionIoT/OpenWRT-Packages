@@ -28,7 +28,7 @@ resource "aws_codebuild_project" "step_build_project" {
 
   environment {
     compute_type    = var.compute_type
-    image           = "aws/codebuild/standard:5.0"
+    image           = "aws/codebuild/standard:7.0"
     type            = "LINUX_CONTAINER"
     privileged_mode = var.is_privileged_mode
     dynamic "environment_variable" {
