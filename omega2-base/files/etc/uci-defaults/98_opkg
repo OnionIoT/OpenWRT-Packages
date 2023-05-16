@@ -2,6 +2,15 @@
 
 . /etc/os-release
 
-echo "src/gz omega2_onion http://repo.onioniot.com/omega2/packages/openwrt-${VERSION_ID}/onion" >> /etc/opkg/customfeeds.conf
+echo "
+src/gz onion_core http://downloads.onioniot.com/releases/${VERSION_ID}/targets/${OPENWRT_BOARD}/packages
+src/gz onion_base http://downloads.onioniot.com/releases/${VERSION_ID}/packages/${OPENWRT_ARCH}/base
+src/gz onion_packages http://downloads.onioniot.com/releases/${VERSION_ID}/packages/${OPENWRT_ARCH}/packages
+src/gz onion_routing http://downloads.onioniot.com/releases/${VERSION_ID}/packages/${OPENWRT_ARCH}/routing
+src/gz onion_telephony http://downloads.onioniot.com/releases/${VERSION_ID}/packages/${OPENWRT_ARCH}/telephony
+src/gz onion_openwrt_packages http://repo.onioniot.com/omega2/packages/openwrt-${VERSION_ID}/onion
+" > /etc/opkg/customfeeds.conf
+
+sed -i -e '/openwrt_core/d' -e 's/https/http/g' /etc/opkg/distfeeds.conf
 
 exit 0

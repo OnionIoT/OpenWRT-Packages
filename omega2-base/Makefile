@@ -22,11 +22,10 @@ define Package/omega2-base
 	SUBMENU:=Base system
 	TITLE:=Omega2 family base packages and configuration
 	DEPENDS:=\
-		+ca-certificates +wget \
-		+block-mount +blockd +fdisk +e2fsprogs +kmod-mmc +kmod-usb-storage \
+		+kmod-mmc +kmod-usb-storage \
 		+kmod-fs-vfat +kmod-fs-ext4 +kmod-nls-cp437 +kmod-nls-iso8859-1 +kmod-nls-utf8 \
 		+kmod-sdhci +kmod-spi-dev \
-		+kmod-i2c-mt7628 +i2c-tools
+		+kmod-i2c-mt7628
 endef
 
 define Package/omega2-base/description
