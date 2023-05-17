@@ -1,7 +1,7 @@
 #!/bin/sh
 
-m1=$(cat /sys/class/net/wlan0/address | awk -F':' '{ print $5 }' | awk '{print toupper($0)}')
-m2=$(cat /sys/class/net/wlan0/address | awk -F':' '{ print $6 }' | awk '{print toupper($0)}')
+m1=$(cat /sys/class/net/wlan0/address | cut -d: -f5)
+m2=$(cat /sys/class/net/wlan0/address | cut -d: -f6)
 
 uci -q batch <<-EOF > /dev/null
 	set system.@system[0].hostname=Omega-$m1$m2
