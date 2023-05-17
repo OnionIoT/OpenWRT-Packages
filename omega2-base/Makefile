@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.3
-PKG_RELEASE:=104
+PKG_RELEASE:=105
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
