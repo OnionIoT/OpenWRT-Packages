@@ -23,7 +23,7 @@ This page has instructions on using this new firmware:
   * [I2C](#i2c)
   * [SPI](#spi)
   * [GPIO](#gpio)
-- [Feedback]
+- [Feedback](#feedback)
 
 # Installing the New Firmware
 
