@@ -11,6 +11,6 @@ src/gz onion_telephony http://downloads.onioniot.com/releases/${VERSION_ID}/pack
 src/gz onion_openwrt_packages http://repo.onioniot.com/omega2/packages/openwrt-${VERSION_ID}/onion
 " > /etc/opkg/customfeeds.conf
 
-sed -i -e '/openwrt_core/d' -e 's/https/http/g' /etc/opkg/distfeeds.conf
+sed -i -e '/openwrt_core/d' /etc/opkg/distfeeds.conf
 
 exit 0
