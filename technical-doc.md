@@ -23,6 +23,9 @@ This page has instructions on using this new firmware:
   * [I2C](#i2c)
   * [SPI](#spi)
   * [GPIO](#gpio)
+    + [`gpio-lookup` utility](#gpio-lookup-utility)
+- [Software](#software)
+  * [NodeJS v16.19](#nodejs-v1619)
 - [Feedback](#feedback)
 
 # Installing the New Firmware
@@ -41,8 +44,8 @@ Before you install firmware to your device, you'll need to decide which firmware
 
 First, you'll need to find the firmware for your device:
 
-* Firmware for Omega2/Omega2S starts with `onion_omega2-`
-* Firmware for Omega2**+**/Omega2S**+** starts with `onion_omega2p-`.
+* Firmware for Omega2 and Omega2S starts with `onion_omega2-`
+* Firmware for Omega2**+** and Omega2S**+** starts with `onion_omega2p-`.
 
 Then, you'll want to select the **highest** OpenWRT release and the **latest** build date. This will ensure you're using the very latest available firmware.
 
@@ -57,13 +60,13 @@ Once you know which firmware image you want to install on your device:
 
 1. Connect to the command line of your device
 1. Go to the `/tmp` directory: `cd /tmp`
-1. Download the firmware image: `wget http://repo.onioniot.com/omega2/images/openwrt-22.03/<SELECTED-FIRMWARE-IMAGE>.bin`
+1. Download the firmware image: `wget http://repo.onioniot.com.s3.amazonaws.com/omega2/images/openwrt-22.03/<SELECTED-FIRMWARE-IMAGE>.bin`
 1. Install the firwmare: `sysupgrade -F -n -v <SELECTED-FIRMWARE-IMAGE>.bin`
 
-Say you selected firmware `onion_omega2p-22.03.2-20230221.bin`:
+Say you selected firmware `onion_omega2p-22.03.3-20230526.bin`:
 
-* Your download command would be `wget http://repo.onioniot.com/omega2/images/openwrt-22.03/onion_omega2p-22.03.2-20230221.bin`
-* Your installation command would be `sysupgrade -F -n -v onion_omega2p-22.03.2-20230221.bin`
+* Your download command would be `wget http://repo.onioniot.com.s3.amazonaws.com/omega2/images/openwrt-22.03/onion_omega2p-22.03.3-20230526.bin`
+* Your installation command would be `sysupgrade -F -n -v onion_omega2p-22.03.3-20230526.bin`
 
 
 ## Updating
@@ -268,6 +271,30 @@ Here are a few examples of how to use `gpio-lookup`.
 ```
 
 For valid GPIO numbers, `gpio-lookup` would display the corresponding kernel GPIO number, for all other cases It would display `-1` with a non-zero exit code.
+
+# Software 
+
+Anything software-related for the new firmware.
+
+## NodeJS v16.19
+
+Starting in firmware `22.03.3-20230526`, the Omega2 supports NodeJS v16.19!
+
+To install Node, first make sure your Omega2 is connected to the internet, then run:
+
+```
+opkg update
+opkg install node
+```
+
+Installation may take a few minutes. 
+
+Afterwards you will be able to run your own Node programs on the Omega2 or activate the Node REPL
+
+```
+root@Omega-f195:~# node -v
+v16.19.0
+```
 
 # Feedback
 
