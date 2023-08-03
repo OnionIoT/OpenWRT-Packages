@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.5
-PKG_RELEASE:=20230726
+PKG_RELEASE:=20230803
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -69,6 +69,19 @@ define Package/omega2-base-passwd/description
 Omega2 family base configuration for default password files
 endef
 
+define Package/omega2-script
+	SECTION:=onion
+	CATEGORY:=Onion
+	SUBMENU:=Base system
+	TITLE:=Omega2 utility script
+	DEPENDS:=+bc
+	# TODO: add kmod-pwm-mediatek-ramips to dependencies?
+endef
+
+define Package/omega2-script/description
+Omega2 utility script
+endef
+
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)/
 	$(CP) ./files/* $(PKG_BUILD_DIR)/
@@ -105,7 +118,14 @@ define Package/omega2-base-passwd/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/etc/shadow $(1)/etc/shadow
 endef
 
+define Package/omega2-script/install
+	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/lib/onion-pwm-lib.sh $(1)/usr/lib/onion-pwm-lib.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/onion.sh $(1)/usr/bin/onion.sh
+endef
+
 $(eval $(call BuildPackage,omega2-base))
 $(eval $(call BuildPackage,omega2-base-files))
 $(eval $(call BuildPackage,omega2-base-passwd))
 $(eval $(call BuildPackage,omega2-usb-autorun))
+$(eval $(call BuildPackage,omega2-script))
