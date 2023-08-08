@@ -4,12 +4,17 @@ LIB_PATH="/usr/lib"
 
 bVerbose=0
 bPwmCommands=0
+bTimeCommands=0
 
 ret=1
 
 if [ -e $LIB_PATH/onion-pwm-lib.sh ]; then
     bPwmCommands=1
     . $LIB_PATH/onion-pwm-lib.sh
+fi
+if [ -e $LIB_PATH/onion-time-lib.sh ]; then
+    bTimeCommands=1
+    . $LIB_PATH/onion-time-lib.sh
 fi
 
 ## Usage
@@ -24,6 +29,9 @@ usage () {
 
     if [ $bPwmCommands -eq 1 ]; then
         pwmUsage
+    fi
+    if [ $bTimeCommands -eq 1 ]; then
+        timeUsage
     fi
 
 	echo ""
@@ -56,6 +64,27 @@ handlePwmOperation() {
     return 0
 }
 
+# Function to handle time operations
+handleTimeOperation() {
+    local command="$2"
+
+    if [ "$command" == "list" ]; then
+        listTimezones
+    elif [ "$command" == "sync" ]; then
+        syncTime
+    elif 	[ "$command" == "set" ]; then
+        shift
+        local timezone="$1"
+        shift
+        local tz="$1"
+        # TODO: add check for valid arguments
+        setTimezone "$timezone" "$tz"
+    else
+        return 1
+    fi
+    return 0
+}
+
 # parse arguments
 while [ "$1" != "" ]
 do
@@ -77,6 +106,18 @@ do
             fi
             shift
             ;;
+        time)
+            if [ $bTimeCommands -eq 1 ]; then
+                shift
+                command="$1"
+                handleTimeOperation "$command"
+                ret=$?
+            else
+                $2="error"
+            fi
+            shift
+            ;;
+        # catch error
         *)
             echo "ERROR: Invalid Argument: $1"
             usage
