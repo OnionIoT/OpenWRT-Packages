@@ -30,6 +30,9 @@ This page has instructions on using this new firmware:
     + [Enabling PWM Pins](#enabling-pwm-pins)
     + [Generating PWM Signals](#generating-pwm-signals)
     + [Stopping the PWM signal](#stopping-the-pwm-signal)
+    + [Writing your own script to generate PWM signals](#writing-your-own-script-to-generate-pwm-signals)
+      - [Generating PWM Signals](#generating-pwm-signals-1)
+      - [Stopping the PWM signal](#stopping-the-pwm-signal-1)
 - [Software](#software)
   * [NodeJS v16.19](#nodejs-v1619)
 - [Feedback](#feedback)
@@ -325,12 +328,12 @@ For GPIO19:
 omega2-ctrl gpiomux set pwm1 pwm
 ```
 
-For GPIO20:
+For GPIO20 (Omega2S only):
 ```
 omega2-ctrl gpiomux set uart2 pwm23
 ```
 
-For GPIO21:
+For GPIO21 (Omega2S only):
 ```
 omega2-ctrl gpiomux set uart2 pwm23
 ```
@@ -338,6 +341,43 @@ omega2-ctrl gpiomux set uart2 pwm23
 **This multiplexing configuration will need to be repeated after each reboot of the Omega.**
 
 ### Generating PWM Signals
+
+To start, we'll need to install the `omega2-script` package:
+
+```
+opkg update
+opkg install omega2-script
+```
+
+Once the pins have been configured for PWM usage, we can configure the PWM hardware module to generate a pwm signal using the following command:
+
+```
+onion pwm <CHANNEL> <DUTY CYCLE> <FREQUENCY>
+```
+
+Where:
+
+* CHANNEL is 0 (GPIO18), 1 (GPIO19), 2 (GPIO20), or 3 (GPIO21)
+  * Remember, Channels 2 & 3 are exposed on the Omega2S only
+* DUTY_CYCLE is the percentage of time the signal is `ON`, expressed 0-100
+* FREQUENCY is the signal frequency, expressed in Hz
+
+### Stopping the PWM signal
+
+To stop and disable the PWM signal:
+
+```
+onion pwm <CHANNEL> disable
+```
+
+
+
+
+### Writing your own script to generate PWM signals
+
+The following explains how the `onion pwm` script command works behind the scenes. In case you're interested in writing your own script.
+
+#### Generating PWM Signals
 
 To start, we'll need to install the `bc` program to help us run the math needed for PWM:
 
@@ -369,9 +409,7 @@ echo "1" > /sys/class/pwm/pwmchip0/pwm${channel}/enable
 echo "${channel}" > /sys/class/pwm/pwmchip0/unexport
 ```
 
-> You can run this line by line in the terminal, or you can put this into a shell script.
-
-### Stopping the PWM signal
+#### Stopping the PWM signal
 
 To disable the PWM channel:
 
