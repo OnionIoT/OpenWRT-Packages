@@ -46,12 +46,12 @@ usage () {
 # Function to handle PWM operations
 handlePwmOperation() {
     local channel="$1"
+    shift
     checkPwmValid "$channel"
     if [ $? -ne 0 ]; then
         return 1
     fi
 
-    shift
     if [ "$1" == "disable" ]; then
         disablePwmChannel "$channel"
     else
@@ -66,14 +66,14 @@ handlePwmOperation() {
 
 # Function to handle time operations
 handleTimeOperation() {
-    local command="$2"
+    local command="$1"
+    shift
 
     if [ "$command" == "list" ]; then
         listTimezones
     elif [ "$command" == "sync" ]; then
         syncTime
-    elif 	[ "$command" == "set" ]; then
-        shift
+    elif [ "$command" == "set" ]; then
         local timezone="$1"
         shift
         local tz="$1"
@@ -98,9 +98,9 @@ do
         pwm)
             if [ $bPwmCommands -eq 1 ]; then
                 shift
-                channel="$1"
-                handlePwmOperation "$channel"
+                handlePwmOperation "$@"
                 ret=$?
+                break
             else
                 $2="error"
             fi
@@ -109,9 +109,9 @@ do
         time)
             if [ $bTimeCommands -eq 1 ]; then
                 shift
-                command="$1"
-                handleTimeOperation "$command"
+                handleTimeOperation "$@"
                 ret=$?
+                break
             else
                 $2="error"
             fi
