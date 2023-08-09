@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.5
-PKG_RELEASE:=20230803
+PKG_RELEASE:=20230809
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -92,6 +92,7 @@ define Package/omega2-base/install
 	$(INSTALL_DIR) $(1)/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/omega2selfreport.sh  $(1)/usr/bin/omega2selfreport
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/lib/ramips.sh $(1)/lib/ramips.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/check-internet.sh  $(1)/usr/bin/check-internet
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/gpio-lookup $(1)/usr/bin/gpio-lookup
 endef
 
@@ -121,7 +122,8 @@ endef
 define Package/omega2-script/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/lib/onion-pwm-lib.sh $(1)/usr/lib/onion-pwm-lib.sh
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/onion.sh $(1)/usr/bin/onion.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/lib/onion-time-lib.sh $(1)/usr/lib/onion-time-lib.sh
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/onion.sh $(1)/usr/bin/onion
 endef
 
 $(eval $(call BuildPackage,omega2-base))
