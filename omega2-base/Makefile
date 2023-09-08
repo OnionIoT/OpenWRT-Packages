@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.5
-PKG_RELEASE:=20230809
+PKG_RELEASE:=20230908
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -50,7 +50,7 @@ define Package/omega2-usb-autorun
 	CATEGORY:=Onion
 	SUBMENU:=Base system
 	TITLE:=Omega2 family USB autorun package
-	DEPENDS:=rpcd
+	DEPENDS:=+rpcd
 endef
 
 define Package/omega2-usb-autorun/description
