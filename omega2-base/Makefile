@@ -50,7 +50,7 @@ define Package/omega2-usb-autorun
 	CATEGORY:=Onion
 	SUBMENU:=Base system
 	TITLE:=Omega2 family USB autorun package
-	#DEPENDS:=
+	DEPENDS:=rpcd
 endef
 
 define Package/omega2-usb-autorun/description
