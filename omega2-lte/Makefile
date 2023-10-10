@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-lte-base
 PKG_VERSION:=1.0.2
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=HEAD
@@ -26,7 +26,7 @@ define Package/omega2-lte-base
 	CATEGORY:=Onion
 	SUBMENU:=Base system
 	TITLE:=Omega2 LTE base packages and configuration
-	DEPENDS:=+usb-modeswitch +kmod-mii +kmod-usb-net +kmod-usb-wdm +kmod-usb-net-qmi-wwan +ogps
+	DEPENDS:=+usb-modeswitch +kmod-mii +kmod-usb-net +kmod-usb-wdm +kmod-usb-net-qmi-wwan
 endef
 
 define Package/omega2-lte-base/description
