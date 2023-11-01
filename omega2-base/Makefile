@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.5
-PKG_RELEASE:=20231010
+PKG_RELEASE:=20231031
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -26,7 +26,7 @@ define Package/omega2-base
 		+block-mount +blockd +fdisk +e2fsprogs +kmod-mmc +kmod-usb-storage \
 		+kmod-fs-vfat +kmod-fs-ext4 +kmod-nls-cp437 +kmod-nls-iso8859-1 +kmod-nls-utf8 \
 		+kmod-sdhci +kmod-spi-dev \
-		+kmod-i2c-mt7628 +i2c-tools
+		+kmod-i2c-mt7628
 endef
 
 define Package/omega2-base/description
