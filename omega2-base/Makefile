@@ -1,6 +1,6 @@
 # Copyright (C) 2021 Onion Corporation
 #
-# Author: Lazar Demin  <lazar@onion.io>
+# Author: Lazar Demin  <lazar@onioniot.com>
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=omega2-base
 PKG_VERSION:=22.03.5
-PKG_RELEASE:=20231031
+PKG_RELEASE:=20231109
 
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
