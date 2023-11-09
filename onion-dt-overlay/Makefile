@@ -65,9 +65,19 @@ define BuildDtbo
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/$(1).dtbo $$(1)/lib/firmware/device-tree/overlays/$(1).dtbo
   endef
 
+  define Package/onion-dt-overlay-$(1)/postinst
+	#!/bin/sh
+
+	if [ -z "$${IPKG_INSTROOT}" ]; then
+		mkdir -p /sys/kernel/config/device-tree/overlays/$(1)
+		cat /lib/firmware/device-tree/overlays/$(1).dtbo > /sys/kernel/config/device-tree/overlays/$(1)/dtbo
+	fi
+  endef
+
   $$(eval $$(call BuildPackage,onion-dt-overlay-$(1)))
 
 endef
 
 $(eval $(call BuildPackage,onion-dt-overlay))
 $(eval $(call BuildDtbo,sw-spi,,Provides SW SPI))
+$(eval $(call BuildDtbo,w1-gpio,+kmod-w1 +kmod-w1-master-gpio +kmod-w1-slave-therm,Provides One Wire GPIO))
