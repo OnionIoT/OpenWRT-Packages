@@ -1,12 +1,13 @@
 #!/bin/sh
 
-m1=$(cat /sys/class/net/wlan0/address | cut -d: -f5)
-m2=$(cat /sys/class/net/wlan0/address | cut -d: -f6)
+MAC_ADDRESS="$(cat /sys/class/net/wlan0/address | tr '[a-z]' '[A-Z]')"
+m1=$(echo $MAC_ADDRESS | cut -d: -f5)
+m2=$(echo $MAC_ADDRESS | cut -d: -f6)
 
 uci -q batch <<-EOF > /dev/null
 	set system.@system[0].hostname=Omega-$m1$m2
-    	set system.@led[0].sysfs='amber:system'
-    	set system.@led[0].trigger='default-on'
+	set system.@led[0].sysfs='amber:system'
+	set system.@led[0].trigger='default-on'
 	commit system
 	set wireless.@wifi-iface[0].ssid='Omega-$m1$m2'
 	commit wireless

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAC_ID=$(cat /sys/class/net/eth0/address | tr -d ':' | tail -c5)
+MAC_ID=$(cat /sys/class/net/wlan0/address | tr -d ':' | tail -c5 | tr '[a-z]' '[A-Z]')
 HOSTNAME="Omega-${MAC_ID}"
 
 uci -q batch <<-EOF > /dev/null
