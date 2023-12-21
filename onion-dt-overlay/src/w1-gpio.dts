@@ -8,7 +8,7 @@
 		__overlay__ {
 			onewire:onewire {
 				compatible = "w1-gpio";
-				gpios = <&gpio 19 0>;
+				gpios = <&gpio 2 0>;
 				status = "okay";
 			};
 		};
