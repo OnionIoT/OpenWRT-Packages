@@ -1,6 +1,10 @@
 
 data "aws_caller_identity" "current" {}
 
+data "aws_codestarconnections_connection" "github_connection" {
+  name = "openwrt-connection-devops"
+}
+
 locals {
   stage      = terraform.workspace
   stage_vars = var.stage_vars[local.stage]
@@ -26,10 +30,10 @@ locals {
   }
 }
 
-resource "aws_codestarconnections_connection" "github_connection" {
-  name          = "${var.project_name}-connection-${local.stage}"
-  provider_type = "GitHub"
-}
+# resource "aws_codestarconnections_connection" "github_connection" {
+#   name          = "${var.project_name}-connection-${local.stage}"
+#   provider_type = "GitHub"
+# }
 
 
 resource "aws_s3_bucket" "codepipeline_bucket" {
@@ -60,7 +64,7 @@ resource "aws_codepipeline" "codepipeline" {
 
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github_connection.arn
+        ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.packages
         BranchName       = local.stage_vars.branch
       }
@@ -77,7 +81,7 @@ resource "aws_codepipeline" "codepipeline" {
 
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github_connection.arn
+        ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.sdk
         BranchName       = local.stage_vars.branch
         DetectChanges    = false
@@ -94,7 +98,7 @@ resource "aws_codepipeline" "codepipeline" {
 
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github_connection.arn
+        ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.image_builder
         BranchName       = local.stage_vars.branch
         DetectChanges    = false
