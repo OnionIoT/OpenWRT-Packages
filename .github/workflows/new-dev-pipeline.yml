@@ -1,0 +1,78 @@
+# This pipeline create a new pipeline in AWS CodePipeline if the branch follows the desired pattern defined in BRANCH_PATTERN.
+name: "New Branch create AWS CodePipeline" 
+
+on:
+  create:
+    branches:
+      - 'openwrt-2*'
+
+env:
+  BRANCH_PATTERN: openwrt-2[0-9]\.[0-9]{2}
+  TERRAFORM_VERSION: 1.7.4
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  branch_created:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: devops
+              
+      - name: Get branch name
+        run: | 
+            echo "BRANCH_NAME=${{ github.event.ref }}" >> $GITHUB_ENV
+      
+      - name: Verify branch name
+        run: |
+          if [[ ! "${BRANCH_NAME}" =~ $BRANCH_PATTERN ]]; then
+            echo "Branch name doesn't match the pattern."
+            echo "VALID_BRANCH=false" >> $GITHUB_ENV
+          else
+            echo "New branch created $GITHUB_REF"
+            echo "VALID_BRANCH=true" >> $GITHUB_ENV
+          fi
+
+      - name: Set up Terraform
+        if: env.VALID_BRANCH == 'true'
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: $TERRAFORM_VERSION
+          
+      - name: Terraform Init 
+        if: env.VALID_BRANCH == 'true'
+        run: |
+          cd .terraform/pipeline
+          terraform init
+
+      - name: Terraform New Workspace
+        if: env.VALID_BRANCH == 'true'
+        run: |
+          cd .terraform/pipeline
+          terraform workspace new $BRANCH_NAME
+          echo "Current Workspace is $(terraform workspace show)"
+
+      - name: Terraform Validate
+        if: env.VALID_BRANCH == 'true'
+        run: |
+          cd .terraform/pipeline
+          terraform validate
+
+      - name: Terraform Plan
+        if: env.VALID_BRANCH == 'true'
+        run: |
+          cd .terraform/pipeline
+          sed -i "/stage_vars = {/a \ \ \"\${{ env.BRANCH_NAME }}\" = {\n \ \ \ branch = \"\${{ env.BRANCH_NAME }}\"\n \ \ }" terraform.tfvars
+          terraform plan
+
+      - name: Terraform Apply
+        if: env.VALID_BRANCH == 'true'
+        run: |
+          cd .terraform/pipeline
+          terraform apply -auto-approve
+
+      - name: NOTHING TO DO
+        if: env.VALID_BRANCH == 'false'
+        run: echo "THIS BRANCH DOES NOT CREATE A NEW AWS CODEPIPELINE"
