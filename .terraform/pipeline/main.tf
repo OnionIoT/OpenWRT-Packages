@@ -83,7 +83,7 @@ resource "aws_codepipeline" "codepipeline" {
       configuration = {
         ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.sdk
-        BranchName       = local.stage_vars.branch
+        BranchName       = "main"
         DetectChanges    = false
       }
     }
@@ -100,7 +100,7 @@ resource "aws_codepipeline" "codepipeline" {
       configuration = {
         ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.image_builder
-        BranchName       = local.stage_vars.branch
+        BranchName       = "main"
         DetectChanges    = false
       }
     }
