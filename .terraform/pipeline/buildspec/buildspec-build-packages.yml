@@ -18,7 +18,9 @@ phases:
     commands:
       - aws s3 cp s3://onion-build/openwrt/openwrt21.key $CODEBUILD_SRC_DIR/keys/key-build
       - aws s3 cp s3://onion-build/openwrt/openwrt21.pub $CODEBUILD_SRC_DIR/keys/key-build.pub
+      - ls -la
       - cd $CODEBUILD_SRC_DIR
+      - ls -la
       - bash setup.sh
   build:
     commands:
