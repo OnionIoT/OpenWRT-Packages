@@ -10,7 +10,7 @@ env:
 phases:
   install:
     runtime-versions:
-      python: 3.8
+      python: 3.11
     commands:
       - echo "Installing dependencies"
       - apt-get update
