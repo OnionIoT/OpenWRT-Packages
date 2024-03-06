@@ -23,6 +23,6 @@ module "build_packages_action" {
   environment_variables      = local.tf_codebuild_env_vars
   secrets                    = local.codebuild_shared_secrets
   build_step                 = "packages"
-  buildspec_file             = "buildspec.yml"
+  buildspec_file             = ".terraform/pipeline/buidspec/buildspec-build-packages.yml"
   cache_bucket               = aws_s3_bucket.codepipeline_bucket.bucket
 }
