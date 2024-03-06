@@ -19,6 +19,11 @@ phases:
   pre_build:
     commands:
       - cd $CODEBUILD_SRC_DIR
+      - cat $CODEBUILD_SRC_DIR/profile
+      - cp $CODEBUILD_SRC_DIR_packages_source_output/imagebuilder-profile $CODEBUILD_SRC_DIR/profile
+      - cd $CODEBUILD_SRC_DIR
+      - ls -la
+      - cat profile
       - bash onion_buildenv setup_imagebuilder
   build:
     commands:
@@ -27,7 +32,7 @@ phases:
   post_build:
     commands:
       - if [ "$CODEBUILD_BUILD_SUCCEEDING" = "0" ]; then exit 1; fi
-      - aws s3 cp --recursive ./output/ s3://$OUTPUT_BUCKET/omega2/images/openwrt-$VERSION
+      - aws s3 cp --recursive ./output/ s3://$OUTPUT_BUCKET/omega2-dev/images/openwrt-$VERSION
 cache:
   paths:
     - /var/cache/apt/**/*
