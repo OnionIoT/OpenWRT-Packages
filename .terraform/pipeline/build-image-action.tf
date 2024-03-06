@@ -11,6 +11,10 @@ data "aws_iam_policy_document" "build_image_action_role_policy_document" {
   }
 }
 
+data "local_file" "buildspec_image_local" {
+    filename = "${path.module}/buildspec/buildspec-build-image.yml"
+}
+
 module "build_image_action" {
   source           = "./modules/codebuild"
   project_name     = var.project_name
@@ -22,6 +26,6 @@ module "build_image_action" {
   environment_variables      = local.tf_codebuild_env_vars
   secrets                    = local.codebuild_shared_secrets
   build_step                 = "image"
-  buildspec_file             = ".terraform/pipeline/buidspec/buildspec-build-image.yml"
+  buildspec_file             = data.local_file.buildspec_image_local.content
   cache_bucket               = aws_s3_bucket.codepipeline_bucket.bucket
 }
