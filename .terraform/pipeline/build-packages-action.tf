@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "build_packages_action_role_policy_document" {
 }
 
 data "local_file" "buildspec_packages_local" {
-    filename = "${path.module}/buildspec/buildspec-build-packages.yml"
+  filename = "${path.module}/buildspec/buildspec-build-packages.yml"
 }
 
 module "build_packages_action" {

@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "build_image_action_role_policy_document" {
 }
 
 data "local_file" "buildspec_image_local" {
-    filename = "${path.module}/buildspec/buildspec-build-image.yml"
+  filename = "${path.module}/buildspec/buildspec-build-image.yml"
 }
 
 module "build_image_action" {

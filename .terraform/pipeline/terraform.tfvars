@@ -6,7 +6,7 @@ stage_vars = {
   "prod" = {
     branch = "prod"
   }
-  "devops" = {
-    branch = "devops"
+  "openwrt-29.99" = {
+    branch = "openwrt-29.99"
   }
 }

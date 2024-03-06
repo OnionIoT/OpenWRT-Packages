@@ -61,5 +61,5 @@ variable "is_privileged_mode" {
 variable "cache_bucket" {
   description = "Bucket name used for caching"
   type        = string
-  default = null
+  default     = null
 }
