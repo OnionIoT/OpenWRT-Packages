@@ -18,6 +18,7 @@ phases:
       - apt-get -y install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python2
   pre_build:
     commands:
+      - 
       - cd $CODEBUILD_SRC_DIR
       - bash setup.sh
   build:
