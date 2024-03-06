@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Stable OpenWrt Release version (Needs change whenever new openwrt release is available)
+# Stable OpenWrt Release version (Needs change whenever new openwrt release is available!!)
 OPENWRT_RELEASE="22.03"
 OPENWRT_VERSION="${OPENWRT_RELEASE}.5"
 ARCH="mipsel_24kc"
