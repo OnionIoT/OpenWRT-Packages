@@ -13,6 +13,11 @@ variable "deployment_bucket" {
   description = "Deployment Bucket to host the packages and images"
 }
 
+variable "buildspec_file_name" {
+  type        = string
+  description = "The name of the buildspec file for correct development or production builds."
+}
+
 variable "stage_vars" {
   description = "Stage Specific Variables"
   type = map(
