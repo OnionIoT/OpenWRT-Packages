@@ -18,8 +18,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          ref: devops
               
       - name: Get branch name
         run: | 
@@ -65,13 +63,13 @@ jobs:
         run: |
           cd .terraform/pipeline
           sed -i "/stage_vars = {/a \ \ \"\${{ env.BRANCH_NAME }}\" = {\n \ \ \ branch = \"\${{ env.BRANCH_NAME }}\"\n \ \ }" terraform.tfvars
-          terraform plan
+          terraform plan -var="buildspec_file_name=development-buildspec.yml"
 
       - name: Terraform Apply
         if: env.VALID_BRANCH == 'true'
         run: |
           cd .terraform/pipeline
-          terraform apply -auto-approve
+          terraform apply -auto-approve -var="buildspec_file_name=development-buildspec.yml"
 
       - name: NOTHING TO DO
         if: env.VALID_BRANCH == 'false'
