@@ -27,6 +27,6 @@ module "build_packages_action" {
   environment_variables      = local.tf_codebuild_env_vars
   secrets                    = local.codebuild_shared_secrets
   build_step                 = "packages"
-  buildspec_file             = data.local_file.buildspec_packages_local.content
+  buildspec_file             = var.buildspec_file_name
   cache_bucket               = aws_s3_bucket.codepipeline_bucket.bucket
 }

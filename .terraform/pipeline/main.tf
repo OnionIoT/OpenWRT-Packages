@@ -30,15 +30,9 @@ locals {
   }
 }
 
-# resource "aws_codestarconnections_connection" "github_connection" {
-#   name          = "${var.project_name}-connection-${local.stage}"
-#   provider_type = "GitHub"
-# }
-
-
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = "devops-${var.project_name}-artifacts-${local.stage}"
-  tags   = local.tags
+  bucket        = "devops-${var.project_name}-artifacts-${local.stage}"
+  tags          = local.tags
 }
 
 resource "aws_codepipeline" "codepipeline" {
@@ -83,7 +77,7 @@ resource "aws_codepipeline" "codepipeline" {
       configuration = {
         ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.sdk
-        BranchName       = "main"
+        BranchName       = "devops"
         DetectChanges    = false
       }
     }
@@ -100,7 +94,7 @@ resource "aws_codepipeline" "codepipeline" {
       configuration = {
         ConnectionArn    = data.aws_codestarconnections_connection.github_connection.arn
         FullRepositoryId = local.repositories.image_builder
-        BranchName       = "main"
+        BranchName       = "devops"
         DetectChanges    = false
       }
     }
