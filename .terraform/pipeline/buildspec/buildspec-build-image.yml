@@ -5,34 +5,30 @@ version: 0.2
 
 env:
   variables:
-    VERSION: "22.03"
+    VERSION: "22.03.2"
+    OUTPUT_S3_PATH: "omega2/images"
 phases:
   install:
+    runtime-versions:
+      python: 3.8
     commands:
       - echo "Installing dependencies"
       - apt-get update
-      - apt-get -y install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python2 python3
       - apt-get -y install --upgrade awscli
-      # remove pyenv from path to use the default system installation.
-      - export PATH=$(echo $PATH | sed 's@/root/.pyenv/shims:/root/.pyenv/bin:@@g')
-
+      - apt-get -y install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python2
   pre_build:
     commands:
       - cd $CODEBUILD_SRC_DIR
-      - cat $CODEBUILD_SRC_DIR/profile
-      - cp $CODEBUILD_SRC_DIR_packages_source_output/imagebuilder-profile $CODEBUILD_SRC_DIR/profile
-      - cd $CODEBUILD_SRC_DIR
-      - ls -la
-      - cat profile
-      - bash onion_buildenv setup_imagebuilder
+      - bash setup.sh
   build:
     commands:
-      - bash onion_buildenv build_all_firmware
+      - bash build-fw.sh
 
   post_build:
     commands:
       - if [ "$CODEBUILD_BUILD_SUCCEEDING" = "0" ]; then exit 1; fi
-      - aws s3 cp --recursive ./output/ s3://$OUTPUT_BUCKET/omega2-dev/images/openwrt-$VERSION
+      - bash rename-images.sh
+      - aws s3 cp --recursive ./output/ s3://$OUTPUT_BUCKET/$OUTPUT_S3_PATH
 cache:
   paths:
     - /var/cache/apt/**/*

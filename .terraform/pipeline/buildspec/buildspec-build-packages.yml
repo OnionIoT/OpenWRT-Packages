@@ -2,35 +2,32 @@
 #  Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #  SPDX-License-Identifier: MIT-0
 version: 0.2
+env:
+  variables:
+    VERSION: "22.03.2"
 phases:
   install:
+    runtime-versions:
+      python: 3.8
     commands:
       - echo "Installing dependencies"
       - apt-get update
-      - apt-get -y install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python2 python3
       - apt-get -y install --upgrade awscli
-      # remove pyenv from path to use the default system installation.
-      - export PATH=$(echo $PATH | sed 's@/root/.pyenv/shims:/root/.pyenv/bin:@@g')
+      - apt-get -y install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python2
   pre_build:
     commands:
       - aws s3 cp s3://onion-build/openwrt/openwrt21.key $CODEBUILD_SRC_DIR/keys/key-build
       - aws s3 cp s3://onion-build/openwrt/openwrt21.pub $CODEBUILD_SRC_DIR/keys/key-build.pub
-      
-      - cat $CODEBUILD_SRC_DIR/profile
-      - cp $CODEBUILD_SRC_DIR_packages_source_output/sdk-profile $CODEBUILD_SRC_DIR/profile
       - cd $CODEBUILD_SRC_DIR
-      - ls -la
-      - cat profile
-      - bash onion_buildenv setup_sdk
+      - bash setup.sh
   build:
     commands:
-      - bash onion_buildenv build_all_packages
+      - bash build-packages.sh
   post_build:
     commands:
       - if [ "$CODEBUILD_BUILD_SUCCEEDING" = "0" ]; then exit 1; fi
-      - VERSION=$(. $CODEBUILD_SRC_DIR/profile; echo ${OPENWRT_VERSION=#v})
-      - cd "openwrt-sdk/bin/packages/mipsel_24kc/onion"
-      - aws s3 cp --recursive . "s3://$OUTPUT_BUCKET/omega2-dev/packages/openwrt-$VERSION/onion"
+      - cd "openwrt-sdk-$VERSION/bin/packages/mipsel_24kc/onion"
+      - aws s3 cp --recursive . "s3://repo.onioniot.com/omega2/packages/openwrt-$VERSION/onion"
 cache:
   paths:
     - /var/cache/apt/**/*
@@ -39,4 +36,4 @@ cache:
 artifacts:
   type: zip
   files: "**/*"
-  base-directory: "openwrt-sdk/bin/packages/mipsel_24kc/onion"
+  base-directory: "openwrt-sdk-$VERSION/bin/packages/mipsel_24kc/onion"
