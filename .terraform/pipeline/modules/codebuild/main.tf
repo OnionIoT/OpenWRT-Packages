@@ -8,7 +8,7 @@ resource "aws_cloudwatch_log_group" "step_log_group" {
 }
 
 resource "aws_codebuild_project" "step_build_project" {
-  name         = "${var.project_name}-codebuild-${var.build_step}-${var.stage}"
+  name         = "${var.project_name}-codebuild-${var.build_step}-${replace(var.stage, ".", "")}"
   description  = var.step_description
   service_role = aws_iam_role.service_role.arn
   tags         = var.tags

@@ -1,5 +1,5 @@
 locals {
-  code_start_connection_id = split("/", aws_codestarconnections_connection.github_connection.id)[1]
+  code_start_connection_id = split("/", data.aws_codestarconnections_connection.github_connection.id)[1]
 }
 
 output "Github_connection_url" {
