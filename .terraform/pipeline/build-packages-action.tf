@@ -12,10 +12,6 @@ data "aws_iam_policy_document" "build_packages_action_role_policy_document" {
   }
 }
 
-data "local_file" "buildspec_packages_local" {
-  filename = "${path.module}/buildspec/buildspec-build-packages.yml"
-}
-
 module "build_packages_action" {
   source           = "./modules/codebuild"
   project_name     = var.project_name
