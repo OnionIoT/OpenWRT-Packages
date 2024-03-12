@@ -6,6 +6,7 @@ Onion Packages for OpenWRT firmware. Intended for the Onion Omega2 & Omega2+ dev
 
 ## Where can I find the compiled output of this repo?
 
-The latest compiled packages can be found at: http://repo.onioniot.com/omega2/packages/openwrt-22.03.5/
+The latest compiled packages can be found at: http://repo.onioniot.com/omega2/packages/openwrt-23.05.2/
 
-And firmware with these packages can be found at: http://repo.onioniot.com/omega2/images/openwrt-22.03/
+And firmware with these packages can be found at: http://repo.onioniot.com/omega2/images/openwrt-23.05/
+/
