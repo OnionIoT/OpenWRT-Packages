@@ -10,3 +10,4 @@ The latest compiled packages can be found at: http://repo.onioniot.com/omega2/pa
 
 And firmware with these packages can be found at: http://repo.onioniot.com/omega2/images/openwrt-23.05/
 /
+
