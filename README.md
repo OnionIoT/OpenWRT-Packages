@@ -2,6 +2,20 @@
 
 Onion Packages for OpenWRT firmware. Intended for the Onion Omega2 & Omega2+ devices
 
+- [OpenWRT-Packages](#openwrt-packages)
+  * [Where can I find the compiled output of this repo?](#where-can-i-find-the-compiled-output-of-this-repo)
+- [Developing with this Repo](#developing-with-this-repo)
+  * [How Can I Compile the Packages in this Repo for the Omega2 Device?](#how-can-i-compile-the-packages-in-this-repo-for-the-omega2-device)
+    + [Compiling the Packages as they are in this repo](#compiling-the-packages-as-they-are-in-this-repo)
+    + [Compiling the Packages from a local clone of this repo](#compiling-the-packages-from-a-local-clone-of-this-repo)
+  * [How Can I Build Firmware that includes the packages from this repo?](#how-can-i-build-firmware-that-includes-the-packages-from-this-repo)
+    + [Building Firmware with Published Packages](#building-firmware-with-published-packages)
+    + [Building Firmware with the Packages from a local clone of this repo](#building-firmware-with-the-packages-from-a-local-clone-of-this-repo)
+- [Continuous Deployment Details](#continuous-deployment-details)
+  * [Development Builds in Branches](#development-builds-in-branches)
+  * [Newly Created Releases](#newly-created-releases)
+  * [Process: Creating a Release](#process-creating-a-release)
+
 ![Omega2+ and Omega2S+](https://github.com/OnionIoT/source/raw/openwrt-18.06/omega2-family.png)
 
 ## Where can I find the compiled output of this repo?
@@ -9,6 +23,59 @@ Onion Packages for OpenWRT firmware. Intended for the Onion Omega2 & Omega2+ dev
 The latest compiled packages can be found at: http://repo.onioniot.com/omega2/packages/openwrt-22.03.5/
 
 And firmware with these packages can be found at: http://repo.onioniot.com/omega2/images/openwrt-22.03/
+
+> Compilation done bour our Continuous Deployment System. More details [below](#continuous-deployment-details)
+
+
+# Developing with this Repo
+
+See below for information on development of the packages of this repo
+
+## How Can I Compile the Packages in this Repo for the Omega2 Device?
+
+### Compiling the Packages as they are in this repo
+
+> This is useful if you want to test the compilation of packages in this repo
+
+Use the OnionIoT/openwrt-sdk-wrapper:
+
+1. Clone the OnionIoT/openwrt-sdk-wrapper repo: https://github.com/OnionIoT/openwrt-sdk-wrapper and check out the `main` branch
+1. Copy the `sdk-profile` config file to the locally cheked out openwrt-sdk-wrapper repo, rename it to `profile`
+1. Follow the instructions in the [OnionIoT/openwrt-sdk-wrapper repo readme](https://github.com/OnionIoT/openwrt-sdk-wrapper/tree/main?tab=readme-ov-file#how-to-use-this-repo) to compile the packages
+
+### Compiling the Packages from a local clone of this repo
+
+> This is useful if you're working on changes to the packages in this repo
+
+Use the OnionIoT/openwrt-sdk-wrapper:
+
+1. Clone the OnionIoT/openwrt-sdk-wrapper repo: https://github.com/OnionIoT/openwrt-sdk-wrapper and check out the `main` branch
+1. Copy the `sdk-profile` config file to the locally cheked out openwrt-sdk-wrapper repo, rename it to `profile`
+1. Follow the instructions in the [OnionIoT/openwrt-sdk-wrapper repo readme on **using this repo for development**](https://github.com/OnionIoT/openwrt-sdk-wrapper/tree/main?tab=readme-ov-file#how-to-use-this-repo)
+
+## How Can I Build Firmware that includes the packages from this repo?
+
+### Building Firmware with Published Packages
+
+> This is useful if you need firmware with the packages from this repo
+
+Use the OnionIoT/openwrt-imagebuilder-wrapper to build firmware that includes the compiled, published packages from this repo:
+
+1. Clone the OnionIoT/openwrt-imagebuilder-wrapper repo: https://github.com/OnionIoT/openwrt-imagebuilder-wrapper and check out the `main` branch
+1. Copy the `imagebuilder-profile` config file to the locally cheked out openwrt-imagebuilder-wrapper repo, rename it to `profile`
+1. Follow the instructions in the [OnionIoT/openwrt-imagebuilder-wrapper repo readme](https://github.com/OnionIoT/openwrt-sdk-wrapper/tree/main?tab=readme-ov-file#how-to-use-this-repo) to build firmware
+
+### Building Firmware with the Packages from a local clone of this repo
+
+> This is useful if you're working on changes to the packages in this repo and need to test building firmware that includes the packages
+
+Use the OnionIoT/openwrt-imagebuilder-wrapper to build firmware that includes packages that have been locally compiled
+
+1. Clone the OnionIoT/openwrt-imagebuilder-wrapper repo: https://github.com/OnionIoT/openwrt-imagebuilder-wrapper and check out the `main` branch
+1. Copy the `imagebuilder-profile` config file to the locally cheked out openwrt-imagebuilder-wrapper repo, rename it to `profile`
+1. Follow the instructions in the [OnionIoT/openwrt-imagebuilder-wrapper repo readme on **using this repo for development**](https://github.com/OnionIoT/openwrt-imagebuilder-wrapper/tree/main?tab=readme-ov-file#using-this-repo-for-development) 
+
+
 
 --- 
 
