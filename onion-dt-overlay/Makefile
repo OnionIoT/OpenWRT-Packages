@@ -68,7 +68,12 @@ define BuildDtbo
   define Package/onion-dt-overlay-$(1)/postinst
 	#!/bin/sh
 
-	if [ -z "$${IPKG_INSTROOT}" ]; then
+	if [ -z "$$$${IPKG_INSTROOT}" ]; then
+		if ! cat /proc/mounts | grep -q config; then
+			echo "Mounting configfs..."
+			mount -t configfs none /sys/kernel/config
+		fi
+
 		mkdir -p /sys/kernel/config/device-tree/overlays/$(1)
 		cat /lib/firmware/device-tree/overlays/$(1).dtbo > /sys/kernel/config/device-tree/overlays/$(1)/dtbo
 	fi
