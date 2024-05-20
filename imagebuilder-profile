@@ -2,10 +2,7 @@
 
 # Stable OpenWrt Release version (Needs change whenever new openwrt release is available)
 OPENWRT_RELEASE="23.05"
-OPENWRT_VERSION="${OPENWRT_RELEASE}.2"
-# temporarily override the openwrt version (compile old 22.03.5 in the new 23.05 branch)
-OPENWRT_RELEASE_CD_TESTING="22.03"
-OPENWRT_VERSION_CD_TESTING="${OPENWRT_RELEASE_CD_TESTING}.5"
+OPENWRT_VERSION="${OPENWRT_RELEASE}.3"
 ARCH="mipsel_24kc"
 TARGET="ramips"
 SUBTARGET="mt76x8"

@@ -4,7 +4,7 @@
 version: 0.2
 env:
   variables:
-    VERSION: "22.03.2"
+    VERSION: "23.05.3"
 phases:
   install:
     runtime-versions:

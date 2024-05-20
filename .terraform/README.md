@@ -31,7 +31,7 @@ deployment_bucket = "repo.onioniot.com"
 
 stage_vars = {
   "stage_name" = {
-    branch = "openwrt-22.03"
+    branch = "openwrt-23.05"
   }
 }
 ```

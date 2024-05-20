@@ -1,6 +1,6 @@
-# Usage Instructions for New OpenWRT-22.03-based Omega2 Firmware
+# Usage Instructions for New OpenWRT-23.05-based Omega2 Firmware
 
-A new firmware is available for the Omega2 and Omega2+ that's based on the recent OpenWRT 22.03 release.
+A new firmware is available for the Omega2 and Omega2+ that's based on the recent OpenWRT 23.05 release.
 
 This page has instructions on using this new firmware:
 
@@ -42,10 +42,10 @@ This page has instructions on using this new firmware:
 
 > This firmware doesn't include the `oupgrade` utility, so we'll need to manually install the firmware. The procedure is very similar to the [Manual Firmware Installation instructions in the Onion Documentation](http://docs.onion.io/omega2-docs/manual-firmware-installation.html). 
 
-The new firmware can be found online at http://repo.onioniot.com/omega2/images/openwrt-22.03/
+The new firmware can be found online at http://repo.onioniot.com/omega2/images/openwrt-23.05/
 
 The firmware images are named according to this syntax: `<DEVICE-NAME>-<OPENWRT-VERSION>-<BUILD-DATE>.bin`
-So `onion_omega2p-22.03.2-20230221.bin` is firmware made for the Omega2+/Omega2S+, based on OpenWRT release 22.03.2, and was built on Feb 21, 2023.
+So `onion_omega2p-23.05.3-20240516.bin` is firmware made for the Omega2+/Omega2S+, based on OpenWRT release 23.05.3, and was built on May 16, 2024.
 
 
 ## Selecting Firmware
@@ -70,13 +70,13 @@ Once you know which firmware image you want to install on your device:
 
 1. Connect to the command line of your device
 1. Go to the `/tmp` directory: `cd /tmp`
-1. Download the firmware image: `wget http://repo.onioniot.com.s3.amazonaws.com/omega2/images/openwrt-22.03/<SELECTED-FIRMWARE-IMAGE>.bin`
+1. Download the firmware image: `wget http://repo.onioniot.com.s3.amazonaws.com/omega2/images/openwrt-23.05/<SELECTED-FIRMWARE-IMAGE>.bin`
 1. Install the firwmare: `sysupgrade -F -n -v <SELECTED-FIRMWARE-IMAGE>.bin`
 
-Say you selected firmware `onion_omega2p-22.03.3-20230526.bin`:
+Say you selected firmware `onion_omega2p-23.05.3-20240516.bin`:
 
-* Your download command would be `wget http://repo.onioniot.com.s3.amazonaws.com/omega2/images/openwrt-22.03/onion_omega2p-22.03.3-20230526.bin`
-* Your installation command would be `sysupgrade -F -n -v onion_omega2p-22.03.3-20230526.bin`
+* Your download command would be `wget http://repo.onioniot.com.s3.amazonaws.com/omega2/images/openwrt-23.05/onion_omega2p-23.05.3-20240516.bin`
+* Your installation command would be `sysupgrade -F -n -v onion_omega2p-23.05.3-20240516.bin`
 
 
 ## Updating
@@ -290,14 +290,14 @@ For valid GPIO numbers, `gpio-lookup` would display the corresponding kernel GPI
 
 ## Pin Multiplexing
 
-Changing the functionality of the Omega's pins is supported as of firmware `22.03.3-20230526`.
+Changing the functionality of the Omega's pins is supported as of firmware `23.05.3-20240516`.
 
 See the [Pin Multiplexing](http://docs.onion.io/omega2-docs/pin-multiplexing.html) article in the Onion Documentation for details.
 
 
 ## Hardware PWM
 
-Using the Omega's hardware PWM channels is supported as for firmware `22.03.3-20230626`.
+Using the Omega's hardware PWM channels is supported as for firmware `23.05.3-20230626`.
 
 The Omega’s SoC has a number of PWM modules. The Omega2 exposes two (2) PWM hardware modules on its pin headers while the Omega2S exposes all four (4).
 
@@ -434,7 +434,7 @@ Anything software-related for the new firmware.
 
 ## NodeJS v16.19
 
-The Omega2 supports NodeJS v16.19 starting in firmware `22.03.3-20230526`!
+The Omega2 supports NodeJS v16.19 starting in firmware `23.05.3-20240516`!
 
 To install Node, first make sure your Omega2 is connected to the internet, then run:
 

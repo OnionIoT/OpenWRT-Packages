@@ -7,6 +7,6 @@ buildspec_file_name = "buildspec.yml"
 
 stage_vars = {
   "prod" = {
-    branch = "openwrt-22.03"
+    branch = "openwrt-23.05"
   }
 }
