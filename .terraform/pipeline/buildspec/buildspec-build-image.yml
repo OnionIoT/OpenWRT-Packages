@@ -5,7 +5,7 @@ version: 0.2
 
 env:
   variables:
-    VERSION: "22.03.2"
+    VERSION: "23.05.3"
     OUTPUT_S3_PATH: "omega2/images"
 phases:
   install:

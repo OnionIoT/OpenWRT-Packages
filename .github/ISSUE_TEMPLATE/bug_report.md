@@ -31,10 +31,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots or terminal output to help explain your problem.
 
 # **Version Info (please complete the following information):**
- - Firmware version: [e.g. 22.03.02 b124]
+ - Firmware version: [e.g. 23.05.3 b124]
  - Package name [e.g. omega2-ctrl]
- - Package Version [e.g. 22-1]
- - Repo branch (if applicable) [e.g. openwrt-22.03]
+ - Package Version [e.g. 23-1]
+ - Repo branch (if applicable) [e.g. openwrt-23.05]
 
 # **Additional context**
 Add any other context about the problem here.

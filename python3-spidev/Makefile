@@ -57,4 +57,8 @@ define Package/python3-spidev/install
 	$(CP) $(PKG_BUILD_DIR)/lib/python$(PYTHON3_VERSION)/spidev.so $(1)$(PYTHON3_PKG_DIR)
 endef
 
+define Build/Install
+	true
+endef
+
 $(eval $(call BuildPackage,python3-spidev))
