@@ -8,11 +8,11 @@ TARGET="ramips"
 SUBTARGET="mt76x8"
 
 # Default base URL from where openwrt SDKs are available for the respective openwrt version and targets
-# BASE_URL="https://downloads.openwrt.org/releases/$OPENWRT_VERSION_CD_TESTING/targets/$TARGET/$SUBTARGET"
-BASE_URL="http://downloads.onioniot.com.s3.amazonaws.com/releases/$OPENWRT_VERSION_CD_TESTING/targets/$TARGET/$SUBTARGET"
+# BASE_URL="https://downloads.openwrt.org/releases/$OPENWRT_VERSION/targets/$TARGET/$SUBTARGET"
+BASE_URL="http://downloads.openwrt.org/releases/$OPENWRT_VERSION/targets/$TARGET/$SUBTARGET"
 
 # imagebuilder file name available and downloaded from BASE_URL ((Needs change whenever new openwrt release is available with different gcc version))
-IMAGE_BUILDER_FILE="openwrt-imagebuilder-$OPENWRT_VERSION_CD_TESTING-$TARGET-$SUBTARGET.Linux-$(uname -p).tar.xz"
+IMAGE_BUILDER_FILE="openwrt-imagebuilder-$OPENWRT_VERSION-$TARGET-$SUBTARGET.Linux-$(uname -p).tar.xz"
 IMAGE_BUILDER_URL="$BASE_URL/$IMAGE_BUILDER_FILE"
 
 # Additions directory copy custom files into image builder dir
@@ -21,23 +21,23 @@ ADDITIONS_DIR="$PWD/additions"
 ## specify ipk repos to be included in the firmware (each repo in new line) 
 PACKAGE_REPOS="
 # Override openwrt_core repo with Onion Core repo
-src/gz openwrt_core http://downloads.onioniot.com/releases/$OPENWRT_VERSION_CD_TESTING/targets/$TARGET/$SUBTARGET/packages
-src/gz onion_base http://downloads.onioniot.com/releases/$OPENWRT_VERSION_CD_TESTING/packages/$ARCH/base
-src/gz onion_luci http://downloads.onioniot.com/releases/$OPENWRT_VERSION_CD_TESTING/packages/$ARCH/luci
-src/gz onion_packages http://downloads.onioniot.com/releases/$OPENWRT_VERSION_CD_TESTING/packages/$ARCH/packages
-src/gz onion_routing http://downloads.onioniot.com/releases/$OPENWRT_VERSION_CD_TESTING/packages/$ARCH/routing
-src/gz onion_telephony http://downloads.onioniot.com/releases/$OPENWRT_VERSION_CD_TESTING/packages/$ARCH/telephony"
+src/gz openwrt_core http://downloads.onioniot.com/releases/$OPENWRT_VERSION/targets/$TARGET/$SUBTARGET/packages
+src/gz onion_base http://downloads.onioniot.com/releases/$OPENWRT_VERSION/packages/$ARCH/base
+src/gz onion_luci http://downloads.onioniot.com/releases/$OPENWRT_VERSION/packages/$ARCH/luci
+src/gz onion_packages http://downloads.onioniot.com/releases/$OPENWRT_VERSION/packages/$ARCH/packages
+src/gz onion_routing http://downloads.onioniot.com/releases/$OPENWRT_VERSION/packages/$ARCH/routing
+src/gz onion_telephony http://downloads.onioniot.com/releases/$OPENWRT_VERSION/packages/$ARCH/telephony"
 
 # use different repo for dev vs release builds
 if [ "$DEV_BUILD" != "" ]; then 
     # dev build
     PACKAGE_REPOS="$PACKAGE_REPOS
-src/gz onion_openwrt_packages http://repo.onioniot.com/omega2-dev/packages/openwrt-$OPENWRT_VERSION_CD_TESTING/onion
+src/gz onion_openwrt_packages http://repo.onioniot.com/omega2-dev/packages/openwrt-$OPENWRT_VERSION/onion
 "
 else
     # release build
     PACKAGE_REPOS="$PACKAGE_REPOS
-src/gz onion_openwrt_packages http://repo.onioniot.com/omega2/packages/openwrt-$OPENWRT_VERSION_CD_TESTING/onion
+src/gz onion_openwrt_packages http://repo.onioniot.com/omega2/packages/openwrt-$OPENWRT_VERSION/onion
 "
 fi 
 
