@@ -27,7 +27,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Onion
 	SUBMENU:=Utilities
 	TITLE:=Utility to control the Omega2's low-level hardware
-	DEPENDS:=@KERNEL_DEVMEM
+	DEPENDS:=+USE_GLIBC:librt +USE_GLIBC:libpthread +@KERNEL_DEVMEM
 endef
 
 define Package/$(PKG_NAME)/description
