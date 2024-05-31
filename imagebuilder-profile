@@ -51,10 +51,9 @@ onion-repo-keys
 omega2-base
 omega2-base-files
 omega2-base-passwd
+omega2-ctrl
 i2c-tools
 "
-# temporarily removed from above (requires changes to kernel config, pending on https://github.com/OnionIoT/openwrt-buildsystem-wrapper/issues/24)
-#omega2-ctrl
 
 BUILD_MODELS="
 onion_omega2
