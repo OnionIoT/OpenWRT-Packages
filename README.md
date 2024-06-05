@@ -2,6 +2,20 @@
 
 Onion Packages for OpenWRT firmware. Intended for the Onion Omega2 & Omega2+ devices
 
+- [OpenWRT-Packages](#openwrt-packages)
+  * [Where can I find the compiled output of this repo?](#where-can-i-find-the-compiled-output-of-this-repo)
+- [Developing with this Repo](#developing-with-this-repo)
+  * [How Can I Compile the Packages in this Repo for the Omega2 Device?](#how-can-i-compile-the-packages-in-this-repo-for-the-omega2-device)
+    + [Compiling the Packages as they are in this repo](#compiling-the-packages-as-they-are-in-this-repo)
+    + [Compiling the Packages from a local clone of this repo](#compiling-the-packages-from-a-local-clone-of-this-repo)
+  * [How Can I Build Firmware that includes the packages from this repo?](#how-can-i-build-firmware-that-includes-the-packages-from-this-repo)
+    + [Building Firmware with Published Packages](#building-firmware-with-published-packages)
+    + [Building Firmware with the Packages from a local clone of this repo](#building-firmware-with-the-packages-from-a-local-clone-of-this-repo)
+- [Continuous Deployment Details](#continuous-deployment-details)
+  * [Development Builds in Branches](#development-builds-in-branches)
+  * [Newly Created Releases](#newly-created-releases)
+  * [Process: Creating a Release](#process-creating-a-release)
+
 ![Omega2+ and Omega2S+](https://github.com/OnionIoT/source/raw/openwrt-18.06/omega2-family.png)
 
 ## Where can I find the compiled output of this repo?
