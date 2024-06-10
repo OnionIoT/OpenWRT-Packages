@@ -92,7 +92,6 @@ define Package/omega2-base/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/omega2selfreport.sh  $(1)/usr/bin/omega2selfreport
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/lib/ramips.sh $(1)/lib/ramips.sh
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/check-internet.sh  $(1)/usr/bin/check-internet
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/usr/bin/gpio-lookup $(1)/usr/bin/gpio-lookup
 endef
 
 define Package/omega2-base-files/install
