@@ -35,6 +35,11 @@ define Package/python3-gpio/description
 	Python3 module that provides gpio access via the standard linux sysfs interface
 endef
 
+define Build/Prepare
+	mkdir -p $(PKG_BUILD_DIR)/
+	$(CP) ./files/* $(PKG_BUILD_DIR)/
+endef
+
 TARGET_CFLAGS += $(FPIC)
 TARGET_LIBS += -l m
 
