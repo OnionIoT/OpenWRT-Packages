@@ -1,0 +1,13 @@
+diff --git a/gpio/__init__.py b/gpio/__init__.py
+index c6f37f7..119545d 100644
+--- a/gpio/__init__.py
++++ b/gpio/__init__.py
+@@ -16,7 +16,7 @@ _open_pins = {}
+ GPIO_ROOT = '/sys/class/gpio'
+ GPIO_EXPORT = os.path.join(GPIO_ROOT, 'export')
+ GPIO_UNEXPORT = os.path.join(GPIO_ROOT, 'unexport')
+-FMODE = 'w+'  # w+ overwrites and truncates existing files
++FMODE = 'w'  # fix: w for write-only sysfs files
+ IN, OUT = 'in', 'out'
+ LOW, HIGH = 0, 1
+ 
