@@ -30,5 +30,6 @@ omega2-base
 omega2-ctrl
 onion-dt-overlay
 python3-spidev
+python3-gpio
 omega2-lte
 "
