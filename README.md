@@ -1,6 +1,6 @@
 # OpenWRT-Packages
 
-Onion Packages for OpenWRT firmware. Intended for the Onion Omega2 & Omega2+ devices
+Onion Packages for OpenWRT firmware. Intended for the Onion Omega2 & Omega2+ devices.
 
 - [OpenWRT-Packages](#openwrt-packages)
   * [Where can I find the compiled output of this repo?](#where-can-i-find-the-compiled-output-of-this-repo)
