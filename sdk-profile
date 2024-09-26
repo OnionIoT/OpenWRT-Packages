@@ -11,7 +11,7 @@ SUBTARGET="mt76x8"
 BASE_URL="http://downloads.onioniot.com.s3.amazonaws.com/releases/$OPENWRT_VERSION/targets/$TARGET/$SUBTARGET"
 
 # SDK file name available and downloaded from BASE_URL ((Needs change whenever new openwrt release is available with different gcc version))
-SDK_FILE="openwrt-sdk-$OPENWRT_VERSION-$TARGET-${SUBTARGET}_gcc-12.3.0_musl.Linux-$(uname -p).tar.xz"
+SDK_FILE="openwrt-sdk-$OPENWRT_VERSION-$TARGET-${SUBTARGET}_gcc-12.3.0_musl.Linux-$(uname -m).tar.xz"
 SDK_URL="$BASE_URL/$SDK_FILE"
 
 # Keys directory to sign compiled packages, Ensure you have key-build files in specificed directory

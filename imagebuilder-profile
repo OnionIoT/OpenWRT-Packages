@@ -12,7 +12,7 @@ SUBTARGET="mt76x8"
 BASE_URL="http://downloads.onioniot.com.s3.amazonaws.com/releases/$OPENWRT_VERSION/targets/$TARGET/$SUBTARGET"
 
 # imagebuilder file name available and downloaded from BASE_URL ((Needs change whenever new openwrt release is available with different gcc version))
-IMAGE_BUILDER_FILE="openwrt-imagebuilder-$OPENWRT_VERSION-$TARGET-$SUBTARGET.Linux-$(uname -p).tar.xz"
+IMAGE_BUILDER_FILE="openwrt-imagebuilder-$OPENWRT_VERSION-$TARGET-$SUBTARGET.Linux-$(uname -m).tar.xz"
 IMAGE_BUILDER_URL="$BASE_URL/$IMAGE_BUILDER_FILE"
 
 # Additions directory copy custom files into image builder dir
