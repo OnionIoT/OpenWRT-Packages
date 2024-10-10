@@ -122,7 +122,7 @@ See https://documentation.onioniot.com/hardware-interfaces/pwm#generating-pwm-si
 
 ### Stopping the PWM signal
 
-See See https://documentation.onioniot.com/hardware-interfaces/pwm#generating-pwm-signals
+See https://documentation.onioniot.com/hardware-interfaces/pwm#generating-pwm-signals
 
 
 ### Writing your own script to generate PWM signals
