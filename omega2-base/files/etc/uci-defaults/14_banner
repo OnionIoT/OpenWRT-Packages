@@ -14,12 +14,12 @@ echo "$OMEGA" > /etc/banner
 # add Omega firmware version
 version=$(uci get onion.@onion[0].version)
 build=$(uci get onion.@onion[0].build)
+echo " ----------------------------------------------------- " >> /etc/banner
+echo "               Ω-ware:  $version $build                " >> /etc/banner
+echo " ----------------------------------------------------- " >> /etc/banner
+echo "   This is new firmware! For more info," >> /etc/banner
+echo "   visit https://documentation.onioniot.com" >> /etc/banner
 echo " -----------------------------------------------------" >> /etc/banner
-echo "   Ω-ware: $version b$build" >> /etc/banner
-echo " -----------------------------------------------------" >> /etc/banner
-
-# old code to preserve bottom of old banner
-#sed -e 9,14d -e 1,5d /etc/banner_tmp | cat >> /etc/banner
 
 rm /etc/banner_tmp
 
