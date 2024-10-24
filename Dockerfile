@@ -10,7 +10,8 @@ WORKDIR /root
 # Update and install the required packages
 RUN git clone https://github.com/OnionIoT/openwrt-sdk-wrapper.git && \
     cd openwrt-sdk-wrapper && \
-    bash onion_buildenv setup_sdk
+    bash onion_buildenv setup_sdk && \
+    bash onion_buildenv build_packages python3
 
 WORKDIR /root/openwrt-sdk-wrapper
 
