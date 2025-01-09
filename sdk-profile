@@ -32,4 +32,5 @@ onion-dt-overlay
 python3-spidev
 python3-gpio
 omega2-lte
+p44-ledchain
 "
