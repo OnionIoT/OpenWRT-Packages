@@ -2,12 +2,14 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=p44-ledchain
+# version of what we are downloading
+PKG_VERSION:=9
+# version of this makefile
+PKG_RELEASE:=12
 
-PKG_MIRROR_HASH:=dc5c915d8d9c236486ecbebe242a9ac2558072f53bda4184cd978640d48d9b60
 PKG_SOURCE_URL:=https://github.com/plan44/plan44-feed.git
-PKG_SOURCE_DATE:=2023-08-16
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=9d4ed3ebe1a2d06cad67524a7bbb2ad7596f133e
+PKG_SOURCE_VERSION:=d0450ddc62807beb88df3dfd7a9dddda35879e9c
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -26,6 +28,7 @@ endef
 MAKE_OPTS:= \
 	    ARCH="$(LINUX_KARCH)" \
 	    CROSS_COMPILE="$(TARGET_CROSS)" \
+		$(KERNEL_MAKE_FLAGS) \
 	    SUBDIRS="$(PKG_BUILD_DIR)"
 
 define Build/Compile
