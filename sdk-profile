@@ -33,4 +33,5 @@ python3-spidev
 python3-gpio
 omega2-lte
 i2c-exp-driver
+p44-ledchain
 "
