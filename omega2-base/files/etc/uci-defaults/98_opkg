@@ -3,6 +3,7 @@
 . /etc/os-release
 
 echo "
+src/gz onion_openwrt_core http://repo.onioniot.com/omega2/packages/openwrt-${VERSION_ID}/core
 src/gz onion_core http://downloads.onioniot.com/releases/${VERSION_ID}/targets/${OPENWRT_BOARD}/packages
 src/gz onion_base http://downloads.onioniot.com/releases/${VERSION_ID}/packages/${OPENWRT_ARCH}/base
 src/gz onion_packages http://downloads.onioniot.com/releases/${VERSION_ID}/packages/${OPENWRT_ARCH}/packages
