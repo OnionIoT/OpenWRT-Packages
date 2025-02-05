@@ -85,4 +85,5 @@ endef
 
 $(eval $(call BuildPackage,onion-dt-overlay))
 $(eval $(call BuildDtbo,sw-spi,+kmod-mmc-spi +kmod-spi-bitbang +kmod-spi-dev +kmod-spi-gpio,Provides SW SPI))
+$(eval $(call BuildDtbo,sw-spi-alt,+kmod-mmc-spi +kmod-spi-bitbang +kmod-spi-dev +kmod-spi-gpio,Provides SW SPI on easily accessible GPIOs))
 $(eval $(call BuildDtbo,w1-gpio,+kmod-w1 +kmod-w1-master-gpio +kmod-w1-slave-therm,Provides One Wire GPIO))
