@@ -33,11 +33,13 @@ if [ "$DEV_BUILD" != "" ]; then
     # dev build
     PACKAGE_REPOS="$PACKAGE_REPOS
 src/gz onion_openwrt_packages http://repo.onioniot.com/omega2-dev/packages/openwrt-$OPENWRT_VERSION/onion
+src/gz onion_openwrt_core http://repo.onioniot.com/omega2-dev/packages/openwrt-$OPENWRT_VERSION/core
 "
 else
     # release build
     PACKAGE_REPOS="$PACKAGE_REPOS
 src/gz onion_openwrt_packages http://repo.onioniot.com/omega2/packages/openwrt-$OPENWRT_VERSION/onion
+src/gz onion_openwrt_core http://repo.onioniot.com/omega2/packages/openwrt-$OPENWRT_VERSION/core
 "
 fi 
 
