@@ -57,6 +57,9 @@ omega2-ctrl
 i2c-tools
 openssh-sftp-server
 openssh-sftp-client
+avahi-nodbus-daemon
+avahi-daemon-service-http
+avahi-daemon-service-ssh
 "
 
 BUILD_MODELS="
